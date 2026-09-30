@@ -61,9 +61,11 @@ El registro exige contraseña de 12 a 128 caracteres. Las peticiones del navegad
 
 ## Publicación de prueba
 
-El repositorio incluye [.github/workflows/pages.yml](.github/workflows/pages.yml). Al subirlo a GitHub, seleccionar **GitHub Actions** como origen de Pages y publicar `main`, el flujo compila `dist-demo` y lo despliega. La ruta base es relativa, así que sirve en una URL de proyecto. La demo funciona sin hosting de backend, con las limitaciones indicadas arriba.
+Repositorio: [github.com/xbae23/nexo-upa](https://github.com/xbae23/nexo-upa). Demo publicada: [xbae23.github.io/nexo-upa](https://xbae23.github.io/nexo-upa/).
 
-El repositorio de GitHub se creará y subirá **después** de cerrar la revisión funcional y visual, por petición del propietario. No introduzcas credenciales en Git; `.local/`, compilados y dependencias quedan ignorados.
+El repositorio incluye [.github/workflows/pages.yml](.github/workflows/pages.yml) y tiene **GitHub Actions** como origen de Pages. Cada actualización de `main` ejecuta comprobación de tipos, compila `dist-demo` y lo despliega. La ruta base es relativa, así que sirve en una URL de proyecto. La demo funciona sin hosting de backend, con las limitaciones indicadas arriba.
+
+Para actualizarla, edita el código, comprueba `npm run check` y `npm run build:demo`, crea un commit y súbelo a `main`. El despliegue automático aparecerá en la pestaña **Actions** del repositorio. No introduzcas credenciales en Git; `.local/`, compilados y dependencias quedan ignorados.
 
 ## Organización
 
