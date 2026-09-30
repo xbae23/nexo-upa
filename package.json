@@ -12,6 +12,7 @@
     "check": "tsc --noEmit --incremental false",
     "auth:local": "node local-server/server.mjs",
     "test:auth": "node --test local-server/server.test.mjs",
+    "test:gestures": "node --experimental-strip-types --test tests/gesture-math.test.mjs",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "node scripts/run-framework.mjs dev",
     "build": "node scripts/run-framework.mjs build",

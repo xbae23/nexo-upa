@@ -182,6 +182,9 @@ html.nexo-2026 .post-content h3 button { min-height: 44px; }
 html.nexo-2026 .post-strip { color: var(--primary); }
 html.nexo-2026 .post-strip .post-type-label { color: var(--primary); }
 html.nexo-2026 .post-media { border-color: var(--border); background: var(--muted); border-radius: 16px; }
+html.nexo-2026 .post-media-trigger { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+html.nexo-2026 .post-media-trigger img { width: 100%; }
+html.nexo-2026 .post-media .media-price { pointer-events: none; }
 html.nexo-2026 .media-price { background: var(--popover); color: var(--foreground); }
 html.nexo-2026 .post-actions button { color: var(--muted-foreground); min-width: 44px; }
 html.nexo-2026 .post-actions button.selected { color: var(--primary); }
@@ -249,6 +252,44 @@ html.nexo-2026 .chat-send-button { background: var(--primary); color: var(--prim
 html.nexo-2026 .chat-empty-icon { border-color: var(--primary); color: var(--primary); }
 html.nexo-2026 .new-chat-people button { color: var(--foreground); }
 html.nexo-2026 [data-sonner-toast] { background: var(--popover)!important; color: var(--foreground)!important; border-color: var(--border)!important; }
+
+html.nexo-2026 [data-slot="dialog-content"].media-viewer-dialog {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  left: 0;
+  translate: none!important;
+  transform: none!important;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0;
+  width: 100vw!important;
+  max-width: none!important;
+  height: 100dvh;
+  max-height: none!important;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0!important;
+  background: #050b08!important;
+  color: #edf8ef!important;
+  overflow: hidden;
+}
+html.nexo-2026 .media-viewer-toolbar,
+html.nexo-2026 .media-viewer-controls { display: flex; align-items: center; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right)); background: rgb(5 11 8 / 90%); }
+html.nexo-2026 .media-viewer-toolbar { justify-content: space-between; font-size: 14px; font-weight: 600; }
+html.nexo-2026 .media-viewer-toolbar button,
+html.nexo-2026 .media-viewer-controls button { display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 1px solid #365044; border-radius: 14px; background: #192b20; color: #edf8ef; }
+html.nexo-2026 .media-viewer-toolbar button:hover,
+html.nexo-2026 .media-viewer-controls button:hover { background: #294331; }
+html.nexo-2026 .media-viewer-controls { justify-content: center; padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+html.nexo-2026 .media-viewer-controls span { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; font-size: 14px; }
+html.nexo-2026 .media-viewer-stage { min-height: 0; display: grid; place-items: center; overflow: hidden; touch-action: none; user-select: none; overscroll-behavior: contain; }
+html.nexo-2026 .media-viewer-stage img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center; will-change: transform; transition: transform 220ms cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexo-2026 .media-viewer-stage img { transition: none; }
+}
 
 @media (max-width: 1279px) {
   html.nexo-2026 .app-shell { grid-template-columns: 212px minmax(0, 636px); gap: 20px; padding: 0 20px; }

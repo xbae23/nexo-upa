@@ -14,6 +14,10 @@ const AppearanceContext = createContext<Appearance>({
   toggle: () => {},
 });
 
+export function useNexoAppearance() {
+  return useContext(AppearanceContext);
+}
+
 export function NexoAppearanceProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(featureFlags.design2026);
   const [theme, setTheme] = useState<Theme>("dark");
