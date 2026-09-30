@@ -2,19 +2,19 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, Bell, Compass, House, MessageCircle, Plus, Search, UserRound, Zap } from "lucide-react";
 import { toast } from "sonner";
-import { Toaster } from "@/components/ui/sonner";
 import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { FeedView, ExploreView, ProfileView, PublishDialog, StoryViewer, NotificationsView, PostCard, Avatar, FollowButton } from "@/components/nexo-features";
 import { ChatsView } from "@/components/nexo-chat";
 import { NexoWebTools } from "@/components/nexo-webmcp";
+import { AppearanceButton, NexoAppearanceProvider, NexoToaster as Toaster } from "@/components/nexo-appearance";
 import { DemoProvider, useDemo } from "@/lib/demo-store";
 import { appConfig } from "@/lib/app-config";
 import type { PostKind, Story, View } from "@/lib/demo-data";
 const navigation=[{id:"inicio",label:"Inicio",icon:House},{id:"explorar",label:"Explorar",icon:Search},{id:"notificaciones",label:"Notificaciones",icon:Bell},{id:"chats",label:"Mensajes",icon:MessageCircle},{id:"perfil",label:"Perfil",icon:UserRound}] as const;
-function Brand(){return <span className="brand" aria-label="Nexo UPA"><span className="brand-mark">n</span><span className="brand-name">nexo<em>UPA</em></span></span>;}
-export default function HomePage(){return <DemoProvider><App/></DemoProvider>;}
+function Brand(){return <div className="brand-line"><span className="brand" aria-label="Nexo UPA"><span className="brand-mark">n</span><span className="brand-name">nexo<em>UPA</em></span></span><AppearanceButton/></div>;}
+export default function HomePage(){return <DemoProvider><NexoAppearanceProvider><App/></NexoAppearanceProvider></DemoProvider>;}
 function App(){
  const {state,ready}=useDemo();const [view,setView]=useState<View>("inicio");const [postId,setPostId]=useState<string|null>(null);const [profile,setProfile]=useState<string|null>(null);const [publish,setPublish]=useState(false);const [kind,setKind]=useState<PostKind|"dump">("post");const [story,setStory]=useState<string|null>(null);const [contact,setContact]=useState<string|null>(null);const [loginNotice,setLoginNotice]=useState(false);const [offline,setOffline]=useState(false);
  const unread=state.notifications.filter(n=>!n.read).length;const post=state.posts.find(p=>p.id===postId);const suggestions=Array.from(new Map(state.posts.filter(p=>!p.own).map(p=>[p.handle,p])).values()).slice(0,3);

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./design-2026.css";
 
 export const metadata: Metadata = {
   title: "Nexo UPA · La red de tu comunidad",
