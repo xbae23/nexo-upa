@@ -227,7 +227,7 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
         <div className="media-viewer-controls">
           <div className="media-zoom-controls">
             <button type="button" aria-label="Alejar foto" disabled={scale <= 1} onClick={() => commitZoom(scale - .5)}><Minus size={20} /></button>
-            <output aria-label="Nivel de zoom">{Math.round(scale * 100)}%</output>
+            <span aria-live="off" title="Nivel de zoom">{Math.round(scale * 100)}%</span>
             <button type="button" aria-label="Acercar foto" disabled={scale >= 4} onClick={() => commitZoom(scale + .5)}><Plus size={20} /></button>
             <button type="button" aria-label="Restablecer zoom" onClick={reset}><Maximize2 size={19} /></button>
           </div>
