@@ -18,15 +18,18 @@ export function distance(a: Point, b: Point): number {
 }
 
 /**
- * Bounds translation for media that fills the given viewport at 1x and has
- * `transform-origin: center`. Pass the visible media rectangle as viewport.
+ * Bounds translation for centered media with `transform-origin: center`.
+ * `viewport` is the fitted media rectangle; `stage` is the visible container.
+ * When omitted, stage defaults to viewport for full-bleed media.
  */
-export function clampOffset(offset: Point, scale: number, viewport: Viewport): Point {
+export function clampOffset(offset: Point, scale: number, viewport: Viewport, stage: Viewport = viewport): Point {
   const zoom = clampZoom(scale);
   const width = Number.isFinite(viewport.width) ? Math.max(0, viewport.width) : 0;
   const height = Number.isFinite(viewport.height) ? Math.max(0, viewport.height) : 0;
-  const maxX = (width * (zoom - 1)) / 2;
-  const maxY = (height * (zoom - 1)) / 2;
+  const stageWidth = Number.isFinite(stage.width) ? Math.max(0, stage.width) : 0;
+  const stageHeight = Number.isFinite(stage.height) ? Math.max(0, stage.height) : 0;
+  const maxX = Math.max(0, (width * zoom - stageWidth) / 2);
+  const maxY = Math.max(0, (height * zoom - stageHeight) / 2);
   const x = Number.isFinite(offset.x) ? offset.x : 0;
   const y = Number.isFinite(offset.y) ? offset.y : 0;
   return {
@@ -42,10 +45,11 @@ export function zoomAtPoint(
   offset: Point,
   point: Point,
   viewport: Viewport,
+  stage: Viewport = viewport,
 ): { scale: number; offset: Point } {
   const from = clampZoom(scale);
   const to = clampZoom(nextScale);
-  const current = clampOffset(offset, from, viewport);
+  const current = clampOffset(offset, from, viewport, stage);
   const centerX = viewport.width / 2;
   const centerY = viewport.height / 2;
   const focalX = Number.isFinite(point.x) ? point.x - centerX : 0;
@@ -60,6 +64,7 @@ export function zoomAtPoint(
       },
       to,
       viewport,
+      stage,
     ),
   };
 }

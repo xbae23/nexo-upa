@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState, type FormEvent, type ChangeEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent, type ChangeEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { ArrowLeft, ArrowUp, Bell, Bookmark, Camera, Check, ChevronLeft, ChevronRight, CircleAlert, Clock3, Image as ImageIcon, MapPin, MessageCircle, MoreHorizontal, Pause, Play, Plus, Repeat2, Search, Send, Share2, ShoppingBag, ThumbsUp, UserRound, X, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { PostMedia } from "@/components/nexo-post-media";
 import { useNexoAppearance } from "@/components/nexo-appearance";
 import { featureFlags } from "@/lib/feature-flags";
+import { classifySwipe } from "@/lib/gesture-math";
 import { useDemo, uid, initials, fileData, dayKey } from "@/lib/demo-store";
 import { rankPosts, type Post, type PostKind, type Story } from "@/lib/demo-data";
 export type Quota={notify:number;reporte:number};
@@ -78,12 +79,78 @@ export function PublishDialog({open,initialKind,onClose,onDone}:{open:boolean;in
  return <Dialog open={open} onOpenChange={v=>{if(!v)close();}}><DialogContent className="publish-dialog"><DialogHeader><DialogTitle>Crear publicación</DialogTitle><DialogDescription>{kind==="post"?"Visible en el feed. En la app conectada solo se avisará a tus amigos.":kind==="dump"?"Un momento para todo el campus. Desaparece en 3 horas.":"Comparte algo útil con la comunidad."}</DialogDescription></DialogHeader><form className="publish-form" onSubmit={publish}><div className="publish-kinds">{options.map(({id,name,icon:Icon,note})=><button type="button" key={id} aria-pressed={kind===id} className={kind===id?"active":""} onClick={()=>{setKind(id);setFile(null);setError("");}}><Icon size={20}/><b>{name}</b><small>{note}</small></button>)}</div>{kind!=="dump"&&<input aria-label="Título" placeholder="Título (opcional)" value={title} onChange={e=>setTitle(e.target.value)} maxLength={120}/>}<textarea aria-label="Contenido de la publicación" placeholder="¿Qué quieres compartir?" value={body} onChange={e=>setBody(e.target.value)} maxLength={4000}/><span className="character-count">{body.length}/4000</span>{kind==="venta"&&<div className="form-two"><input type="number" min=".01" step=".01" value={price} onChange={e=>setPrice(e.target.value)} placeholder="Precio en MXN" aria-label="Precio"/><Select value={category} onValueChange={setCategory}><SelectTrigger aria-label="Categoría"><SelectValue/></SelectTrigger><SelectContent>{["Comida","Material","Servicios"].map(c=><SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent></Select></div>}{kind!=="dump"&&<input aria-label="Lugar" placeholder="Lugar (opcional)" value={location} onChange={e=>setLocation(e.target.value)} maxLength={120}/>}<input ref={fileRef} hidden type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" onChange={choose}/><div className="media-actions"><button type="button" disabled={busy} onClick={()=>fileRef.current?.click()}><ImageIcon size={18}/>Foto o video</button><span>Video ≤ {kind==="dump"?25:30} s</span></div>{file&&<div className="upload-preview">{file.type.startsWith("video")?<video src={preview} controls playsInline/>:<img src={preview} alt="Vista previa"/>}<button type="button" aria-label="Quitar archivo" onClick={()=>setFile(null)}><X size={18}/></button></div>}{error&&<p className="form-error" role="alert">{error}</p>}<button className="button-primary" disabled={busy||(kind==="notify"&&state.quota.notify>=2)||(kind==="reporte"&&state.quota.reporte>=2)}>{busy?"Preparando…":kind==="dump"?"Compartir Dump":"Publicar"}</button><p className="form-footnote">Prueba local. Notify y Reporte: 2 de cada uno al día, sin acumular.</p></form></DialogContent></Dialog>;
 }
 export function StoryViewer({storyId,onClose,onReply}:{storyId:string|null;onClose:()=>void;onReply:(name:string)=>void}){
- const {state}=useDemo();const [index,setIndex]=useState(0);const [progress,setProgress]=useState(0);const [paused,setPaused]=useState(false);const [seconds,setSeconds]=useState(7);const video=useRef<HTMLVideoElement>(null);const touch=useRef(0);const stories=state.stories;const story=stories[index];
- useEffect(()=>{if(storyId){const i=stories.findIndex(s=>s.id===storyId);setIndex(Math.max(0,i));setProgress(0);setPaused(false);}},[storyId]);
+ const {state}=useDemo();
+ const {enabled:designEnabled}=useNexoAppearance();
+ const gesturesEnabled=designEnabled&&featureFlags.gestures2026;
+ const [index,setIndex]=useState(0);
+ const [progress,setProgress]=useState(0);
+ const [manualPaused,setManualPaused]=useState(false);
+ const [holding,setHolding]=useState(false);
+ const [seconds,setSeconds]=useState(7);
+ const video=useRef<HTMLVideoElement>(null);
+ const touch=useRef(0);
+ const pointer=useRef<{id:number;x:number;y:number}|null>(null);
+ const holdTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+ const holdTriggered=useRef(false);
+ const stories=state.stories;
+ const story=stories[index];
+ const paused=manualPaused||holding;
+
+ useEffect(()=>{if(holdTimer.current){clearTimeout(holdTimer.current);holdTimer.current=null;}pointer.current=null;holdTriggered.current=false;setHolding(false);if(storyId){const i=stories.findIndex(s=>s.id===storyId);setIndex(Math.max(0,i));setProgress(0);setManualPaused(false);}},[storyId]);
  useEffect(()=>{setProgress(0);setSeconds(7);},[index]);
  useEffect(()=>{if(paused)video.current?.pause();else video.current?.play().catch(()=>{});},[paused,index]);
  useEffect(()=>{if(!storyId||paused)return;const timer=setInterval(()=>{if(document.hidden)return;setProgress(p=>Math.min(100,p+100/(seconds*10)));},100);return()=>clearInterval(timer);},[storyId,paused,index,seconds]);
  useEffect(()=>{if(progress>=100){if(index+1<stories.length)setIndex(i=>i+1);else onClose();}},[progress]);
+ useEffect(()=>()=>{if(holdTimer.current)clearTimeout(holdTimer.current);},[]);
+
  function move(delta:number){if(index+delta<0)return;if(index+delta>=stories.length)onClose();else setIndex(i=>i+delta);}
- return <Dialog open={!!storyId} onOpenChange={v=>{if(!v)onClose();}}><DialogContent className="story-dialog" showCloseButton={false} onTouchStart={e=>{touch.current=e.touches[0].clientX;}} onTouchEnd={e=>{const delta=e.changedTouches[0].clientX-touch.current;if(Math.abs(delta)>50)move(delta<0?1:-1);}}><DialogHeader className="sr-only"><DialogTitle>Dump de {story?.author}</DialogTitle><DialogDescription>Historia temporal de la comunidad</DialogDescription></DialogHeader>{story?<><div className="story-progress">{stories.map((s,i)=><div key={s.id}><span style={{width:(i<index?100:i===index?progress:0)+"%"}}/></div>)}</div><div className="story-top"><Avatar name={story.author}/><div><b>{story.author}</b><small>{Math.max(1,Math.ceil(((story.expiresAt||0)-Date.now())/60000))} min restantes</small></div><button aria-label={paused?"Reanudar historia":"Pausar historia"} onClick={()=>setPaused(!paused)}>{paused?<Play size={20}/>:<Pause size={20}/>}</button><button aria-label="Cerrar historia" onClick={onClose}><X size={24}/></button></div>{story.media&&<div className="story-media">{story.mediaType==="video"?<video ref={video} src={story.media} autoPlay muted playsInline controls onLoadedMetadata={e=>setSeconds(Math.min(25,e.currentTarget.duration)||7)} onEnded={()=>move(1)}/>:<img src={story.media} alt={story.text||"Dump de "+story.author}/>}</div>}<p className="story-copy">{story.text}</p><div className="story-controls"><button aria-label="Historia anterior" disabled={!index} onClick={()=>move(-1)}><ChevronLeft/></button><button aria-label="Historia siguiente" onClick={()=>move(1)}><ChevronRight/></button></div><div className="story-bottom"><span>Visible 3 horas · toda UPA{story.source&&<> · <a href={story.source.url} target="_blank" rel="noopener noreferrer">{story.source.title}</a></>}</span><button onClick={()=>{onReply(story.author);onClose();}}>Responder <Send size={18}/></button></div></>:<p>Esta historia ya no está disponible.</p>}</DialogContent></Dialog>;
+ function reply(){if(!story)return;onReply(story.author);onClose();}
+ function clearHold(){if(holdTimer.current){clearTimeout(holdTimer.current);holdTimer.current=null;}setHolding(false);}
+ function pointerDown(event:ReactPointerEvent<HTMLDivElement>){
+  if(event.button!==0)return;
+  if(pointer.current){pointer.current=null;holdTriggered.current=false;clearHold();return;}
+  if((event.target as Element).closest("button, a, .story-progress, .story-top, .story-controls, .story-bottom"))return;
+  if(event.target instanceof HTMLVideoElement&&event.clientY>=event.target.getBoundingClientRect().bottom-56)return;
+  pointer.current={id:event.pointerId,x:event.clientX,y:event.clientY};
+  holdTriggered.current=false;
+  try{event.currentTarget.setPointerCapture(event.pointerId);}catch{}
+  const pointerId=event.pointerId;
+  holdTimer.current=setTimeout(()=>{if(pointer.current?.id===pointerId){holdTriggered.current=true;setHolding(true);}},220);
+ }
+ function pointerMove(event:ReactPointerEvent<HTMLDivElement>){
+  const start=pointer.current;
+  if(!start||start.id!==event.pointerId||holdTriggered.current)return;
+  if(Math.hypot(event.clientX-start.x,event.clientY-start.y)>12&&holdTimer.current){clearTimeout(holdTimer.current);holdTimer.current=null;}
+ }
+ function pointerUp(event:ReactPointerEvent<HTMLDivElement>){
+  const start=pointer.current;
+  if(!start||start.id!==event.pointerId)return;
+  pointer.current=null;
+  const wasHolding=holdTriggered.current;
+  holdTriggered.current=false;
+  clearHold();
+  if(wasHolding)return;
+  const dx=event.clientX-start.x;
+  const dy=event.clientY-start.y;
+  const swipe=classifySwipe(dx,dy,55);
+  if(swipe==="left"){move(1);return;}
+  if(swipe==="right"){move(-1);return;}
+  if(swipe==="down"&&Math.abs(dy)>=70){onClose();return;}
+  if(swipe==="up"&&Math.abs(dy)>=70){reply();return;}
+  if(Math.hypot(dx,dy)>12)return;
+  const bounds=event.currentTarget.getBoundingClientRect();
+  move(event.clientX-bounds.left<bounds.width/2?-1:1);
+ }
+ function pointerCancel(event:ReactPointerEvent<HTMLDivElement>){if(pointer.current?.id!==event.pointerId)return;pointer.current=null;holdTriggered.current=false;clearHold();}
+
+ return <Dialog open={!!storyId} onOpenChange={v=>{if(!v)onClose();}}><DialogContent
+  className={"story-dialog"+(gesturesEnabled?" story-gestures":"")+(holding?" is-holding":"")}
+  showCloseButton={false}
+  onPointerDown={gesturesEnabled?pointerDown:undefined}
+  onPointerMove={gesturesEnabled?pointerMove:undefined}
+  onPointerUp={gesturesEnabled?pointerUp:undefined}
+  onPointerCancel={gesturesEnabled?pointerCancel:undefined}
+  onTouchStart={!gesturesEnabled?e=>{touch.current=e.touches[0].clientX;}:undefined}
+  onTouchEnd={!gesturesEnabled?e=>{const delta=e.changedTouches[0].clientX-touch.current;if(Math.abs(delta)>50)move(delta<0?1:-1);}:undefined}
+ ><DialogHeader className="sr-only"><DialogTitle>Dump de {story?.author}</DialogTitle><DialogDescription>Historia temporal de la comunidad. Usa los botones para navegar, pausar, responder o cerrar.</DialogDescription></DialogHeader>{story?<><div className="story-progress">{stories.map((s,i)=><div key={s.id}><span style={{width:(i<index?100:i===index?progress:0)+"%"}}/></div>)}</div><div className="story-top"><Avatar name={story.author}/><div><b>{story.author}</b><small>{Math.max(1,Math.ceil(((story.expiresAt||0)-Date.now())/60000))} min restantes</small></div><button aria-label={paused?"Reanudar historia":"Pausar historia"} onClick={()=>setManualPaused(!manualPaused)}>{paused?<Play size={20}/>:<Pause size={20}/>}</button><button aria-label="Cerrar historia" onClick={onClose}><X size={24}/></button></div>{story.media&&<div className="story-media">{story.mediaType==="video"?<video ref={video} src={story.media} autoPlay muted playsInline controls onLoadedMetadata={e=>setSeconds(Math.min(25,e.currentTarget.duration)||7)} onEnded={()=>move(1)}/>:<img src={story.media} alt={story.text||"Dump de "+story.author} draggable={false}/>}</div>}<p className="story-copy">{story.text}</p><div className="story-controls"><button aria-label="Historia anterior" disabled={!index} onClick={()=>move(-1)}><ChevronLeft/></button><button aria-label={index+1<stories.length?"Historia siguiente":"Cerrar al terminar historias"} onClick={()=>move(1)}><ChevronRight/></button></div><div className="story-bottom"><span>Visible 3 horas · toda UPA{story.source&&<> · <a href={story.source.url} target="_blank" rel="noopener noreferrer">{story.source.title}</a></>}</span><button onClick={reply}>Responder <Send size={18}/></button></div></>:<p>Esta historia ya no está disponible.</p>}</DialogContent></Dialog>;
 }

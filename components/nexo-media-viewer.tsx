@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
-import { Maximize2, Minus, Plus, X } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Maximize2, Minus, Plus, X } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { clampOffset, clampZoom, distance, isDoubleTap, zoomAtPoint, type Point, type TapPoint } from "@/lib/gesture-math";
 import { webHaptic } from "@/lib/web-haptics";
@@ -19,7 +19,7 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   const pointers = useRef(new Map<number, Point>());
   const drag = useRef<DragState | null>(null);
-  const pinch = useRef<{ distance: number; scale: number; offset: Point; point: Point } | null>(null);
+  const pinch = useRef<{ distance: number; scale: number; offset: Point; point: Point; center: Point } | null>(null);
   const hadPinch = useRef(false);
   const lastTap = useRef<TapPoint | null>(null);
   const scaleRef = useRef(1);
@@ -36,7 +36,11 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
     const stage = stageRef.current;
     if (!image?.naturalWidth || !image.naturalHeight || !stage) return;
     const factor = Math.min(stage.clientWidth / image.naturalWidth, stage.clientHeight / image.naturalHeight);
-    setFitSize({ x: Math.round(image.naturalWidth * factor), y: Math.round(image.naturalHeight * factor) });
+    const fitted = { x: Math.round(image.naturalWidth * factor), y: Math.round(image.naturalHeight * factor) };
+    const bounded = clampOffset(offsetRef.current, scaleRef.current, { width: fitted.x, height: fitted.y }, { width: stage.clientWidth, height: stage.clientHeight });
+    offsetRef.current = bounded;
+    setOffset(bounded);
+    setFitSize(fitted);
   }
 
   useEffect(() => {
@@ -54,6 +58,11 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
     return { width: image?.offsetWidth || stage?.clientWidth || 1, height: image?.offsetHeight || stage?.clientHeight || 1 };
   }
 
+  function stageSize() {
+    const stage = stageRef.current;
+    return { width: stage?.clientWidth || 1, height: stage?.clientHeight || 1 };
+  }
+
   function imagePoint(client: Point): Point {
     const stage = stageRef.current?.getBoundingClientRect();
     const size = dimensions();
@@ -67,7 +76,7 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
   function commitZoom(next: number, point?: Point, from?: { scale: number; offset: Point }) {
     const size = dimensions();
     const origin = from || { scale: scaleRef.current, offset: offsetRef.current };
-    const target = zoomAtPoint(origin.scale, clampZoom(next), origin.offset, point || { x: size.width / 2, y: size.height / 2 }, size);
+    const target = zoomAtPoint(origin.scale, clampZoom(next), origin.offset, point || { x: size.width / 2, y: size.height / 2 }, size, stageSize());
     scaleRef.current = target.scale;
     offsetRef.current = target.offset;
     setScale(target.scale);
@@ -75,7 +84,7 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
   }
 
   function commitOffset(next: Point) {
-    const bounded = clampOffset(next, scaleRef.current, dimensions());
+    const bounded = clampOffset(next, scaleRef.current, dimensions(), stageSize());
     offsetRef.current = bounded;
     setOffset(bounded);
   }
@@ -104,6 +113,7 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
         distance: Math.max(1, distance(a, b)),
         scale: scaleRef.current,
         offset: offsetRef.current,
+        center: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 },
         point: imagePoint({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }),
       };
       hadPinch.current = true;
@@ -118,7 +128,23 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
     pointers.current.set(event.pointerId, point);
     if (pointers.current.size === 2 && pinch.current) {
       const [a, b] = [...pointers.current.values()];
-      commitZoom(pinch.current.scale * distance(a, b) / pinch.current.distance, pinch.current.point, pinch.current);
+      const center = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      const next = zoomAtPoint(
+        pinch.current.scale,
+        pinch.current.scale * distance(a, b) / pinch.current.distance,
+        pinch.current.offset,
+        pinch.current.point,
+        dimensions(),
+        stageSize(),
+      );
+      const translated = clampOffset({
+        x: next.offset.x + center.x - pinch.current.center.x,
+        y: next.offset.y + center.y - pinch.current.center.y,
+      }, next.scale, dimensions(), stageSize());
+      scaleRef.current = next.scale;
+      offsetRef.current = translated;
+      setScale(next.scale);
+      setOffset(translated);
       return;
     }
     if (hadPinch.current || !drag.current) return;
@@ -163,6 +189,12 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
     setDragging(false);
   }
 
+  const visible = stageSize();
+  const media = fitSize || { x: 0, y: 0 };
+  const panX = Math.max(0, (media.x * scale - visible.width) / 2);
+  const panY = Math.max(0, (media.y * scale - visible.height) / 2);
+  const panStep = 64;
+
   return (
     <Dialog open onOpenChange={(open) => { if (!open) onClose(); }}>
       <DialogContent className="media-viewer-dialog" showCloseButton={false}>
@@ -193,10 +225,18 @@ export function MediaViewer({ src, alt, onClose }: MediaViewerProps) {
           />
         </div>
         <div className="media-viewer-controls">
-          <button type="button" aria-label="Alejar foto" disabled={scale <= 1} onClick={() => commitZoom(scale - .5)}><Minus size={20} /></button>
-          <span aria-live="polite">{Math.round(scale * 100)}%</span>
-          <button type="button" aria-label="Acercar foto" disabled={scale >= 4} onClick={() => commitZoom(scale + .5)}><Plus size={20} /></button>
-          <button type="button" aria-label="Restablecer zoom" onClick={reset}><Maximize2 size={19} /></button>
+          <div className="media-zoom-controls">
+            <button type="button" aria-label="Alejar foto" disabled={scale <= 1} onClick={() => commitZoom(scale - .5)}><Minus size={20} /></button>
+            <output aria-label="Nivel de zoom">{Math.round(scale * 100)}%</output>
+            <button type="button" aria-label="Acercar foto" disabled={scale >= 4} onClick={() => commitZoom(scale + .5)}><Plus size={20} /></button>
+            <button type="button" aria-label="Restablecer zoom" onClick={reset}><Maximize2 size={19} /></button>
+          </div>
+          <div className="media-pan-controls" aria-label="Mover foto ampliada">
+            <button type="button" aria-label="Mover foto a la izquierda" disabled={offset.x <= -panX} onClick={() => commitOffset({ x: offsetRef.current.x - panStep, y: offsetRef.current.y })}><ArrowLeft size={19} /></button>
+            <button type="button" aria-label="Mover foto arriba" disabled={offset.y <= -panY} onClick={() => commitOffset({ x: offsetRef.current.x, y: offsetRef.current.y - panStep })}><ArrowUp size={19} /></button>
+            <button type="button" aria-label="Mover foto abajo" disabled={offset.y >= panY} onClick={() => commitOffset({ x: offsetRef.current.x, y: offsetRef.current.y + panStep })}><ArrowDown size={19} /></button>
+            <button type="button" aria-label="Mover foto a la derecha" disabled={offset.x >= panX} onClick={() => commitOffset({ x: offsetRef.current.x + panStep, y: offsetRef.current.y })}><ArrowRight size={19} /></button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

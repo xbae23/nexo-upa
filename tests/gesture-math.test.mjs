@@ -29,6 +29,13 @@ test("clampOffset centers at 1x and constrains pan at higher zoom", () => {
   assert.deepEqual(clampOffset({ x: Number.NaN, y: Infinity }, 4, viewport), { x: 0, y: 0 });
 });
 
+test("letterboxed photos cannot pan beyond the visible stage", () => {
+  const media = { width: 360, height: 180 };
+  const stage = { width: 360, height: 800 };
+  assert.deepEqual(clampOffset({ x: 999, y: 999 }, 4, media, stage), { x: 540, y: 0 });
+  assert.deepEqual(zoomAtPoint(1, 4, { x: 0, y: 0 }, { x: 180, y: 0 }, media, stage).offset, { x: 0, y: 0 });
+});
+
 test("zoomAtPoint preserves the touched content point and clamps its output", () => {
   const viewport = { width: 300, height: 200 };
   const zoomed = zoomAtPoint(1, 2, { x: 0, y: 0 }, { x: 225, y: 100 }, viewport);

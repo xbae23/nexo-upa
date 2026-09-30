@@ -232,9 +232,24 @@ html.nexo-2026 .media-actions button,
 html.nexo-2026 .upload-preview button { color: var(--foreground); background: var(--nexo-surface-2); border-color: var(--border); }
 html.nexo-2026 .form-error { background: color-mix(in srgb, var(--destructive) 12%, var(--popover)); color: var(--destructive); }
 html.nexo-2026 .story-dialog { background: var(--green-900)!important; color: #f4fff7!important; }
+html.nexo-2026 .story-dialog.story-gestures { touch-action: none; user-select: none; }
+html.nexo-2026 .story-dialog.story-gestures .story-progress,
+html.nexo-2026 .story-dialog.story-gestures .story-top,
+html.nexo-2026 .story-dialog.story-gestures .story-controls,
+html.nexo-2026 .story-dialog.story-gestures .story-bottom { transition: opacity 160ms ease-out; }
+html.nexo-2026 .story-dialog.is-holding .story-progress,
+html.nexo-2026 .story-dialog.is-holding .story-top,
+html.nexo-2026 .story-dialog.is-holding .story-controls,
+html.nexo-2026 .story-dialog.is-holding .story-bottom { opacity: 0; pointer-events: none; }
 html.nexo-2026 .story-top button,
 html.nexo-2026 .story-controls button { color: #f4fff7; }
 html.nexo-2026 .story-bottom button { color: #f4fff7; }
+@media (max-width: 767px) {
+  html.nexo-2026 .story-dialog {
+    padding-top: calc(20px + env(safe-area-inset-top))!important;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom))!important;
+  }
+}
 
 html.nexo-2026 .chat-list { background: var(--card); border-color: var(--border); }
 html.nexo-2026 .chat-people > button { color: var(--foreground); }
@@ -277,13 +292,16 @@ html.nexo-2026 [data-slot="dialog-content"].media-viewer-dialog {
 }
 html.nexo-2026 .media-viewer-toolbar,
 html.nexo-2026 .media-viewer-controls { display: flex; align-items: center; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right)); background: rgb(5 11 8 / 90%); }
-html.nexo-2026 .media-viewer-toolbar { justify-content: space-between; font-size: 14px; font-weight: 600; }
+html.nexo-2026 .media-viewer-toolbar { justify-content: space-between; padding-top: calc(12px + env(safe-area-inset-top)); padding-left: max(16px, env(safe-area-inset-left)); font-size: 14px; font-weight: 600; }
 html.nexo-2026 .media-viewer-toolbar button,
 html.nexo-2026 .media-viewer-controls button { display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 1px solid #365044; border-radius: 14px; background: #192b20; color: #edf8ef; }
 html.nexo-2026 .media-viewer-toolbar button:hover,
 html.nexo-2026 .media-viewer-controls button:hover { background: #294331; }
-html.nexo-2026 .media-viewer-controls { justify-content: center; padding-bottom: max(16px, env(safe-area-inset-bottom)); }
-html.nexo-2026 .media-viewer-controls span { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; font-size: 14px; }
+html.nexo-2026 .media-viewer-controls { flex-direction: column; justify-content: center; gap: 8px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+html.nexo-2026 .media-zoom-controls,
+html.nexo-2026 .media-pan-controls { display: flex; align-items: center; justify-content: center; gap: 8px; }
+html.nexo-2026 .media-zoom-controls output { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; font-size: 14px; }
+html.nexo-2026 .media-viewer-controls button:disabled { opacity: .4; cursor: not-allowed; }
 html.nexo-2026 .media-viewer-stage { min-height: 0; display: grid; place-items: center; overflow: hidden; touch-action: none; user-select: none; overscroll-behavior: contain; }
 html.nexo-2026 .media-viewer-stage img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center; will-change: transform; transition: transform 220ms cubic-bezier(.2,.8,.2,1); pointer-events: none; }
 
