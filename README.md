@@ -26,8 +26,9 @@ La versión de producción incluye `manifest.webmanifest`, iconos y service work
 - Feed «Para ti» / «Siguiendo», búsqueda, perfiles, seguir/dejar de seguir, Up!, repost, guardados, compartir, ocultar, comentarios y respuestas.
 - Crear Post sin cupo, Notify y Reporte con cupos **separados** de dos al día, y Venta con ficha de producto.
 - Dumps visibles para la comunidad durante tres horas; videos de Dump de hasta 25 segundos y videos de publicaciones de hasta 30 segundos.
+- Cámara integrada en Post y Dump: foto, video corto, vista previa, repetir y galería. Muestra controles de flash, zoom o enfoque solo cuando el dispositivo los ofrece; pide permiso después de explicarlo. HTTPS o localhost son necesarios para abrirla.
 - Mensajes con búsqueda, temas, notas, enlaces, archivos de hasta 10 MB, fotos y audio grabado, cuando el navegador permite micrófono. Una conversación caduca a los siete días del primer mensaje; los posteriores no reinician el plazo.
-- Estados animados ligeros, reducción de movimiento según el sistema, navegación táctil, diseño responsivo e instalación PWA.
+- Diseño Nexo 2026 claro por defecto, tema oscuro opcional, navegación táctil, gestos de Dumps/fotos, reducción de movimiento según el sistema e instalación PWA. El diseño anterior puede verse temporalmente con `?nexo2026=legacy`.
 
 **Alcance de la demo:** el contenido inicial, los perfiles y la actividad de otros usuarios son ilustrativos. Tus cambios se guardan en **IndexedDB de este navegador/dispositivo**. No se sincronizan entre personas o equipos. La presencia y las notificaciones son simuladas; no hay push, moderación, verificación universitaria ni chat compartido en tiempo real. Borrar los datos del sitio borra los cambios de la demo. GitHub Pages sirve archivos estáticos y no ejecuta la API de cuentas.
 
@@ -40,7 +41,7 @@ createAccountUrl: "https://tu-dominio/crear-cuenta",
 loginUrl: "https://tu-dominio/iniciar-sesion",
 ```
 
-Los botones «Crear cuenta» e «Iniciar sesión» ya usan esos campos. Mientras estén vacíos, se muestra un aviso explicando que falta el enlace, sin pedir contraseñas. No pongas contraseñas, tokens ni claves en ese archivo o en la web. Aún no conocemos la URL de tu login; enlazarlo **no equivale a autenticar** a quien usa Nexo. La integración real debe verificar la sesión desde un servidor antes de permitir acciones entre usuarios.
+Los botones «Crear cuenta» e «Iniciar sesión» ya usan esos campos. Mientras estén vacíos, abren una tarjeta de acceso **solo de demostración**: su formulario permite explorar la interfaz, pero no autentica ni guarda el correo o la contraseña. No introduzcas credenciales reales en esa tarjeta. No pongas contraseñas, tokens ni claves en el archivo de configuración o en la web. Aún no conocemos la URL de tu login; enlazarlo **no equivale a autenticar** a quien usa Nexo. La integración real debe verificar la sesión desde un servidor antes de permitir acciones entre usuarios.
 
 ## Base de cuentas local, separada de la demo pública
 
@@ -72,7 +73,7 @@ Para actualizarla, edita el código, comprueba `npm run check` y `npm run build:
 - `app/`, `components/`, `lib/`: interfaz, funciones y datos de la demo.
 - `public/`: fotos, iconos, manifiesto y service worker.
 - `local-server/`: prototipo de cuentas local y prueba automatizada.
-- `design/`: investigación de referencias, sistema visual y decisiones de producto. Es documentación histórica: algunas fases fueron redactadas antes de desarrollar esta demo.
+- `design/`: investigación de referencias, sistema visual, mapa de las 13 capturas y decisiones de producto. Algunas fases fueron redactadas antes de desarrollar esta demo.
 - `index.html`, `demo-entry.tsx`, `vite.demo.config.ts`: entrada estática compatible con Pages.
 
 La aplicación usa patrones de navegación y densidad de información estudiados en X e Instagram, con una identidad verde/blanca propia; no está afiliada a esas plataformas. Las publicaciones de ejemplo no son avisos oficiales de UPA.

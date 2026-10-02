@@ -1,0 +1,157 @@
+.nexo-camera-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  background: #07120d;
+}
+
+.nexo-camera-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 191;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  border: 0;
+  outline: none;
+  background: #080f0c;
+  color: #f3fff6;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+.nexo-camera-panel *, .nexo-camera-panel *::before, .nexo-camera-panel *::after { box-sizing: border-box; }
+.nexo-camera-panel button { cursor: pointer; font: inherit; }
+.nexo-camera-panel button:disabled { cursor: not-allowed; opacity: .48; }
+.nexo-camera-panel button:focus-visible, .nexo-camera-panel input:focus-visible { outline: 3px solid #a1fbc4; outline-offset: 3px; }
+.nexo-camera-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.nexo-camera-hidden-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+.nexo-camera-intro {
+  min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: max(18px, env(safe-area-inset-top)) max(22px, calc((100vw - 520px) / 2)) max(24px, env(safe-area-inset-bottom));
+  background: radial-gradient(circle at 50% 23%, #1d4b32 0%, #102719 26%, #080f0c 67%);
+  display: flex;
+  flex-direction: column;
+}
+.nexo-camera-intro-top, .nexo-camera-review-top, .nexo-camera-topbar { display: flex; align-items: center; justify-content: space-between; }
+.nexo-camera-wordmark, .nexo-camera-live-brand { letter-spacing: .17em; font-size: 12px; font-weight: 800; }
+.nexo-camera-wordmark b, .nexo-camera-live-brand b { color: #80efa9; }
+.nexo-camera-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 50%;
+  background: rgb(8 21 13 / 52%);
+  color: #fff;
+  backdrop-filter: blur(12px);
+}
+.nexo-camera-intro-art { flex: 1 0 150px; display: grid; place-items: center; padding: 20px 0; }
+.nexo-camera-intro-frame {
+  width: min(57vw, 230px);
+  aspect-ratio: 1;
+  border: 1px solid rgb(140 255 177 / 48%);
+  border-radius: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: #aaf8c6;
+  box-shadow: inset 0 0 45px rgb(81 228 135 / 12%), 0 0 90px rgb(81 228 135 / 10%);
+  transform: rotate(-5deg);
+}
+.nexo-camera-intro-frame span { font-size: 10px; letter-spacing: .22em; font-weight: 800; }
+.nexo-camera-intro-copy { max-width: 490px; width: 100%; margin-inline: auto; }
+.nexo-camera-eyebrow { color: #80efa9; font-size: 11px; letter-spacing: .16em; font-weight: 800; text-transform: uppercase; }
+.nexo-camera-intro h2 { margin: 10px 0 12px; max-width: 410px; font-size: clamp(32px, 9vw, 52px); line-height: 1.04; letter-spacing: -.045em; font-weight: 750; }
+.nexo-camera-intro-copy > p { color: #b7cbbb; line-height: 1.58; }
+.nexo-camera-permission { display: flex; align-items: flex-start; gap: 12px; padding: 14px 15px; margin: 18px 0; border: 1px solid #31523b; border-radius: 16px; color: #d8f4df; background: #14271a; font-size: 13px; }
+.nexo-camera-permission span { color: #80efa9; flex: none; }
+.nexo-camera-primary, .nexo-camera-secondary { min-height: 50px; width: 100%; border-radius: 15px; border: 1px solid transparent; display: inline-flex; justify-content: center; align-items: center; gap: 9px; font-weight: 750 !important; }
+.nexo-camera-primary { background: #80efa9; color: #0a2415; }
+.nexo-camera-secondary { margin-top: 10px; border-color: #47634d; background: #17261b; color: #f1fff3; }
+.nexo-camera-primary:not(:disabled):hover { background: #b0facb; }
+.nexo-camera-secondary:not(:disabled):hover { background: #25432d; }
+.nexo-camera-small { font-size: 11px; text-align: center; }
+.nexo-camera-notice, .nexo-camera-error { padding: 10px 12px; border-radius: 10px; font-size: 13px; }
+.nexo-camera-notice { background: #17321f; color: #daf3df !important; }
+.nexo-camera-error { background: #54202a; color: #fff0f1 !important; }
+
+.nexo-camera-live { width: 100%; height: 100%; position: relative; background: #111; }
+.nexo-camera-stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; }
+.nexo-camera-stage video { width: 100%; height: 100%; object-fit: cover; background: #080f0c; }
+.nexo-camera-stage video.is-mirrored { transform: scaleX(-1); }
+.nexo-camera-grid { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to right, transparent 33.2%, rgb(255 255 255 / 10%) 33.3%, transparent 33.5%, transparent 66.5%, rgb(255 255 255 / 10%) 66.6%, transparent 66.8%), linear-gradient(to bottom, transparent 33.2%, rgb(255 255 255 / 10%) 33.3%, transparent 33.5%, transparent 66.5%, rgb(255 255 255 / 10%) 66.6%, transparent 66.8%); }
+.nexo-camera-focus { position: absolute; width: 72px; height: 72px; border: 2px solid #c5ffdc; border-radius: 16px; transform: translate(-50%, -50%); pointer-events: none; box-shadow: 0 0 15px rgb(0 0 0 / 40%); animation: nexo-camera-focus .65s ease-out both; }
+@keyframes nexo-camera-focus { from { opacity: 0; transform: translate(-50%, -50%) scale(1.35); } 25% { opacity: 1; } to { opacity: 0; transform: translate(-50%, -50%) scale(.88); } }
+.nexo-camera-live-ui { position: absolute; inset: 0; padding: max(14px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; background: linear-gradient(to bottom, rgb(0 0 0 / 47%), transparent 27%, transparent 43%, rgb(0 0 0 / 78%) 100%); }
+.nexo-camera-live-ui > * { pointer-events: auto; }
+.nexo-camera-topbar { align-self: stretch; min-height: 48px; }
+.nexo-camera-tools { align-self: stretch; display: flex; align-items: center; gap: 8px; }
+.nexo-camera-tool { min-width: 66px; height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgb(255 255 255 / 22%); border-radius: 14px; color: #fff; background: rgb(8 20 13 / 56%); backdrop-filter: blur(10px); font-size: 11px !important; font-weight: 700 !important; }
+.nexo-camera-focus-label { margin-left: auto; color: #e1f5e5; font-size: 11px; text-shadow: 0 1px 5px #000; }
+.nexo-camera-spacer { flex: 1 1 auto; pointer-events: none !important; }
+.nexo-camera-zoom { min-height: 48px; border: 1px solid rgb(255 255 255 / 24%); border-radius: 18px; background: rgb(12 24 15 / 68%); backdrop-filter: blur(16px); display: flex; align-items: center; gap: 8px; padding: 2px 4px; width: min(100%, 315px); }
+.nexo-camera-zoom button { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border: 0; color: #fff; background: transparent; }
+.nexo-camera-zoom label { flex: 1; display: flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 800; }
+.nexo-camera-zoom label span { min-width: 32px; }
+.nexo-camera-zoom input { min-width: 0; width: 100%; height: 44px; accent-color: #80efa9; }
+.nexo-camera-countdown { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); font-size: 94px; font-weight: 800; color: #fff; text-shadow: 0 4px 20px #000; }
+.nexo-camera-record-status { display: flex; align-items: center; gap: 8px; min-height: 33px; border-radius: 999px; padding: 4px 12px; background: rgb(10 14 11 / 72%); color: #fff; font-variant-numeric: tabular-nums; font-size: 12px; font-weight: 800; }
+.nexo-camera-record-dot { display: inline-block; width: 9px; height: 9px; flex: none; border-radius: 50%; background: #ff596c; box-shadow: 0 0 10px #ff596c; }
+.nexo-camera-live-notice, .nexo-camera-live-error { max-width: 440px; margin: 0; padding: 7px 12px; border-radius: 9px; text-align: center; font-size: 12px; }
+.nexo-camera-live-notice { background: rgb(18 48 29 / 87%); }
+.nexo-camera-live-error { background: rgb(95 24 36 / 92%); }
+.nexo-camera-mode-tabs { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; max-width: 410px; min-height: 48px; border: 1px solid rgb(255 255 255 / 22%); border-radius: 999px; padding: 4px; background: rgb(11 24 14 / 78%); backdrop-filter: blur(16px); }
+.nexo-camera-mode-tabs button { flex: 1; min-height: 44px; border: 0; border-radius: 999px; background: transparent; color: #d7e5da; font-size: 12px; font-weight: 750; white-space: nowrap; }
+.nexo-camera-mode-tabs button.is-active { background: #e5ffec; color: #0c2b19; }
+.nexo-camera-filter-row { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; min-height: 44px; overflow-x: auto; white-space: nowrap; }
+.nexo-camera-filter-row span { color: #a9c6af; font-size: 10px; font-weight: 800; letter-spacing: .1em; padding: 0 5px; }
+.nexo-camera-filter-row button { min-width: 63px; min-height: 44px; padding: 0 9px; border: 0; border-radius: 999px; color: #e3f3e7; background: rgb(255 255 255 / 11%); font-size: 11px; }
+.nexo-camera-filter-row button.is-active { background: #75edaa; color: #0d2719; font-weight: 800; }
+.nexo-camera-controls { width: min(100%, 340px); min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 9px; }
+.nexo-camera-gallery { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 64px; height: 64px; border: 0; border-radius: 16px; color: #fff; background: rgb(22 39 25 / 64%); backdrop-filter: blur(10px); font-size: 10px !important; }
+.nexo-camera-shutter { display: grid; place-items: center; width: 78px; height: 78px; flex: none; border: 0; border-radius: 50%; background: conic-gradient(#ff6575 var(--record-progress, 0%), #f5fff8 0); padding: 6px; box-shadow: 0 0 0 2px rgb(0 0 0 / 45%), 0 8px 28px rgb(0 0 0 / 25%); touch-action: none; }
+.nexo-camera-shutter > span { display: grid; place-items: center; width: 100%; height: 100%; border: 3px solid #173022; border-radius: 50%; background: #e8ffef; color: #0a2d1a; }
+.nexo-camera-shutter.is-recording > span { background: #2d1118; color: #fff; }
+.nexo-camera-stop-square { width: 24px; height: 24px; border-radius: 5px; background: #ff596c; }
+.nexo-camera-action-row { width: min(100%, 300px); }
+.nexo-camera-action-row button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 44px; padding: 4px 12px; border: 1px solid rgb(255 255 255 / 27%); border-radius: 999px; background: rgb(10 26 16 / 75%); color: #fff; font-size: 12px; font-weight: 750; }
+.nexo-camera-hint { margin: 0; text-align: center; font-size: 11px; color: #e0f0e2; text-shadow: 0 1px 5px #000; }
+
+.nexo-camera-review { display: flex; flex-direction: column; width: 100%; height: 100%; background: #080f0c; }
+.nexo-camera-review-top { min-height: 68px; padding: max(12px, env(safe-area-inset-top)) 18px 8px; color: #a5eab8; letter-spacing: .16em; font-size: 11px; font-weight: 800; }
+.nexo-camera-review-media { flex: 1; min-height: 0; width: 100%; display: grid; place-items: center; background: #030704; }
+.nexo-camera-review-media img, .nexo-camera-review-media video { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.nexo-camera-review-actions { padding: 14px max(18px, calc((100vw - 560px) / 2)) max(18px, env(safe-area-inset-bottom)); background: #0e1e14; }
+.nexo-camera-review-actions p { margin: 0 0 14px; color: #c4d8c8; font-size: 12px; line-height: 1.5; text-align: center; }
+.nexo-camera-review-actions > div { display: flex; gap: 10px; }
+.nexo-camera-review-actions button { flex: 1; margin: 0; }
+
+@media (max-height: 700px) {
+  .nexo-camera-live-ui { gap: 5px; }
+  .nexo-camera-hint { display: none; }
+  .nexo-camera-filter-row { min-height: 40px; }
+  .nexo-camera-filter-row button { min-height: 40px; }
+  .nexo-camera-intro-frame { width: min(37vw, 145px); border-radius: 25px; }
+}
+
+@media (max-width: 370px) {
+  .nexo-camera-live-ui { padding-inline: 10px; }
+  .nexo-camera-mode-tabs button { font-size: 11px; }
+  .nexo-camera-focus-label { font-size: 10px; }
+  .nexo-camera-tool { min-width: 58px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nexo-camera-focus { animation: none; opacity: 1; }
+  .nexo-camera-panel *, .nexo-camera-panel *::before, .nexo-camera-panel *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

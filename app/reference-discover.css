@@ -1,0 +1,115 @@
+/* Secondary surfaces follow the same Campus Signal rhythm as the supplied feed. */
+html.nexo-2026 .feature-search {
+  min-height: 52px;
+  border-radius: 16px;
+  box-shadow: 0 3px 16px rgb(0 0 0 / 3%);
+}
+
+html.nexo-2026 .feature-search:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--nexo-glow);
+}
+
+html.nexo-2026 .community-list {
+  display: grid;
+  gap: 10px;
+}
+
+html.nexo-2026 .community-list article {
+  min-height: 82px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--card);
+}
+
+html.nexo-2026 .community-list .avatar { width: 48px; height: 48px; }
+html.nexo-2026 .community-list h3 { color: var(--foreground); font-weight: 700; }
+html.nexo-2026 .community-list p { line-height: 1.3; }
+
+html.nexo-2026 .market-heading { margin-bottom: 16px; }
+html.nexo-2026 .market-heading h2 {
+  color: var(--foreground);
+  font-size: 21px;
+  letter-spacing: -.035em;
+}
+
+html.nexo-2026 .product-grid { gap: 12px; }
+html.nexo-2026 .product-grid article {
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgb(0 0 0 / 4%);
+}
+
+html.nexo-2026 .product-image {
+  overflow: hidden;
+  color: var(--primary);
+  background: var(--nexo-surface-2);
+}
+
+html.nexo-2026 .product-image img {
+  transition: transform 220ms ease;
+}
+
+html.nexo-2026 .product-image:hover img { transform: scale(1.035); }
+html.nexo-2026 .product-info { padding: 13px; }
+html.nexo-2026 .product-info strong { font-size: 18px; font-weight: 750; }
+html.nexo-2026 .product-info h4 {
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+html.nexo-2026 .product-info button { font-weight: 700; }
+
+html.nexo-2026 .view-toolbar {
+  min-height: 64px;
+  border-bottom: 1px solid var(--border);
+}
+
+html.nexo-2026 .notification-list {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+html.nexo-2026 .notification-list > button {
+  min-height: 76px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--card);
+  color: var(--foreground);
+}
+
+html.nexo-2026 .notification-list > button:hover { border-color: var(--green-300); }
+html.nexo-2026 .notification-list > button.unread { border-color: var(--green-300); }
+html.nexo-2026 .notification-symbol {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--green-200);
+  border-radius: 14px;
+}
+
+html.nexo-2026 .notification-list b { font-weight: 650; line-height: 1.35; }
+html.nexo-2026 .notification-list small { margin-top: 3px; line-height: 1.4; }
+
+@media (max-width: 767px) {
+  html.nexo-2026 .feed-scroll:has(.feature-search) > .feature-view:first-child {
+    padding: 14px 12px 8px;
+  }
+
+  html.nexo-2026 .feed-scroll:has(.community-list) .community-list,
+  html.nexo-2026 .feed-scroll:has(.product-grid) > .feature-view {
+    padding: 12px;
+  }
+
+  html.nexo-2026 .feed-scroll:has(.feature-search) .feed-tabs { top: 72px; }
+  html.nexo-2026 .view-toolbar { padding: 8px 14px; }
+  html.nexo-2026 .notification-list { padding: 11px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexo-2026 .product-image img { transition: none; }
+}

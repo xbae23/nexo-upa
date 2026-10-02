@@ -20,7 +20,7 @@ export function useNexoAppearance() {
 
 export function NexoAppearanceProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(featureFlags.design2026);
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
 
   useLayoutEffect(() => {
     setEnabled(
@@ -30,9 +30,9 @@ export function NexoAppearanceProvider({ children }: { children: ReactNode }) {
     try {
       const saved = window.localStorage.getItem(STORAGE_KEY);
       if (saved === "dark" || saved === "light") setTheme(saved);
-      else setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      else setTheme("light");
     } catch {
-      setTheme("dark");
+      setTheme("light");
     }
   }, []);
 

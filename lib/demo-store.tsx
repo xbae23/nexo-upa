@@ -14,7 +14,10 @@ export function seed():DemoState {
   return {version:2,posts:initialPosts.map(p=>({...p,image:p.image?.replace(/^\//,""),createdAt:now-p.ageMinutes*60000})),stories:initialStories.map(s=>({...s,media:s.media?.replace(/^\//,""),expiresAt:now+s.remainingMinutes*60000})),following:["@vida.upa","@robotica.upa","@mariana.v"],hidden:[],profile:{name:"Alex UPA",bio:"Ideas, café y proyectos que nos conectan.",program:"Comunidad UPA",note:"¿Quién estudia en la biblioteca?"},conversations:[{id:"chat-robotica",name:"Club de Robótica",initials:"CR",active:true,firstMessageAt:now-86400000,theme:"verde",messages:[{id:"m1",text:"¡Hola! ¿Te sumas a las pruebas del jueves?",mine:false,at:now-3600000},{id:"m2",text:"Sí, ¿nos vemos en el laboratorio?",mine:true,at:now-3500000}]},{id:"chat-mariana",name:"Mariana V.",initials:"MV",active:false,firstMessageAt:now-2*86400000,theme:"verde",messages:[{id:"m3",text:"¡Todavía hay brownies! Entrego junto a la cafetería.",mine:false,at:now-7200000}]}],notifications:[{id:"n1",text:"Un reporte para la comunidad",detail:"Ana Sofía encontró una cartera cerca de la biblioteca.",postId:"wallet",read:false,at:now-360000},{id:"n2",text:"Robótica compartió un proyecto",detail:"Ya puedes ver las pruebas del nuevo prototipo.",postId:"robotics",read:false,at:now-1440000}],quota:{day:dayKey(),notify:0,reporte:0},draft:{kind:"post",title:"",body:""}};
 }
 export function expire(state:DemoState,now=Date.now()):DemoState {
-  const stories=state.stories.filter(s=>(s.expiresAt||0)>now);
+  const activeStories=state.stories.filter(s=>(s.expiresAt||0)>now);
+  // Keep illustrative campus stories available across return visits. Personal Dumps still expire.
+  const sampleStories=initialStories.filter(s=>!activeStories.some(active=>active.id===s.id)).map(s=>({...s,media:s.media?.replace(/^\//,""),expiresAt:now+s.remainingMinutes*60000}));
+  const stories=[...activeStories,...sampleStories];
   const conversations=state.conversations.map(c=>c.firstMessageAt!==null&&now>=c.firstMessageAt+7*86400000?{...c,firstMessageAt:null,messages:[]}:c);
   return {...state,stories,conversations,quota:state.quota.day===dayKey(now)?state.quota:{day:dayKey(now),notify:0,reporte:0}};
 }

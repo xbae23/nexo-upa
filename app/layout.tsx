@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./design-2026.css";
+import "./reference-feed.css";
+import "./reference-chat.css";
+import "./reference-story.css";
+import "./reference-discover.css";
+import "./reference-account.css";
 
 export const metadata: Metadata = {
   title: "Nexo UPA · La red de tu comunidad",
