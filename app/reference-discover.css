@@ -113,3 +113,33 @@ html.nexo-2026 .notification-list small { margin-top: 3px; line-height: 1.4; }
 @media (prefers-reduced-motion: reduce) {
   html.nexo-2026 .product-image img { transition: none; }
 }
+
+/* Activity is a readable social timeline with direct content access. */
+html.nexo-2026 .activity-view { background: var(--card); }
+html.nexo-2026 .activity-view .view-toolbar { padding: var(--space-5) var(--space-4) var(--space-2); border: 0; }
+html.nexo-2026 .activity-view .view-toolbar > div { display: grid; gap: var(--space-1); }
+html.nexo-2026 .activity-view .view-toolbar h2 { margin: 0; font-size: var(--text-title-1); font-weight: var(--weight-bold); letter-spacing: var(--tracking-title); color: var(--foreground); }
+html.nexo-2026 .activity-view .view-toolbar span { color: var(--muted-foreground); font-size: var(--text-footnote); }
+html.nexo-2026 .activity-read-all { display: grid; place-items: center; width: var(--touch); height: var(--touch); border-radius: var(--radius-circle); background: var(--nexo-surface-2); color: var(--primary); }
+html.nexo-2026 .activity-read-all:disabled { opacity: .4; }
+html.nexo-2026 .activity-filters { display: flex; gap: var(--space-2); padding: var(--space-3) var(--space-4); }
+html.nexo-2026 .activity-filters button { display: flex; align-items: center; gap: var(--space-2); min-height: var(--touch); padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill); color: var(--muted-foreground); background: var(--nexo-surface-2); font-size: var(--text-subhead); font-weight: var(--weight-medium); }
+html.nexo-2026 .activity-filters button[aria-pressed="true"] { color: var(--primary-foreground); background: var(--primary); }
+html.nexo-2026 .activity-filters button span { font-size: var(--text-caption); opacity: .8; }
+html.nexo-2026 .activity-group h3 { margin: 0; padding: var(--space-4) var(--space-4) var(--space-2); font-size: var(--text-callout); font-weight: var(--weight-medium); }
+html.nexo-2026 .activity-group .notification-list { gap: 0; padding: 0; }
+html.nexo-2026 .activity-group .notification-list > button { display: flex; align-items: center; gap: var(--space-3); min-height: 92px; padding: var(--space-4); border: 0; border-bottom: var(--hairline) solid var(--border); border-radius: 0; background: var(--card); text-align: left; }
+html.nexo-2026 .activity-group .notification-list > button.unread { background: color-mix(in srgb, var(--secondary) 48%, var(--card)); }
+html.nexo-2026 .notification-avatar { position: relative; flex-shrink: 0; align-self: flex-start; margin-top: var(--space-1); }
+html.nexo-2026 .notification-avatar .avatar, html.nexo-2026 .notification-avatar .notification-symbol { width: var(--space-12); height: var(--space-12); border-radius: var(--radius-circle); }
+html.nexo-2026 .notification-avatar > i { position: absolute; right: -2px; bottom: -2px; display: grid; place-items: center; width: 22px; height: 22px; border: 2px solid var(--card); border-radius: var(--radius-circle); background: var(--primary); color: var(--primary-foreground); }
+html.nexo-2026 .notification-copy { display: grid; flex: 1; min-width: 0; gap: var(--space-1); color: var(--foreground); font-size: var(--text-subhead); line-height: 1.4; }
+html.nexo-2026 .notification-copy b { font-weight: var(--weight-medium); }
+html.nexo-2026 .notification-copy > span { color: var(--muted-foreground); font-size: var(--text-footnote); }
+html.nexo-2026 .notification-copy small { margin: 0; color: var(--muted-foreground); font-size: var(--text-caption); }
+html.nexo-2026 .notification-preview { width: var(--space-12); height: var(--space-12); flex-shrink: 0; border-radius: var(--radius-chip); object-fit: cover; }
+html.nexo-2026 .notification-list .unread-dot { width: var(--space-2); height: var(--space-2); flex-shrink: 0; }
+html.nexo-2026 .activity-empty { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-12) var(--space-6); text-align: center; }
+html.nexo-2026 .activity-empty > svg { box-sizing: content-box; padding: var(--space-5); border-radius: var(--radius-circle); background: var(--nexo-surface-2); color: var(--primary); }
+html.nexo-2026 .activity-empty h3 { margin: 0; font-size: var(--text-title-3); }
+html.nexo-2026 .activity-empty p { margin: 0; color: var(--muted-foreground); font-size: var(--text-subhead); line-height: 1.5; }

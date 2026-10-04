@@ -1,6 +1,6 @@
 # Nexo UPA
 
-Demo instalable y adaptable de una red social para la comunidad de la Universidad Politécnica de Atlautla. Está diseñada primero para teléfonos y funciona también en tabletas y escritorio. Las fotografías institucionales provienen del [sitio oficial de UPA](https://upa.edomex.gob.mx/) y se identifican como ejemplos dentro de la interfaz.
+Demo instalable y adaptable de una red social para la comunidad de la Universidad Politécnica de Atlautla. Está diseñada primero para teléfonos y funciona también en tabletas y escritorio. Combina archivo institucional del [sitio oficial de UPA](https://upa.edomex.gob.mx/) con escenas genéricas claramente identificadas como ilustrativas. Los [avatares fotográficos descargados](public/media/avatars/CREDITS.md) pertenecen a perfiles ficticios de demostración.
 
 ## Probarla
 
@@ -11,7 +11,7 @@ npm ci
 npm run dev:demo
 ```
 
-Abrir la dirección local que muestra Vite (normalmente `http://127.0.0.1:5173/`). Para revisar exactamente la versión estática que se publicará en GitHub Pages:
+Abrir la dirección local que muestra Vite (`http://127.0.0.1:5174/`). Para revisar exactamente la versión estática que se publicará en GitHub Pages:
 
 ```sh
 npm run check
@@ -28,7 +28,7 @@ La versión de producción incluye `manifest.webmanifest`, iconos y service work
 - Dumps visibles para la comunidad durante tres horas; videos de Dump de hasta 25 segundos y videos de publicaciones de hasta 30 segundos.
 - Cámara integrada en Post y Dump: foto, video corto, vista previa, repetir y galería. Muestra controles de flash, zoom o enfoque solo cuando el dispositivo los ofrece; pide permiso después de explicarlo. HTTPS o localhost son necesarios para abrirla.
 - Mensajes con búsqueda, temas, notas, enlaces, archivos de hasta 10 MB, fotos y audio grabado, cuando el navegador permite micrófono. Una conversación caduca a los siete días del primer mensaje; los posteriores no reinician el plazo.
-- Diseño Nexo 2026 claro por defecto, tema oscuro opcional, navegación táctil, gestos de Dumps/fotos, reducción de movimiento según el sistema e instalación PWA. El diseño anterior puede verse temporalmente con `?nexo2026=legacy`.
+- Diseño Nexo 2026 blanco, verde, gris y negro; tema inicial según el sistema y selector claro/oscuro. Navegación táctil, gestos de Dumps/fotos, reducción de movimiento según el sistema e instalación PWA. El diseño anterior puede verse temporalmente con `?nexo2026=legacy`.
 
 **Alcance de la demo:** el contenido inicial, los perfiles y la actividad de otros usuarios son ilustrativos. Tus cambios se guardan en **IndexedDB de este navegador/dispositivo**. No se sincronizan entre personas o equipos. La presencia y las notificaciones son simuladas; no hay push, moderación, verificación universitaria ni chat compartido en tiempo real. Borrar los datos del sitio borra los cambios de la demo. GitHub Pages sirve archivos estáticos y no ejecuta la API de cuentas.
 
@@ -41,7 +41,7 @@ createAccountUrl: "https://tu-dominio/crear-cuenta",
 loginUrl: "https://tu-dominio/iniciar-sesion",
 ```
 
-Los botones «Crear cuenta» e «Iniciar sesión» ya usan esos campos. Mientras estén vacíos, abren una tarjeta de acceso **solo de demostración**: su formulario permite explorar la interfaz, pero no autentica ni guarda el correo o la contraseña. No introduzcas credenciales reales en esa tarjeta. No pongas contraseñas, tokens ni claves en el archivo de configuración o en la web. Aún no conocemos la URL de tu login; enlazarlo **no equivale a autenticar** a quien usa Nexo. La integración real debe verificar la sesión desde un servidor antes de permitir acciones entre usuarios.
+Los botones «Crear cuenta» e «Iniciar sesión» ya usan esos campos. Mientras estén vacíos, abren una tarjeta de acceso **solo de demostración**. Su único proveedor ficticio, «Nexo Connect», abre un formulario pequeño superpuesto, manteniendo visible la tarjeta de fondo. Permite explorar la interfaz sin autenticar ni guardar correo o contraseña. Usa datos inventados. No pongas contraseñas, tokens ni claves en el archivo de configuración o en la web. Enlazar tu login **no equivale a autenticar** a quien usa Nexo: la integración real debe verificar la sesión desde un servidor.
 
 ## Base de cuentas local, separada de la demo pública
 

@@ -70,10 +70,10 @@ export function PostMedia({ post, burst, gesturesEnabled, onDoubleUp }: PostMedi
             onPointerCancel={() => { start.current = null; lastTap.current = null; }}
             onClick={(event) => { if (event.detail === 0) setViewerOpen(true); }}
           >
-            <img src={post.image} alt={post.title} loading="lazy" style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined} />
+            <img src={post.image} srcSet={post.imageSrcSet} sizes="(max-width: 767px) 100vw, 650px" alt={post.title} loading="lazy" decoding="async" style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined} />
           </button>
         ) : (
-          <img src={post.image} alt={post.title} loading="lazy" style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined} />
+          <img src={post.image} srcSet={post.imageSrcSet} sizes="(max-width: 767px) 100vw, 650px" alt={post.title} loading="lazy" decoding="async" style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined} />
         )}
         {burst && <span className="up-burst"><ArrowUp size={64} /></span>}
         {post.price && <span className="media-price">{post.price}</span>}

@@ -1,0 +1,198 @@
+/* Native polish for existing components, layered after the screenshot compositions. */
+html.nexo-2026 {
+  min-height: 100dvh;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-height) + var(--safe-top));
+}
+
+html.nexo-2026 body {
+  min-height: 100dvh;
+  font-family: var(--font-native);
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: contain;
+}
+
+html.nexo-2026 .app-shell { min-height: 100dvh; }
+html.nexo-2026 .sidebar { height: 100dvh; }
+html.nexo-2026 :is(.brand-name, .profile-header h2, .account-access-card [data-slot="dialog-title"], .market-heading h2) {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+}
+
+html.nexo-2026 :is(button, a[href], [role="button"], [role="tab"]) {
+  -webkit-tap-highlight-color: var(--nexo-clear);
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+}
+
+html.nexo-2026 button,
+html.nexo-2026 :is(.login-link, .register-link, [role="button"]) {
+  transition: transform var(--dur-press) var(--ease-ui), opacity var(--dur-press) var(--ease-ui), background-color var(--dur-fast) var(--ease-ui), color var(--dur-fast) var(--ease-ui);
+  user-select: none;
+}
+
+html.nexo-2026 :is(button, .login-link, .register-link, [role="button"]):active:not(:disabled) {
+  transform: scale(var(--tap-scale));
+  opacity: var(--tap-opacity);
+}
+
+html.nexo-2026 :is(button, a, input, textarea, select, [role="button"], [role="tab"]):focus-visible {
+  outline: var(--focus-width) solid var(--ring);
+  outline-offset: var(--focus-offset);
+}
+
+html.nexo-2026 :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), textarea, select) {
+  font-family: var(--font-native);
+  font-size: max(16px, var(--text-callout)) !important;
+  line-height: var(--line-body);
+}
+
+/* NavBar and TabBar: preserve the reference's floating dock. */
+html.nexo-2026 .header {
+  min-height: calc(var(--header-height) + var(--safe-top));
+  padding-top: calc(var(--space-2) + var(--safe-top));
+  border-bottom-width: var(--hairline);
+}
+
+html.nexo-2026 :is(.header-actions .notification, .header-actions .register-link, .header-actions .login-link, .appearance-button, .icon-button, .profile-settings-button) {
+  min-width: var(--touch);
+  min-height: var(--touch);
+}
+
+html.nexo-2026 .header-actions .notification { flex-basis: var(--touch); }
+html.nexo-2026 .mobile-nav { box-shadow: var(--shadow-floating); }
+html.nexo-2026 .mobile-nav button { min-width: var(--touch); min-height: var(--touch); }
+
+/* Card / Avatar / StoryRing keep screen-defined shapes and media proportions. */
+html.nexo-2026 :is(.rail-card, .product-grid article) { border-color: var(--border); }
+html.nexo-2026 .avatar { font-weight: var(--weight-medium); overflow: hidden; }
+html.nexo-2026 .avatar img { width: 100%; height: 100%; object-fit: cover; }
+html.nexo-2026 .avatar { flex-shrink: 0; }
+html.nexo-2026 .avatar img { border-radius: inherit; }
+html.nexo-2026 .story { min-width: var(--touch); min-height: var(--touch); }
+html.nexo-2026 .stories-scroll { overscroll-behavior-x: contain; }
+
+/* Button / IconButton: compact visuals with a comfortable interaction area. */
+html.nexo-2026 :is(.button-primary, .button-secondary, .text-button, .compose-top, .compose-options button, .post-actions button, .post-head .author-avatar, .post-head .follow-button, .post-head .following-button, .post-head .more-button, .settings-theme-options button, .market-filters button, .publish-kinds button) {
+  min-width: var(--touch);
+  min-height: var(--touch);
+}
+
+html.nexo-2026 .post-head .more-button { width: var(--touch); }
+html.nexo-2026 .post-head .author-name { position: relative; font-size: var(--text-subhead); font-weight: var(--weight-bold); }
+html.nexo-2026 .post-content p { font-size: var(--text-subhead); line-height: var(--line-body); }
+html.nexo-2026 .post-content h3 { font-size: var(--text-callout); font-weight: var(--weight-medium); }
+html.nexo-2026 .post-head .author-name::before {
+  content: "";
+  position: absolute;
+  inset-inline: var(--space-0);
+  top: 50%;
+  min-height: var(--touch);
+  transform: translateY(-50%);
+}
+
+html.nexo-2026 .post-actions button:first-child.selected svg { animation: nexo-up-signal var(--dur-sheet) var(--ease-up); }
+@keyframes nexo-up-signal {
+  0%, 100% { transform: translateY(0) scale(1); }
+  42% { transform: translateY(var(--up-rise)) scale(1.17); }
+  70% { transform: translateY(var(--up-settle)) scale(.98); }
+}
+
+/* Sheet and menu rows use existing Radix dialogs and keyboard behaviour. */
+html.nexo-2026 [data-slot="dialog-content"] {
+  overscroll-behavior: contain;
+  animation-duration: var(--dur-sheet);
+  animation-timing-function: var(--ease-sheet);
+}
+
+html.nexo-2026 :is([data-slot="dropdown-menu-content"], [data-slot="context-menu-content"]) {
+  border-radius: var(--radius-control);
+  border-color: var(--border);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow: var(--shadow-sheet);
+}
+
+html.nexo-2026 :is([data-slot="dropdown-menu-item"], [data-slot="context-menu-item"]) {
+  min-height: var(--touch);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-chip);
+}
+
+/* Toggle retains the Radix switch semantics and expands its touch area. */
+html.nexo-2026 [data-slot="switch"] {
+  position: relative;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  padding: var(--switch-inset);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--nexo-surface-3);
+}
+
+html.nexo-2026 [data-slot="switch"]::before { content: ""; position: absolute; inset: var(--switch-touch-inset) var(--space-0); }
+html.nexo-2026 [data-slot="switch"][data-state="checked"] { background: var(--primary); }
+html.nexo-2026 [data-slot="switch-thumb"] {
+  width: var(--switch-thumb);
+  height: var(--switch-thumb);
+  border-radius: var(--radius-circle);
+  background: var(--card);
+  box-shadow: var(--shadow-control);
+  transition: transform var(--dur-base) var(--ease-sheet);
+}
+html.nexo-2026 [data-slot="switch-thumb"][data-state="unchecked"] { transform: translateX(0); }
+html.nexo-2026 [data-slot="switch-thumb"][data-state="checked"] { transform: translateX(var(--switch-travel)); }
+
+/* ListRow / Segmented use separators, not additional card framing. */
+html.nexo-2026 :is(.settings-section, .notification-list > button, .community-list article, .stories-block, .feed-tabs) { border-bottom-width: var(--hairline); }
+html.nexo-2026 .settings-section > button { font-weight: var(--weight-regular); }
+html.nexo-2026 .settings-theme-options button { transition: background-color var(--dur-fast) var(--ease-ui), transform var(--dur-press) var(--ease-ui); }
+html.nexo-2026 .settings-theme-options button.chosen { font-weight: var(--weight-medium); }
+
+/* ChatBubble inherits iMessage-style grouping from reference-chat.css. */
+html.nexo-2026 .message-bubble { overflow-wrap: anywhere; }
+html.nexo-2026 .message-row { animation-duration: var(--dur-fast); animation-timing-function: var(--ease-sheet); }
+html.nexo-2026 :is(.messages, .chat-list) { overscroll-behavior: contain; }
+
+/* Toast / Skeleton / EmptyState / Badge. */
+html.nexo-2026 [data-sonner-toast] { border-radius: var(--radius-control); box-shadow: var(--nexo-shadow); }
+html.nexo-2026 [data-sonner-toast] button { min-width: var(--touch); min-height: var(--touch); }
+html.nexo-2026 [data-slot="skeleton"] { background: var(--nexo-surface-3); border-radius: var(--radius-control); animation: nexo-skeleton var(--dur-pulse) var(--ease-ui) infinite; }
+@keyframes nexo-skeleton { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+html.nexo-2026 :is(.empty-text, .chat-empty p) { color: var(--muted-foreground); line-height: var(--line-body); }
+html.nexo-2026 :is(.nav-unread, .notification-dot, .unread-dot) { border-radius: var(--radius-pill); }
+html.nexo-2026 :is(.post-content, .profile-header, .notification-list, .settings-identity) { min-width: 0; overflow-wrap: anywhere; }
+html.nexo-2026 .view-enter { animation-duration: var(--dur-base); animation-timing-function: var(--ease-sheet); }
+
+@media (max-width: 767px) {
+  html.nexo-2026 .mobile-brand .brand-name { display: block; font-size: var(--text-title-2); }
+  html.nexo-2026 .mobile-brand .brand-name em { display: none; }
+  html.nexo-2026 .mobile-brand .brand { gap: var(--space-2); }
+  html.nexo-2026 .header {
+    padding-top: calc(var(--space-1) + var(--safe-top));
+    padding-right: max(var(--space-3), var(--safe-right));
+    padding-bottom: var(--space-1);
+    padding-left: max(var(--space-3), var(--safe-left));
+  }
+  html.nexo-2026 .feed-scroll:not(.chat-scroll) { min-height: calc(100dvh - var(--header-height) - var(--safe-top)); }
+  html.nexo-2026 .feed-tabs { top: calc(var(--header-height) + var(--safe-top)); min-height: var(--touch); }
+  html.nexo-2026 .feed-tabs button { min-height: var(--touch); }
+  html.nexo-2026 .mobile-nav { bottom: calc(var(--dock-offset) + var(--safe-bottom)); }
+  html.nexo-2026 .stories-block { padding-inline: max(var(--space-4), var(--safe-left)) max(var(--space-4), var(--safe-right)); }
+  html.nexo-2026 .stories-scroll { margin-right: calc(-1 * var(--space-4)); padding-right: var(--space-4); }
+  html.nexo-2026 .account-access-card { max-height: calc(100dvh - var(--space-5) - var(--safe-top) - var(--safe-bottom)); }
+  html.nexo-2026 [data-slot="dialog-content"]:not(.story-dialog):not(.media-viewer-dialog):not(.camera-dialog) { max-height: calc(100dvh - var(--space-6) - var(--safe-top) - var(--safe-bottom)); }
+  html.nexo-2026 .feed-scroll:has(.feature-search) .feed-tabs { top: calc(var(--header-height) + var(--safe-top)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexo-2026 *, html.nexo-2026 *::before, html.nexo-2026 *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  html.nexo-2026 [data-slot="skeleton"] { animation: none; }
+}

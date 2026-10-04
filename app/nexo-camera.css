@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 190;
-  background: #07120d;
+  background: #050506;
 }
 
 .nexo-camera-panel {
@@ -15,7 +15,7 @@
   overflow: hidden;
   border: 0;
   outline: none;
-  background: #080f0c;
+  background: #050506;
   color: #f3fff6;
   font-family: inherit;
   font-size: 15px;
@@ -85,18 +85,21 @@
 .nexo-camera-notice { background: #17321f; color: #daf3df !important; }
 .nexo-camera-error { background: #54202a; color: #fff0f1 !important; }
 
-.nexo-camera-live { width: 100%; height: 100%; position: relative; background: #111; }
+.nexo-camera-live { width: 100%; height: 100%; position: relative; background: #030304; }
 .nexo-camera-stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; }
-.nexo-camera-stage video { width: 100%; height: 100%; object-fit: cover; background: #080f0c; }
+.nexo-camera-stage video { width: 100%; height: 100%; object-fit: cover; background: #030304; }
 .nexo-camera-stage video.is-mirrored { transform: scaleX(-1); }
-.nexo-camera-grid { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to right, transparent 33.2%, rgb(255 255 255 / 10%) 33.3%, transparent 33.5%, transparent 66.5%, rgb(255 255 255 / 10%) 66.6%, transparent 66.8%), linear-gradient(to bottom, transparent 33.2%, rgb(255 255 255 / 10%) 33.3%, transparent 33.5%, transparent 66.5%, rgb(255 255 255 / 10%) 66.6%, transparent 66.8%); }
+.nexo-camera-grid { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to right, transparent 33.2%, rgb(255 255 255 / 4%) 33.3%, transparent 33.5%, transparent 66.5%, rgb(255 255 255 / 4%) 66.6%, transparent 66.8%), linear-gradient(to bottom, transparent 33.2%, rgb(255 255 255 / 4%) 33.3%, transparent 33.5%, transparent 66.5%, rgb(255 255 255 / 4%) 66.6%, transparent 66.8%); }
 .nexo-camera-focus { position: absolute; width: 72px; height: 72px; border: 2px solid #c5ffdc; border-radius: 16px; transform: translate(-50%, -50%); pointer-events: none; box-shadow: 0 0 15px rgb(0 0 0 / 40%); animation: nexo-camera-focus .65s ease-out both; }
 @keyframes nexo-camera-focus { from { opacity: 0; transform: translate(-50%, -50%) scale(1.35); } 25% { opacity: 1; } to { opacity: 0; transform: translate(-50%, -50%) scale(.88); } }
-.nexo-camera-live-ui { position: absolute; inset: 0; padding: max(14px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; background: linear-gradient(to bottom, rgb(0 0 0 / 47%), transparent 27%, transparent 43%, rgb(0 0 0 / 78%) 100%); }
+.nexo-camera-live-ui { position: absolute; inset: 0; padding: max(14px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; background: linear-gradient(to bottom, rgb(0 0 0 / 58%), transparent 20%, transparent 55%, rgb(0 0 0 / 90%) 100%); }
 .nexo-camera-live-ui > * { pointer-events: auto; }
 .nexo-camera-topbar { align-self: stretch; min-height: 48px; }
+.nexo-camera-live-brand { color: var(--nexo-signal); font-size: 15px; font-weight: 900; letter-spacing: .06em; text-shadow: 0 2px 1px #000; }
+.nexo-camera-live-brand b { color: var(--nexo-signal); }
 .nexo-camera-tools { align-self: stretch; display: flex; align-items: center; gap: 8px; }
-.nexo-camera-tool { min-width: 66px; height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgb(255 255 255 / 22%); border-radius: 14px; color: #fff; background: rgb(8 20 13 / 56%); backdrop-filter: blur(10px); font-size: 11px !important; font-weight: 700 !important; }
+.nexo-camera-tool { min-width: 46px; height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 0; border-radius: 50%; color: #fff; background: rgb(25 25 27 / 68%); backdrop-filter: blur(10px); font-size: 11px !important; font-weight: 700 !important; }
+.nexo-camera-tool span { display: none; }
 .nexo-camera-focus-label { margin-left: auto; color: #e1f5e5; font-size: 11px; text-shadow: 0 1px 5px #000; }
 .nexo-camera-spacer { flex: 1 1 auto; pointer-events: none !important; }
 .nexo-camera-zoom { min-height: 48px; border: 1px solid rgb(255 255 255 / 24%); border-radius: 18px; background: rgb(12 24 15 / 68%); backdrop-filter: blur(16px); display: flex; align-items: center; gap: 8px; padding: 2px 4px; width: min(100%, 315px); }
@@ -110,17 +113,17 @@
 .nexo-camera-live-notice, .nexo-camera-live-error { max-width: 440px; margin: 0; padding: 7px 12px; border-radius: 9px; text-align: center; font-size: 12px; }
 .nexo-camera-live-notice { background: rgb(18 48 29 / 87%); }
 .nexo-camera-live-error { background: rgb(95 24 36 / 92%); }
-.nexo-camera-mode-tabs { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; max-width: 410px; min-height: 48px; border: 1px solid rgb(255 255 255 / 22%); border-radius: 999px; padding: 4px; background: rgb(11 24 14 / 78%); backdrop-filter: blur(16px); }
+.nexo-camera-mode-tabs { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; max-width: 330px; min-height: 42px; border: 0; border-radius: 999px; padding: 3px; background: rgb(17 17 18 / 58%); backdrop-filter: blur(16px); }
 .nexo-camera-mode-tabs button { flex: 1; min-height: 44px; border: 0; border-radius: 999px; background: transparent; color: #d7e5da; font-size: 12px; font-weight: 750; white-space: nowrap; }
-.nexo-camera-mode-tabs button.is-active { background: #e5ffec; color: #0c2b19; }
+.nexo-camera-mode-tabs button.is-active { background: var(--nexo-signal); color: #17191a; }
 .nexo-camera-filter-row { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; min-height: 44px; overflow-x: auto; white-space: nowrap; }
 .nexo-camera-filter-row span { color: #a9c6af; font-size: 10px; font-weight: 800; letter-spacing: .1em; padding: 0 5px; }
 .nexo-camera-filter-row button { min-width: 63px; min-height: 44px; padding: 0 9px; border: 0; border-radius: 999px; color: #e3f3e7; background: rgb(255 255 255 / 11%); font-size: 11px; }
-.nexo-camera-filter-row button.is-active { background: #75edaa; color: #0d2719; font-weight: 800; }
+.nexo-camera-filter-row button.is-active { background: var(--nexo-signal); color: #17191a; font-weight: 800; }
 .nexo-camera-controls { width: min(100%, 340px); min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 9px; }
-.nexo-camera-gallery { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 64px; height: 64px; border: 0; border-radius: 16px; color: #fff; background: rgb(22 39 25 / 64%); backdrop-filter: blur(10px); font-size: 10px !important; }
-.nexo-camera-shutter { display: grid; place-items: center; width: 78px; height: 78px; flex: none; border: 0; border-radius: 50%; background: conic-gradient(#ff6575 var(--record-progress, 0%), #f5fff8 0); padding: 6px; box-shadow: 0 0 0 2px rgb(0 0 0 / 45%), 0 8px 28px rgb(0 0 0 / 25%); touch-action: none; }
-.nexo-camera-shutter > span { display: grid; place-items: center; width: 100%; height: 100%; border: 3px solid #173022; border-radius: 50%; background: #e8ffef; color: #0a2d1a; }
+.nexo-camera-gallery { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 58px; height: 58px; border: 0; border-radius: 50%; color: #fff; background: rgb(25 25 27 / 78%); font-size: 10px !important; }
+.nexo-camera-shutter { display: grid; place-items: center; width: 78px; height: 78px; flex: none; border: 0; border-radius: 50%; background: conic-gradient(#ff6575 var(--record-progress, 0%), var(--nexo-signal) 0); padding: 3px; box-shadow: 0 0 0 2px #111, 0 8px 28px rgb(0 0 0 / 35%); touch-action: none; }
+.nexo-camera-shutter > span { display: grid; place-items: center; width: 100%; height: 100%; border: 3px solid #070707; border-radius: 50%; background: #fff; color: #17191a; }
 .nexo-camera-shutter.is-recording > span { background: #2d1118; color: #fff; }
 .nexo-camera-stop-square { width: 24px; height: 24px; border-radius: 5px; background: #ff596c; }
 .nexo-camera-action-row { width: min(100%, 300px); }

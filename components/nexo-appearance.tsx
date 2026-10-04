@@ -30,9 +30,9 @@ export function NexoAppearanceProvider({ children }: { children: ReactNode }) {
     try {
       const saved = window.localStorage.getItem(STORAGE_KEY);
       if (saved === "dark" || saved === "light") setTheme(saved);
-      else setTheme("light");
+      else setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     } catch {
-      setTheme("light");
+      setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     }
   }, []);
 
@@ -48,7 +48,7 @@ export function NexoAppearanceProvider({ children }: { children: ReactNode }) {
     }
     document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute(
       "content",
-      enabled ? (theme === "dark" ? "#101b15" : "#ffffff") : "#087f4f",
+      enabled ? (theme === "dark" ? "#17191a" : "#f8faf9") : "#087f4f",
     );
   }, [enabled, theme]);
 

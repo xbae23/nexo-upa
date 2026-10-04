@@ -8,4 +8,6 @@ import "./app/reference-chat.css";
 import "./app/reference-story.css";
 import "./app/reference-discover.css";
 import "./app/reference-account.css";
+import "./app/tokens.css";
+import "./app/components.css";
 createRoot(document.getElementById("root")!).render(<HomePage/>);

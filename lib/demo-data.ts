@@ -13,6 +13,7 @@ export type Post = {
   body: string;
   location?: string;
   image?: string;
+  imageSrcSet?: string;
   mediaType?: "image" | "video";
   price?: string;
   category?: string;
@@ -55,9 +56,8 @@ export const initialPosts: Post[] = [
   {
     id:"campus-atlautla",kind:"post",author:"Vida en UPA",handle:"@vida.upa",initials:"VU",program:"Comunidad · ejemplo",ageMinutes:3,
     title:"El campus también se vive fuera del salón",
-    body:"Deporte, equipo y un momento para conectar. Fotografía real publicada por la UPA; este post y sus interacciones son una demostración.",
-    image:"media/upa-comunidad.jpeg",mediaType:"image",ups:87,reposts:8,comments:[{id:"campus-c1",author:"Alex",text:"¡Qué buena forma de hacer comunidad!"}],isFriend:true,tags:["campus","deportes"],
-    source:{title:"Foto: Universidad Politécnica de Atlautla",url:"https://upa.edomex.gob.mx/actividades-deportivas-culturales"},
+    body:"Entre clases también pasan cosas buenas. ¿Cuál es tu lugar favorito para encontrarte con amigos? Imagen ilustrativa.",
+    image:"media/campus-ilustrativo-960.webp",imageSrcSet:"media/campus-ilustrativo-480.webp 480w, media/campus-ilustrativo-960.webp 960w",mediaType:"image",ups:87,reposts:8,comments:[{id:"campus-c1",author:"Alex",text:"¡Qué buena forma de hacer comunidad!"}],isFriend:true,tags:["campus","comunidad"],
   },
   {
     id: "wallet", kind: "reporte", author: "Ana Sofía", handle: "@anasofia",
@@ -70,9 +70,10 @@ export const initialPosts: Post[] = [
   },
   {
     id: "robotics", kind: "post", author: "Club de Robótica", handle: "@robotica.upa",
-    initials: "CR", program: "Comunidad", ageMinutes: 24,
+    initials: "CR", program: "Comunidad", ageMinutes: 90,
     title: "El prototipo ya sigue la línea completa 🤖",
-    body: "El jueves hacemos pruebas abiertas en el laboratorio. No necesitas experiencia para sumarte. Trae curiosidad y ganas de crear.",
+    body: "El jueves hacemos pruebas abiertas en el laboratorio. No necesitas experiencia para sumarte. Trae curiosidad y ganas de crear. Imagen ilustrativa.",
+    image:"media/robotica-ilustrativa-960.webp",imageSrcSet:"media/robotica-ilustrativa-480.webp 480w, media/robotica-ilustrativa-960.webp 960w",imagePosition:"center 65%",mediaType:"image",
     location: "Laboratorio de robótica",
     ups: 128, comments: [{ id: "c2", author: "Valeria", text: "¡Yo me apunto!" }], reposts: 31,
     isFriend: true, tags: ["robótica", "proyectos", "clubes"],
@@ -83,7 +84,7 @@ export const initialPosts: Post[] = [
     title: "Brownies para la salida 🍫",
     body: "Caja de 4 por $55. Entrego hoy junto a la cafetería. Escríbeme para apartar una; me quedan siete cajas. Imagen ilustrativa del producto.",
     location: "Cafetería · 14:00 a 16:00",
-    image: "media/brownies-ilustrativo.png", mediaType: "image",
+    image: "media/brownies-ilustrativo.webp", mediaType: "image",
     price: "$55", category: "Comida", ups: 36,
     comments: [{ id: "c3", author: "Sofía", text: "¡Aparto una caja!" }], reposts: 5,
     isFriend: true, tags: ["comida", "venta", "brownies"],
@@ -100,9 +101,9 @@ export const initialPosts: Post[] = [
 ];
 
 export const initialStories: Story[] = [
-  { id: "s-valeria", author: "Vida UPA", initials: "VU", text: "Un momento de campus. Foto de archivo: UPA Atlautla · ejemplo de Dump.", tone: "green", remainingMinutes: 161, media:"media/upa-deportes.jpeg",mediaType:"image",source:{title:"Foto: UPA Atlautla",url:"https://upa.edomex.gob.mx/actividades-deportivas-culturales"} },
-  { id: "s-robotica", author: "Robótica", initials: "CR", text: "Probando el robot en el laboratorio 🤖", tone: "green", remainingMinutes: 128 },
-  { id: "s-mariana", author: "Mariana", initials: "MV", text: "Brownies recién hechos. ¡Nos vemos en la cafetería!", tone: "green", remainingMinutes: 86 },
+  { id: "s-valeria", author: "Vida UPA", initials: "VU", text: "Los mejores planes empiezan entre clases. Imagen ilustrativa.", tone: "green", remainingMinutes: 161, media:"media/campus-ilustrativo-960.webp",mediaType:"image" },
+  { id: "s-robotica", author: "Robótica", initials: "CR", text: "Ideas que toman forma 🤖 · Imagen ilustrativa", tone: "green", remainingMinutes: 128,media:"media/robotica-ilustrativa-960.webp",mediaType:"image" },
+  { id: "s-mariana", author: "Mariana", initials: "MV", text: "Brownies recién hechos. ¡Nos vemos en la cafetería! · Imagen ilustrativa", tone: "green", remainingMinutes: 86,media:"media/brownies-ilustrativo.webp",mediaType:"image" },
   { id: "s-terapia", author: "Campus", initials: "CU", text: "Haciendo equipo. Foto de archivo: UPA Atlautla · ejemplo de Dump.", tone: "green", remainingMinutes: 48,media:"media/upa-actividad.jpeg",mediaType:"image",source:{title:"Foto: UPA Atlautla",url:"https://upa.edomex.gob.mx/actividades-deportivas-culturales"} },
   { id: "s-diego", author: "Diego", initials: "DR", text: "¿Quién se suma al grupo de estudio?", tone: "ink", remainingMinutes: 21 },
 ];
