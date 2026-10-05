@@ -13,11 +13,12 @@ import { DemoProvider, useDemo } from "@/lib/demo-store";
 import { AccessGate } from "@/components/nexo-access";
 import { NexoLogo } from "@/components/nexo-logo";
 import { appConfig } from "@/lib/app-config";
+import { NexoAuthProvider } from "@/lib/nexo-auth";
 import type { PostKind, Story, View } from "@/lib/demo-data";
 const navigation=[{id:"inicio",label:"Inicio",icon:House},{id:"explorar",label:"Explorar",icon:Search},{id:"notificaciones",label:"Notificaciones",icon:Bell},{id:"chats",label:"Mensajes",icon:MessageCircle},{id:"perfil",label:"Perfil",icon:UserRound}] as const;
 function BrandGlyph(){return <NexoLogo/>;}
 function Brand(){return <div className="brand-line"><span className="brand" aria-label="Nexo UPA"><span className="brand-mark"><BrandGlyph/></span><span className="brand-name">nexo<em>UPA</em></span></span><AppearanceButton/></div>;}
-export default function HomePage(){return <DemoProvider><NexoAppearanceProvider><AccessGate><App/></AccessGate></NexoAppearanceProvider></DemoProvider>;}
+export default function HomePage(){return <NexoAppearanceProvider><NexoAuthProvider><DemoProvider><AccessGate><App/></AccessGate></DemoProvider></NexoAuthProvider></NexoAppearanceProvider>;}
 function App(){
  const {state,ready}=useDemo();const [view,setView]=useState<View>("inicio");const [postId,setPostId]=useState<string|null>(null);const [profile,setProfile]=useState<string|null>(null);const [publish,setPublish]=useState(false);const [kind,setKind]=useState<PostKind|"dump">("post");const [story,setStory]=useState<string|null>(null);const [contact,setContact]=useState<string|null>(null);const [loginNotice,setLoginNotice]=useState(false);const [offline,setOffline]=useState(false);
  const unread=state.notifications.filter(n=>!n.read).length;const post=state.posts.find(p=>p.id===postId);const suggestions=Array.from(new Map(state.posts.filter(p=>!p.own).map(p=>[p.handle,p])).values()).slice(0,3);

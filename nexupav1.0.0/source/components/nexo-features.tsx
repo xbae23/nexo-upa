@@ -13,6 +13,7 @@ import { classifySwipe } from "@/lib/gesture-math";
 import { useDemo, uid, initials, fileData, dayKey } from "@/lib/demo-store";
 import { rankPosts, type Post, type PostKind, type Story } from "@/lib/demo-data";
 import { profileImage } from "@/lib/profile-image";
+import { useNexoAuth } from "@/lib/nexo-auth";
 export type Quota={notify:number;reporte:number};
 const NexoCamera=lazy(()=>import("@/components/nexo-camera").then(module=>({default:module.NexoCamera})));
 export function Avatar({name,small=false,src:explicitSrc}:{name:string;small?:boolean;src?:string}) {
@@ -62,6 +63,7 @@ export function ExploreView({onCreate,...actions}:Actions&{onCreate:(kind:PostKi
 }
 export function ProfileView({handle,...actions}:Actions&{handle:string|null}){
  const {state,update}=useDemo();
+ const auth=useNexoAuth();
  const own=!handle||handle==="@tu.perfil"||handle==="@"+state.profile.username;
  const person=state.posts.find(p=>p.handle===handle);
  const name=own?state.profile.name:person?.author||"Perfil";
@@ -69,7 +71,7 @@ export function ProfileView({handle,...actions}:Actions&{handle:string|null}){
  const [tab,setTab]=useState("posts");
  const [settings,setSettings]=useState(false);
  const [followingOpen,setFollowingOpen]=useState(false);
- const [privacy,setPrivacy]=useState(false);const [avatar,setAvatar]=useState<string>();const [photoBusy,setPhotoBusy]=useState(false);const [photoError,setPhotoError]=useState("");const photoInput=useRef<HTMLInputElement>(null);
+ const [privacy,setPrivacy]=useState(false);const [avatar,setAvatar]=useState<string>();const [photoBusy,setPhotoBusy]=useState(false);const [profileSaving,setProfileSaving]=useState(false);const [photoError,setPhotoError]=useState("");const photoInput=useRef<HTMLInputElement>(null);
  useEffect(()=>{if(edit){setAvatar(state.profile.avatar);setPhotoError("");}},[edit]);
  async function chooseAvatar(event:ChangeEvent<HTMLInputElement>){const file=event.target.files?.[0];event.target.value="";if(!file)return;setPhotoBusy(true);setPhotoError("");try{setAvatar(await profileImage(file));}catch(error){setPhotoError((error as Error).message);}finally{setPhotoBusy(false);}}
  function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const anchor=document.createElement("a");anchor.href=url;anchor.download="nexo-mis-datos.json";anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
@@ -78,7 +80,7 @@ export function ProfileView({handle,...actions}:Actions&{handle:string|null}){
  const visible=tab==="guardados"?state.posts.filter(p=>p.saved):tab==="reposts"?state.posts.filter(p=>p.reposted):authored;
  const media=authored.filter(p=>p.image);
  const following=Array.from(new Map(state.posts.filter(p=>state.following.includes(p.handle)).map(p=>[p.handle,p])).values());
- function save(e:FormEvent<HTMLFormElement>){e.preventDefault();if(photoBusy)return;const data=new FormData(e.currentTarget);const name=String(data.get("name")||"").trim();const username=String(data.get("username")||"").trim().toLowerCase();if(!name||!/^[a-z0-9._]{3,24}$/.test(username)){setPhotoError("Escribe tu nombre y un usuario de 3 a 24 letras, números, puntos o guiones bajos.");return;}update(s=>({...s,profile:{...s.profile,name,username,phone:String(data.get("phone")||"").trim(),avatar,bio:String(data.get("bio")||"").trim(),program:String(data.get("program")||"").trim(),note:String(data.get("note")||"").trim()},posts:s.posts.map(p=>p.own?{...p,author:name,handle:"@"+username}:p),stories:s.stories.map(story=>story.own?{...story,author:name}:story)}));setEdit(false);toast.success("Perfil actualizado");}
+ async function save(e:FormEvent<HTMLFormElement>){e.preventDefault();if(photoBusy||profileSaving)return;const data=new FormData(e.currentTarget);const name=String(data.get("name")||"").trim();const username=String(data.get("username")||"").trim().toLowerCase();if(!name||!/^[a-z0-9._]{3,24}$/.test(username)){setPhotoError("Escribe tu nombre y un usuario de 3 a 24 letras, números, puntos o guiones bajos.");return;}const next={name,username,phone:String(data.get("phone")||"").trim(),bio:String(data.get("bio")||"").trim(),program:String(data.get("program")||"").trim(),note:String(data.get("note")||"").trim()};setProfileSaving(true);setPhotoError("");try{if(auth.account)await auth.saveProfile(next);update(s=>({...s,profile:{...s.profile,...next,avatar},posts:s.posts.map(p=>p.own?{...p,author:name,handle:"@"+username}:p),stories:s.stories.map(story=>story.own?{...story,author:name}:story)}));setEdit(false);toast.success("Perfil actualizado");}catch(error){setPhotoError(error instanceof Error?error.message:"No se pudo guardar el perfil.");}finally{setProfileSaving(false);}}
 
  async function shareProfile(){const url=new URL(location.href);url.hash="profile/"+encodeURIComponent(own?"@"+(state.profile.username||"tu.perfil"):handle||"");try{if(navigator.share)await navigator.share({title:name+" · Nexo UPA",url:url.href});else{await navigator.clipboard.writeText(url.href);toast("Enlace de perfil copiado");}}catch(error){if((error as Error).name!=="AbortError")toast.error("No se pudo compartir el perfil.");}}
  return <div className="profile-view">
@@ -88,7 +90,7 @@ export function ProfileView({handle,...actions}:Actions&{handle:string|null}){
    <h2>{name}</h2><p className="profile-handle">{own?"@"+(state.profile.username||"tu.perfil"):handle}</p>
    <p className="profile-bio">{own?state.profile.bio:"Compartiendo ideas y momentos en la comunidad UPA."}</p>
    <span className="profile-program"><GraduationCap size={16}/>{own?state.profile.program:person?.program}</span>
-   <div className="profile-controls">{own?<><button className="button-secondary" onClick={()=>setEdit(true)}>Editar perfil</button><button className="button-secondary" onClick={shareProfile}>Compartir perfil</button></>:<><FollowButton handle={handle||""}/><button className="button-secondary" onClick={()=>actions.onContact(name)}><MessageCircle size={17}/>Mensaje</button></>}</div>
+   <div className="profile-controls">{own?<><button className="button-secondary" onClick={()=>setEdit(true)}>Editar perfil</button><button className="button-secondary" onClick={shareProfile}>Compartir perfil</button>{auth.account&&<button className="button-secondary" onClick={()=>void auth.signOut()}>Cerrar sesión</button>}</>:<><FollowButton handle={handle||""}/><button className="button-secondary" onClick={()=>actions.onContact(name)}><MessageCircle size={17}/>Mensaje</button></>}</div>
    {own&&state.profile.note&&<button className="profile-note" onClick={()=>setEdit(true)} aria-label="Editar tu nota"><MessageCircle size={16}/><span>{state.profile.note}</span><ChevronRight size={16}/></button>}
   </section>
   <Tabs value={tab} onValueChange={setTab} className="feed-tab-root profile-tab-root"><TabsList variant="line" className="feed-tabs"><TabsTrigger value="posts"><UserRound size={19}/><span>Posts</span></TabsTrigger><TabsTrigger value="media"><Grid2X2 size={19}/><span>Fotos</span></TabsTrigger>{own&&<><TabsTrigger value="reposts"><Repeat2 size={19}/><span>Reposts</span></TabsTrigger><TabsTrigger value="guardados"><Bookmark size={19}/><span>Guardados</span></TabsTrigger></>}</TabsList><TabsContent value={tab}>{tab==="media"?<div className="profile-grid">{media.map(p=><button key={p.id} aria-label={"Ver "+p.title} onClick={()=>actions.onDetail(p.id)}>{p.mediaType==="video"?<><video src={p.image} muted preload="metadata"/><Play size={18}/></>:<img src={p.image} alt={p.title} loading="lazy" decoding="async"/>}</button>)}</div>:<div className="profile-posts">{visible.map(p=><PostCard key={p.id} post={p} {...actions}/>)}</div>}{(tab==="media"?!media.length:!visible.length)&&<div className="profile-empty">{tab==="guardados"?<Bookmark size={28}/>:tab==="reposts"?<Repeat2 size={28}/>:<Grid2X2 size={28}/>}<h3>{tab==="guardados"?"Lo que quieras volver a ver":tab==="reposts"?"Comparte lo que te inspira":"Tu historia empieza aquí"}</h3><p>{tab==="guardados"?"Guarda una publicación y encuéntrala en este espacio.":tab==="reposts"?"Tus reposts aparecerán aquí.":"Tus publicaciones y momentos aparecerán en tu perfil."}</p></div>}</TabsContent></Tabs>

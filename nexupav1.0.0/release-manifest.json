@@ -9,7 +9,7 @@
     },
     {
       "path": "docs/LOGIN-Y-DATOS.md",
-      "sha256": "6dc7f3db08429418f2fdc98cf006aa37c962b2d00d249dfc8640afe17cf9955e"
+      "sha256": "42af003c833d6334055eb7575d3793d209436db77509430ad513ed3b60e83a30"
     },
     {
       "path": "docs/QA.md",
@@ -21,7 +21,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "33a04b0372a97d79699d6c9b1a8af11c01f452d04e4091b93e3732bcf73fbc8a"
+      "sha256": "a0ebaff595bed49c975b617b8ebe08b00183b6db09e61917a3711d04666f5c14"
     },
     {
       "path": "servidor/nexo.service.example",
@@ -57,7 +57,7 @@
     },
     {
       "path": "source/app/page.tsx",
-      "sha256": "7f365a94b6ae2ed90db1da9288857c12b0613dc7d04cfd2e3e7ece4fdfbbd587"
+      "sha256": "de728670d6d6338a57ccc8b4017b6b88af13f9a909278f51aa194abb3a18fae9"
     },
     {
       "path": "source/app/reference-account.css",
@@ -81,7 +81,7 @@
     },
     {
       "path": "source/app/release-polish.css",
-      "sha256": "71a407e64d5b9ea1f07cd326e8e6ad45466c775785242f27ade6d1d8f952f2ab"
+      "sha256": "437d1fc9176d92da872a23621051b484709f1ee5bed166b598bc5e3d5a6d487e"
     },
     {
       "path": "source/app/tokens.css",
@@ -93,7 +93,7 @@
     },
     {
       "path": "source/components/nexo-access.tsx",
-      "sha256": "f888add011d574825e227e6dfdb0e60b1eadc76061455816c3bbf18c03924b18"
+      "sha256": "c03a956043c4457a2ab18da6f1de740359c6df7cc8a079c52931b33cf87d187c"
     },
     {
       "path": "source/components/nexo-appearance.tsx",
@@ -109,7 +109,7 @@
     },
     {
       "path": "source/components/nexo-features.tsx",
-      "sha256": "e168e8deb7b135d05fde967d0f09ae3176fe87039f340c87b6ee0e156a4e51a0"
+      "sha256": "6883e878253c6e41e6ff97cc3fe9db34d4b8791431f60f073449a35264cc76b0"
     },
     {
       "path": "source/components/nexo-logo.tsx",
@@ -389,7 +389,7 @@
     },
     {
       "path": "source/lib/app-config.ts",
-      "sha256": "6aaf64c8587b6653f350d4be8e8501d1e81261c05d2ddd9e2b1034eef7631ba2"
+      "sha256": "1c0b9984ab93e99a685ca539f844f7429bd7e7f40b7d2932322ac2b341914af6"
     },
     {
       "path": "source/lib/camera-utils.ts",
@@ -409,7 +409,7 @@
     },
     {
       "path": "source/lib/demo-store.tsx",
-      "sha256": "c3c1604a244f6b6bd5bf0e775f2bf4529fb1a74565b739471ddac93eb9c994b1"
+      "sha256": "27e3a97ad3b1895487770a6aea73850ed40ecc0b0c62473c14dd076af07060be"
     },
     {
       "path": "source/lib/feature-flags.ts",
@@ -418,6 +418,10 @@
     {
       "path": "source/lib/gesture-math.ts",
       "sha256": "8ea93550736cc68109ebfdbcbfa2beaa13a44bd2f41fda3eb047487647ebf70a"
+    },
+    {
+      "path": "source/lib/nexo-auth.tsx",
+      "sha256": "22737909f06a2ac99af56f56e2de00bb6ab74aa9893ffa3fe5c56345a04bb783"
     },
     {
       "path": "source/lib/profile-image.ts",
@@ -445,7 +449,7 @@
     },
     {
       "path": "source/public/app-config.js",
-      "sha256": "fb0e9aa910cf16005b2a62924b5012274764d7159fc67d91cc0e5fcfac3d0d44"
+      "sha256": "5f83f54c5aac2f1465f681a425215733e0f606cbc7f1c62e2387f56a684bcbc0"
     },
     {
       "path": "source/public/favicon.svg",
@@ -517,23 +521,23 @@
     },
     {
       "path": "web/app-config.js",
-      "sha256": "1c811ae9f37600d94f4bf371cb24d65b27dafa8480a9551040c37c57c286f6b7"
+      "sha256": "84c864e502b600b52f20942359c5876f3e4ecef530b8283a227d27644e193d96"
     },
     {
-      "path": "web/assets/index-DrU35hdP.css",
-      "sha256": "67e6368a10df4576b7d8ba860890205bad5d3583dffea25e2e1f5e2dd18c439d"
+      "path": "web/assets/index-B915lat1.js",
+      "sha256": "343551185e05cf69bc15184d993e3185311b93880d9b56066944b621856f50e1"
     },
     {
-      "path": "web/assets/index-lOasvta2.js",
-      "sha256": "8d0d9d6ccd87e012a347fde99abf88c6f3e27c4c83d9547969a8ef7a40d73f60"
+      "path": "web/assets/index-LBzE787q.css",
+      "sha256": "6738bae5416ed7f8f1d17956790308da08ff2eb97c1c3da69c3b27284dc37ea8"
     },
     {
       "path": "web/assets/nexo-camera-3uh1fH2l.css",
       "sha256": "8a7832223d18cdab4b04d74945f4c5c19245e3dc50e9c708ac987f969fdb3068"
     },
     {
-      "path": "web/assets/nexo-camera-BhgV9uZI.js",
-      "sha256": "59ab2844442610f89dbbd98a7e98e73781fe25338b5f49fc1e8f6b5ae4f6e1af"
+      "path": "web/assets/nexo-camera-DykXFLKY.js",
+      "sha256": "c809318a0e05e0a1e5bfd32f5b03630dd37e7274427448d3156f69f4cf0950a5"
     },
     {
       "path": "web/favicon.svg",
@@ -553,7 +557,7 @@
     },
     {
       "path": "web/index.html",
-      "sha256": "b2f208571913f7243f7ff66a184e24616483e3f7f231b140d67994363077d888"
+      "sha256": "6c9c5d2d0ef7ad236dfc1e977f02e94b9527eab640357860cfd15382055c9597"
     },
     {
       "path": "web/login-provider.svg",

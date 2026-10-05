@@ -1,26 +1,25 @@
-# Integración pendiente de tu acceso y los datos
+# Acceso y datos de esta demostración
 
-## Lo que puedes reemplazar ahora
+El login y el panel viven en el repositorio separado [`xbae23/practica-kj`](https://github.com/xbae23/practica-kj). Allí están el Cloudflare Worker y el SQL de D1. Nexo consume esa API desde `source/lib/nexo-auth.tsx`.
 
-1. **Texto, imagen y botón inicial:** `source/components/nexo-access.tsx` (`AccessGate`).
-2. **Ventana superpuesta:** el componente `InstitutionalLogin` del mismo archivo. Sus dimensiones están en `source/app/release-polish.css`, selector `.institutional-popup`: máximo 360 px y altura limitada a la pantalla.
-3. **URL de tu pantalla:** `web/app-config.js`, propiedades `loginUrl` y `createAccountUrl`.
-4. **Imagen pequeña:** `web/login-provider.svg` o el archivo indicado por `providerImage`.
+## ⛔ No tocar al rediseñar el login
 
-El acceso inicial no pide correo, contraseña ni dominio. Dice «Regístrate con tu correo institucional». Tu servicio decidirá cómo verificarlo. No escribas claves, secretos ni contraseñas en archivos públicos o en GitHub.
+Puedes reemplazar el aspecto de `index.html` y `styles.css` en el repo del login. Conserva los IDs de los formularios y `auth-client.js`, `cloudflare/worker.js`, `cloudflare/schema.sql`. En Nexo, conserva `source/lib/nexo-auth.tsx`, el flujo de `source/components/nexo-access.tsx` y las rutas `/auth/canjear`, `/auth/yo` y `/perfil`.
 
-## Lo que NO hace una URL de login
+## Qué ocurre ahora
 
-No autoriza acceso al feed, no valida alumnos y no crea una sesión compartida. `AccessGate` mantiene cerrada la interfaz de servidor hasta implementar la integración real. El botón de vista previa está separado y no equivale a autenticación.
+1. El registro crea en D1 una cuenta con `id`, `usuario` y `correo`.
+2. Un código de un solo uso devuelve a la persona a Nexo. Nexo lo canjea por una sesión de siete días.
+3. Si no hay perfil interno, Nexo pide un **nombre visible y alias nuevos**. No copia automáticamente el usuario del login. El perfil se guarda en una tabla separada de D1.
+4. El panel del login muestra solo los campos del registro, no el perfil visible de Nexo.
+5. El contenido social de esta versión sigue en IndexedDB del navegador, ahora particionado por ID de cuenta para que dos cuentas en el mismo dispositivo no compartan sus posts y chats locales.
 
-## Contrato que deberá implementar tu backend
+## Configuración necesaria
 
-- Consultar la sesión desde el servidor mediante una cookie de sesión `HttpOnly`, `Secure` y una política `SameSite` adecuada a tu dominio; verificar expiración y cerrar sesión.
-- Entregar el perfil del usuario verificado. Nombre, usuario y foto son datos del perfil; teléfono debe permanecer privado y ser opcional salvo que definas otro requisito.
-- Sustituir el almacenamiento local de `lib/demo-store.tsx` por operaciones autenticadas: perfiles, publicaciones, comentarios, reacciones, seguidores, historias, notificaciones y conversaciones.
-- Validar propiedad y participantes en cada operación del servidor. No aceptar un estado completo del cliente como autoridad ni confiar en `own`, autor, cupos o fechas enviados por el navegador.
-- Aplicar los cupos de Notify/Reporte por usuario y día en `America/Mexico_City`, expiración de Dumps a las 3 horas y conversaciones a los 7 días desde su primer mensaje.
-- Validar archivos en servidor: tipo real, tamaño, duración, almacenamiento privado para adjuntos de chat y acceso autorizado. Los límites de interfaz no sustituyen esos controles.
-- Implementar respaldo y recuperación, límites de abuso, reportes/moderación y tratamiento de datos antes del lanzamiento público.
+En `web/app-config.js`, establece `authApiUrl` con la URL pública del Worker. `loginUrl` y `createAccountUrl` apuntan al repositorio del login. Ninguna clave privada debe aparecer en `app-config.js`. En Cloudflare, el binding D1 se llama `DB`, los orígenes permitidos se configuran en `ALLOWED_ORIGINS` y la clave del panel se guarda como Secret `ADMIN_KEY`.
 
-Estos servicios **no se presentan como implementados** en esta entrega. GitHub Pages no los ejecuta. El prototipo antiguo `local-server/` del repositorio raíz tampoco equivale a este backend y no se incluye en el paquete del servidor.
+## Alcance y seguridad
+
+**Este acceso es deliberadamente inseguro para una prueba:** el correo no se verifica. Conocer el correo o usuario de una cuenta permite entrar en ella. No se deben invitar alumnos reales ni subir datos sensibles hasta añadir verificación de identidad, límites de abuso y protección operativa. La sesión en `localStorage` es solo para esta demo; una implementación real debe usar un mecanismo de sesión más robusto.
+
+El backend de cuentas **no convierte todavía la red social en multiusuario en tiempo real**. Publicaciones, comentarios, reacciones, seguidores, historias, notificaciones, fotos y mensajes no se sincronizan entre dispositivos. Para un lanzamiento real hay que añadir API y almacenamiento de medios, validación de propiedad en cada operación, moderación, respaldos y controles de privacidad.

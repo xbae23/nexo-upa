@@ -26,17 +26,17 @@ Para cambiar el puerto, define `PORT`; para un contenedor o una red privada, `HO
 
 En un hosting estático, sube únicamente el contenido de `web/`. Mantén `app-config.js`, `sw.js` e `index.html` sin caché prolongada. La aplicación utiliza rutas con `#` y no necesita reescrituras de rutas.
 
-## Tu login
+## Login y perfil de la demo
 
-Edita `web/app-config.js` sin recompilar. La imagen del botón es `web/login-provider.svg`; puedes sustituirla y cambiar `providerImage` por tu imagen.
+Edita `web/app-config.js` sin recompilar: establece `authApiUrl` con la URL del Worker de Cloudflare. `loginUrl` y `createAccountUrl` apuntan al login separado en `xbae23/practica-kj`. La imagen del botón es `web/login-provider.svg`; puedes sustituirla y cambiar `providerImage` por tu imagen.
 
-La ventana pequeña se implementa en `source/components/nexo-access.tsx`, componente `InstitutionalLogin`. No contiene formularios ni captura correo o contraseña. No impone dominio institucional. El teléfono pertenece al perfil y no es público.
+La ventana pequeña se implementa en `source/components/nexo-access.tsx`, componente `InstitutionalLogin`. No captura credenciales. Tras registrarse, Nexo pide un nombre visible y alias propios, separados del usuario del login; esos datos se guardan en D1 mediante `source/lib/nexo-auth.tsx`. El panel del login solo muestra ID, usuario y correo del registro.
 
 ## Estado real de esta entrega
 
 Esta entrega es la **interfaz publicable**, no un backend de red social multiusuario terminado. El servidor incluido sirve archivos, no cuentas, conversaciones compartidas, notificaciones push ni base de datos social. No autentica mediante el botón de prueba ni acepta contraseñas. Las rutas `/api/` devuelven 503 mientras no se conecten servicios reales.
 
-Tu login y su integración de sesión siguen pendientes por indicación tuya. Enlazar una URL no crea una sesión de Nexo. Antes de admitir alumnos reales, conecta la sesión y la API social según `docs/LOGIN-Y-DATOS.md`. No debe anunciarse como servicio multiusuario terminado hasta comprobar esa integración.
+El flujo de cuenta y perfil de prueba está implementado en código, pero requiere crear la base y el Worker en Cloudflare y configurar `authApiUrl`. **No verifica la propiedad del correo**: cualquiera que conozca el correo o usuario podría entrar. Antes de admitir alumnos reales, añade verificación de identidad y la API social según `docs/LOGIN-Y-DATOS.md`. No debe anunciarse como servicio multiusuario terminado.
 
 La vista previa de GitHub permite probar la interfaz con almacenamiento en ese navegador. En esta carpeta está **deshabilitada por defecto**. Para una prueba local deliberada del paquete, inicia el servidor con `NEXO_PREVIEW=true`; esto no autentica ni sincroniza usuarios.
 

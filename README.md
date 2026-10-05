@@ -6,7 +6,7 @@ Interfaz móvil de la comunidad UPA. [Vista previa publicada](https://xbae23.git
 
 Acceso como primera pantalla, marca de gorrión de dos colores, fotografía de perfil propia, menús sin duplicados, cámara/galería directa para Dumps y correcciones del editor y visor móvil que se mantienen al compilar. No se precargan usuarios, publicaciones, conversaciones o fotos inventadas.
 
-La vista previa de GitHub permite probar sin iniciar sesión; solo conserva las acciones en ese navegador. La entrega de servidor mantiene ese acceso de prueba deshabilitado. **Es una interfaz publicable, no un backend social multiusuario terminado.** Tu login se deja para que lo reemplaces; las cuentas, sesiones y sincronización real aún requieren integración de servidor.
+La vista previa de GitHub permite probar sin iniciar sesión; solo conserva las acciones en ese navegador. La entrega de servidor mantiene ese acceso de prueba deshabilitado. **Es una interfaz publicable, no un backend social multiusuario terminado.** El login y panel genéricos están en el [repositorio separado practica-kj](https://github.com/xbae23/practica-kj). El flujo de cuenta, sesión de prueba y perfil propio está conectado en código, pero requiere activar su Worker y D1 en Cloudflare y configurar la URL pública de la API.
 
 ## Desarrollo
 
@@ -26,14 +26,15 @@ La prueba local abre en http://127.0.0.1:5174/. La compilación estática se cre
 
 `nexupav1.0.0/` contiene `web/`, `servidor/`, `source/`, `docs/` y un inventario verificable. El generador usa una lista explícita de archivos, no copia bases, secretos, dependencias ni pruebas personales. Si editas manualmente un archivo de la entrega, el generador se detiene para no sobrescribirlo.
 
-## Dónde conectar tu login
+## Conexión del login y perfil
 
-- URL e imagen: [public/app-config.js](public/app-config.js), o `web/app-config.js` dentro de la entrega.
+- URLs públicas del login y la API: [public/app-config.js](public/app-config.js), o `web/app-config.js` dentro de la entrega.
 - Ventana pequeña: `InstitutionalLogin` en [components/nexo-access.tsx](components/nexo-access.tsx).
+- Motor de sesión y perfil: [lib/nexo-auth.tsx](lib/nexo-auth.tsx). **No lo cambies al rediseñar el login.**
 - Imagen reemplazable: [public/login-provider.svg](public/login-provider.svg).
 - Pasos y límites: [LOGIN-Y-DATOS.md](release/LOGIN-Y-DATOS.md).
 
-No hay campos de correo/contraseña ni un dominio fijado por nosotros. Enlazar una URL no valida una sesión: no uses `previewEnabled` como autenticación.
+Nexo no captura credenciales; el login se diseña aparte. El nombre visible y alias que se introducen al entrar por primera vez no se copian del registro. Se guardan en una tabla separada y no aparecen en el panel. **El correo no se verifica en esta demo; conocer un usuario o correo permite entrar.** No uses `previewEnabled` como autenticación ni invites usuarios reales todavía.
 
 ## Publicación y pruebas
 
