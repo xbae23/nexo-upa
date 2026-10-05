@@ -4,6 +4,6 @@ window.NEXO_CONFIG = {
   loginUrl: "https://xbae23.github.io/practica-kj/#entrada",
   createAccountUrl: "https://xbae23.github.io/practica-kj/#registro",
   authApiUrl: "https://nexo-acceso.19salasdechema.workers.dev",
-  providerImage: "./login-provider.svg",
+  providerImage: "https://static.vecteezy.com/system/resources/previews/028/339/965/original/microsoft-icon-logo-symbol-free-png.png",
   previewEnabled: false
 };

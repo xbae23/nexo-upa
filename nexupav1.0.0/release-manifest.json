@@ -449,7 +449,7 @@
     },
     {
       "path": "source/public/app-config.js",
-      "sha256": "069b4b8efe1f130a1c5aab5e3236540ab6f84723799c97d7ad68fa6a67408e53"
+      "sha256": "f0582120db4b2a5e9282ca526289aab0cba7cd1147611b4a5a64fb4fbd090e00"
     },
     {
       "path": "source/public/favicon.svg",
@@ -521,7 +521,7 @@
     },
     {
       "path": "web/app-config.js",
-      "sha256": "069b4b8efe1f130a1c5aab5e3236540ab6f84723799c97d7ad68fa6a67408e53"
+      "sha256": "f0582120db4b2a5e9282ca526289aab0cba7cd1147611b4a5a64fb4fbd090e00"
     },
     {
       "path": "web/assets/index-CJWjI8_8.js",
