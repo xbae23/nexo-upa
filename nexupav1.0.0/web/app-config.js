@@ -3,7 +3,7 @@ window.NEXO_CONFIG = {
   // Direcciones públicas. No pongas claves privadas en este archivo.
   loginUrl: "https://xbae23.github.io/practica-kj/#entrada",
   createAccountUrl: "https://xbae23.github.io/practica-kj/#registro",
-  authApiUrl: "",
+  authApiUrl: "https://nexo-acceso.19salasdechema.workers.dev",
   providerImage: "./login-provider.svg",
   previewEnabled: false
 };
