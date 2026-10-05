@@ -6,7 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "test:release": "node --experimental-strip-types --test tests/*.test.mjs server/*.test.mjs",
+    "test:release": "node --experimental-strip-types --test tests/*.test.mjs server/*.test.mjs social-worker/*.test.mjs",
     "release": "npm run check && npm run test:release && npm run build:demo && node scripts/verify-build.mjs && node scripts/package-release.mjs && node nexupav1.0.0/verify.mjs",
     "dev:demo": "vite --config vite.demo.config.ts",
     "build:demo": "vite build --config vite.demo.config.ts",

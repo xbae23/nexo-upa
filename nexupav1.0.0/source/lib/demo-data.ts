@@ -3,6 +3,7 @@ export type PostKind = "post" | "notify" | "reporte" | "venta";
 export type Comment = { id: string; author: string; text: string; parentId?: string };
 export type Post = {
   id: string;
+  authorId?: string;
   kind: PostKind;
   author: string;
   handle: string;
@@ -33,6 +34,8 @@ export type Post = {
 
 export type Story = {
   id: string;
+  authorId?: string;
+  handle?: string;
   author: string;
   initials: string;
   text: string;

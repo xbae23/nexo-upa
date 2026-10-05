@@ -24,12 +24,12 @@ await copy('release/LOGIN-Y-DATOS.md','docs/LOGIN-Y-DATOS.md');
 await copy('release/QA.md','docs/QA.md');
 await copy('release/nexo.service.example','servidor/nexo.service.example');
 await copy('release/verify.mjs','verify.mjs');
-for(const dir of ['components','hooks','tests','server','vendor'])await copy(dir,`source/${dir}`);
+for(const dir of ['components','hooks','tests','server','vendor','social-worker'])await copy(dir,`source/${dir}`);
 for(const entry of await readdir(resolve(root,'app')))if(entry.endsWith('.css')||['page.tsx','layout.tsx'].includes(entry))await copy(`app/${entry}`,`source/app/${entry}`);
-for(const file of ['app-config.ts','community-state.ts','demo-data.ts','demo-store.tsx','nexo-auth.tsx','camera-utils.ts','connector-errors.mts','feature-flags.ts','gesture-math.ts','profile-image.ts','utils.ts','web-haptics.ts'])await copy(`lib/${file}`,`source/lib/${file}`);
+for(const file of ['app-config.ts','community-state.ts','demo-data.ts','demo-store.tsx','nexo-auth.tsx','social-api.ts','camera-utils.ts','connector-errors.mts','feature-flags.ts','gesture-math.ts','profile-image.ts','utils.ts','web-haptics.ts'])await copy(`lib/${file}`,`source/lib/${file}`);
 for(const file of ['public','index.html','demo-entry.tsx','vite.demo.config.ts','postcss.config.mjs','design-2026-env.d.ts','package-lock.json'])await copy(file,`source/${file}`);
 const pkg=JSON.parse(await readFile(resolve(root,'package.json'),'utf8'));
-pkg.scripts={"dev:demo":"vite --config vite.demo.config.ts","build:demo":"vite build --config vite.demo.config.ts","preview:demo":"vite preview --config vite.demo.config.ts","check":"tsc --noEmit --incremental false","test:release":"node --experimental-strip-types --test tests/*.test.mjs server/*.test.mjs"};
+pkg.scripts={"dev:demo":"vite --config vite.demo.config.ts","build:demo":"vite build --config vite.demo.config.ts","preview:demo":"vite preview --config vite.demo.config.ts","check":"tsc --noEmit --incremental false","test:release":"node --experimental-strip-types --test tests/*.test.mjs server/*.test.mjs social-worker/*.test.mjs"};
 await writeFile(resolve(release,'source/package.json'),JSON.stringify(pkg,null,2)+'\n');
 const ts=JSON.parse(await readFile(resolve(root,'tsconfig.json'),'utf8'));ts.exclude=['node_modules','dist-demo'];ts.compilerOptions.types=['node'];ts.compilerOptions.plugins=[];
 await writeFile(resolve(release,'source/tsconfig.json'),JSON.stringify(ts,null,2)+'\n');
@@ -40,5 +40,5 @@ await writeFile(resolve(release,'.gitignore'),'source/node_modules/\nsource/dist
 const files=[];
 async function walk(dir){for(const entry of await readdir(dir,{withFileTypes:true})){const path=resolve(dir,entry.name);if(entry.isSymbolicLink())throw new Error('No se permiten enlaces simbólicos');if(entry.isDirectory())await walk(path);else if(path!==manifestPath){files.push({path:relative(release,path).split(sep).join('/'),sha256:createHash('sha256').update(await readFile(path)).digest('hex')});}}}
 await walk(release);files.sort((a,b)=>a.path.localeCompare(b.path));
-await writeFile(manifestPath,JSON.stringify({generator:'nexo-release-v1',version:'1.0.0',scope:'static-web-with-external-login-pending',files},null,2)+'\n');
+await writeFile(manifestPath,JSON.stringify({generator:'nexo-release-v1',version:'1.0.0',scope:'static-web-with-cloudflare-social-api',files},null,2)+'\n');
 console.log(`Preparados ${files.length} archivos en ${release}`);

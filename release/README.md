@@ -7,6 +7,7 @@ Entrega separada para publicar la interfaz web, sin usuarios, publicaciones ni f
 - `web/`: archivos compilados. Es la única carpeta que debe quedar expuesta por un hosting estático.
 - `servidor/`: servidor web Node sin dependencias externas, pruebas y ejemplo de servicio.
 - `source/`: código editable y archivo de dependencias bloqueadas para reproducir la web.
+- `source/social-worker/`: API social de Cloudflare, migración D1, pruebas y pasos de activación.
 - `docs/`: conexión de tu login, instrucciones y alcance de esta entrega.
 - `release-manifest.json`: inventario con huellas SHA-256.
 - `verify.mjs`: verifica que no falten archivos ni hayan cambiado desde la preparación.
@@ -26,19 +27,19 @@ Para cambiar el puerto, define `PORT`; para un contenedor o una red privada, `HO
 
 En un hosting estático, sube únicamente el contenido de `web/`. Mantén `app-config.js`, `sw.js` e `index.html` sin caché prolongada. La aplicación utiliza rutas con `#` y no necesita reescrituras de rutas.
 
-## Login y perfil de la demo
+## Login y perfil
 
-Edita `web/app-config.js` sin recompilar: establece `authApiUrl` con la URL del Worker de Cloudflare. `loginUrl` y `createAccountUrl` apuntan al login separado en `xbae23/practica-kj`. La imagen del botón es `web/login-provider.svg`; puedes sustituirla y cambiar `providerImage` por tu imagen.
+Edita `web/app-config.js` sin recompilar: `authApiUrl` apunta al Worker de acceso existente. Cuando despliegues la API de `source/social-worker/`, establece `socialApiUrl` con su URL pública. `loginUrl` y `createAccountUrl` apuntan al login separado en `xbae23/practica-kj`.
 
 La ventana pequeña se implementa en `source/components/nexo-access.tsx`, componente `InstitutionalLogin`. No captura credenciales. Tras registrarse, Nexo pide un nombre visible y alias propios, separados del usuario del login; esos datos se guardan en D1 mediante `source/lib/nexo-auth.tsx`. El panel del login solo muestra ID, usuario y correo del registro.
 
 ## Estado real de esta entrega
 
-Esta entrega es la **interfaz publicable**, no un backend de red social multiusuario terminado. El servidor incluido sirve archivos, no cuentas, conversaciones compartidas, notificaciones push ni base de datos social. No autentica mediante el botón de prueba ni acepta contraseñas. Las rutas `/api/` devuelven 503 mientras no se conecten servicios reales.
+Esta entrega incluye la interfaz y el código de una API social multiusuario para Cloudflare. **La API no funciona en línea hasta que el propietario cree R2, ejecute la migración D1, despliegue el Worker, configure sus bindings y establezca `socialApiUrl`.** El servidor Node incluido solo sirve archivos; las rutas `/api/` no hacen de backend social.
 
-El flujo de cuenta y perfil de prueba está implementado en código, pero requiere crear la base y el Worker en Cloudflare y configurar `authApiUrl`. **No verifica la propiedad del correo**: cualquiera que conozca el correo o usuario podría entrar. Antes de admitir alumnos reales, añade verificación de identidad y la API social según `docs/LOGIN-Y-DATOS.md`. No debe anunciarse como servicio multiusuario terminado.
+El flujo de cuenta y perfil ya usa el Worker de acceso separado. **No verifica la propiedad del correo**: cualquiera que conozca el correo o usuario podría entrar. Antes de admitir alumnos reales, añade verificación de identidad y los controles indicados en `source/social-worker/README.md`. No debe anunciarse como servicio para datos privados reales.
 
-La vista previa de GitHub permite probar la interfaz con almacenamiento en ese navegador. En esta carpeta está **deshabilitada por defecto**. Para una prueba local deliberada del paquete, inicia el servidor con `NEXO_PREVIEW=true`; esto no autentica ni sincroniza usuarios.
+Mientras `socialApiUrl` esté vacío, la actividad social sigue limitada al navegador. La entrada sin cuenta está deshabilitada. Cuando la API esté desplegada y se configure su URL, la app pasa a leer y escribir la actividad compartida mediante Cloudflare.
 
 ## Modificar y volver a compilar
 

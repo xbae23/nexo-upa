@@ -1,6 +1,6 @@
 import type { Post, Story } from "./demo-data";
 export type Message = { id:string; text:string; mine:boolean; at:number; attachment?:{name:string;url:string;type:string} };
-export type Conversation = { id:string; name:string; initials:string; active:boolean; createdAt?:number; firstMessageAt:number|null; messages:Message[]; theme:"verde"|"gris"|"blanco" };
+export type Conversation = { id:string; peerId?:string; handle?:string; name:string; initials:string; active:boolean; createdAt?:number; firstMessageAt:number|null; messages:Message[]; theme:"verde"|"gris"|"blanco" };
 export type Notification = { id:string; text:string; detail:string; postId?:string; read:boolean; at:number };
 export type DemoState = { version:2; posts:Post[]; stories:Story[]; following:string[]; followingAt?:Record<string,number>; hidden:string[]; profile:{name:string;bio:string;program:string;note:string;avatar?:string;username?:string;phone?:string}; conversations:Conversation[]; notifications:Notification[]; quota:{day:string;notify:number;reporte:number}; draft:{kind:string;title:string;body:string;savedAt?:number} };
 export const SOCIAL_CONTENT_MS = 3 * 86400000;

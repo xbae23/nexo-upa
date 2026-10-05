@@ -16,7 +16,8 @@
 ## Verificado
 
 - Tipos de TypeScript y compilación estática.
-- 17 pruebas automatizadas: cámara, gestos, estado inicial vacío, expiración, cuotas y servidor estático.
+- Pruebas automatizadas de cámara, gestos, estado inicial vacío, expiración, cuotas y servidor estático.
+- Cinco pruebas de la API social con SQLite/R2 simulados: directorio privado, dos cuentas que interactúan, fotos y mensajes, notificaciones, cuotas y eliminación temporal sin borrar cuentas/perfiles.
 - En la web compilada: subir icono de prueba como avatar, guardar nombre/usuario y conservar foto de 512 px tras recargar.
 - Dump → galería → vista previa → adjuntar; sin activar cámara ni micrófono.
 - Crear publicación con imagen desde móvil.
@@ -26,4 +27,4 @@
 
 ## Pendientes ajenos a esta validación
 
-No se ha verificado hardware físico de iPhone/Android, grabación con permisos reales, sesiones de tu login ni multiusuario. El paquete sirve la interfaz y mantiene el acceso cerrado en servidor. No hay un backend social implementado: ver `LOGIN-Y-DATOS.md`. Esta limitación no se disimula retirando las opciones de simulación.
+No se ha verificado hardware físico de iPhone/Android, grabación con permisos reales ni el Worker social desplegado en tu cuenta Cloudflare. La API está implementada en `source/social-worker/`, pero la funcionalidad multiusuario en línea sigue pendiente de crear sus recursos, desplegarla y probar dos dispositivos. Ver `source/social-worker/README.md`. El login actual tampoco verifica la propiedad del correo.

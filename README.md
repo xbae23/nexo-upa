@@ -6,7 +6,7 @@ Interfaz móvil de la comunidad UPA. [Vista previa publicada](https://xbae23.git
 
 Acceso como primera pantalla, marca de gorrión de dos colores, fotografía de perfil propia, menús sin duplicados, cámara/galería directa para Dumps y correcciones del editor y visor móvil que se mantienen al compilar. No se precargan usuarios, publicaciones, conversaciones o fotos inventadas.
 
-La vista previa de GitHub permite probar sin iniciar sesión; solo conserva las acciones en ese navegador. La entrega de servidor mantiene ese acceso de prueba deshabilitado. **Es una interfaz publicable, no un backend social multiusuario terminado.** El login y panel genéricos están en el [repositorio separado practica-kj](https://github.com/xbae23/practica-kj). El flujo de cuenta, sesión de prueba y perfil propio está conectado en código, pero requiere activar su Worker y D1 en Cloudflare y configurar la URL pública de la API.
+La app exige una cuenta. El login y panel viven en el [repositorio separado practica-kj](https://github.com/xbae23/practica-kj) y ya usan Cloudflare D1. Esta versión incluye un [Worker social](social-worker/README.md) y la conexión desde la interfaz para compartir usuarios, publicaciones, medios y mensajes. **La función multiusuario no estará activa en GitHub Pages hasta que el propietario despliegue ese Worker, agregue R2 y configure `socialApiUrl`.** Mientras tanto, la actividad sigue limitada al dispositivo.
 
 ## Desarrollo
 
@@ -33,6 +33,7 @@ La prueba local abre en http://127.0.0.1:5174/. La compilación estática se cre
 - Motor de sesión y perfil: [lib/nexo-auth.tsx](lib/nexo-auth.tsx). **No lo cambies al rediseñar el login.**
 - Imagen reemplazable: [public/login-provider.svg](public/login-provider.svg).
 - Pasos y límites: [LOGIN-Y-DATOS.md](release/LOGIN-Y-DATOS.md).
+- Activación de la comunidad real: [social-worker/README.md](social-worker/README.md).
 
 Nexo no captura credenciales; el login se diseña aparte. El nombre visible y alias que se introducen al entrar por primera vez no se copian del registro. Se guardan en una tabla separada y no aparecen en el panel. **El correo no se verifica en esta demo; conocer un usuario o correo permite entrar.** No uses `previewEnabled` como autenticación ni invites usuarios reales todavía.
 

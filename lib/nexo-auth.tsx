@@ -28,6 +28,7 @@ async function requestJson<T>(path:string,options:RequestInit={}):Promise<T>{
 }
 
 function token(){return localStorage.getItem(TOKEN_KEY)||"";}
+export function nexoSessionToken(){return token();}
 
 async function bootstrap(){
   if(!appConfig.authApiUrl)return {account:null,profile:null};

@@ -6,6 +6,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, elapsed, linkParts } from "./nexo-features";
 import { fileData, initials, uid, useDemo, type Conversation, type Message } from "@/lib/demo-store";
+import { socialApi } from "@/lib/social-api";
+import { useNexoAuth } from "@/lib/nexo-auth";
 
 type ReplyPreview = { id: string; name: string; text: string };
 // Optional metadata stays in the existing local message record and shares its 3-day expiry.
@@ -38,9 +40,23 @@ function AudioMessage({ url }: { url: string }) {
   return <div className="chat-audio"><audio ref={audio} src={url} preload="metadata" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)} onError={() => setFailed(true)} onDurationChange={event => { const value = event.currentTarget.duration; if (Number.isFinite(value)) setDuration(value); }} onTimeUpdate={event => setPosition(event.currentTarget.currentTime)}/><button type="button" className="icon-button" onClick={toggle} aria-label={playing ? "Pausar nota de voz" : "Reproducir nota de voz"}>{playing ? <Pause size={20}/> : <Play size={20}/>}</button><div><input type="range" min={0} max={duration || 1} step={.1} value={Math.min(position, duration || 1)} disabled={!duration} aria-label="Posición de la nota de voz" onChange={event => { if (audio.current) { audio.current.currentTime = Number(event.target.value); setPosition(Number(event.target.value)); } }}/><span>{failed ? "Toca reproducir para reintentar" : audioTime(position || duration)}</span></div><Mic size={16}/></div>;
 }
 
+function useAttachmentUrl(url?:string){
+  const {socialEnabled}=useDemo();
+  const [resolved,setResolved]=useState("");
+  useEffect(()=>{
+    if(!url){setResolved("");return;}
+    if(!socialEnabled){setResolved(url);return;}
+    let alive=true;let objectUrl="";
+    socialApi.privateMedia(url).then(blob=>{objectUrl=URL.createObjectURL(blob);if(alive)setResolved(objectUrl);else URL.revokeObjectURL(objectUrl);}).catch(()=>{if(alive)setResolved("");});
+    return()=>{alive=false;if(objectUrl)URL.revokeObjectURL(objectUrl);};
+  },[url,socialEnabled]);
+  return resolved;
+}
+
 function MessageItem({ message, name, groupStart, groupEnd, onReply, onReact }: { message: ChatMessage; name: string; groupStart: boolean; groupEnd: boolean; onReply: (message: ChatMessage) => void; onReact: (id: string, reaction: string) => void }) {
   const [menu, setMenu] = useState(false);
   const [imageOpen, setImageOpen] = useState(false);
+  const attachmentUrl=useAttachmentUrl(message.attachment?.url);
   const hold = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gesture = useRef<{ x: number; y: number; held: boolean } | null>(null);
   function cancelHold() { if (hold.current) clearTimeout(hold.current); hold.current = null; }
@@ -68,7 +84,7 @@ function MessageItem({ message, name, groupStart, groupEnd, onReply, onReact }: 
     <div className="message-cluster">
       <div className="message-bubble" onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={() => { cancelHold(); gesture.current = null; }} onContextMenu={event => { event.preventDefault(); setMenu(true); }} onDoubleClick={event => { if (!(event.target as HTMLElement).closest("a,audio,video,button")) setMenu(true); }}>
         {message.replyTo && <div className="message-quote"><Reply size={14}/><div><strong>{message.replyTo.name}</strong><span>{message.replyTo.text}</span></div></div>}
-        {message.attachment && (message.attachment.type.startsWith("image/") && !message.attachment.type.includes("svg") ? <button type="button" className="chat-image-button" onClick={() => setImageOpen(true)} aria-label={"Ampliar " + message.attachment.name}><img src={message.attachment.url} alt={message.attachment.name} loading="lazy" decoding="async"/></button> : message.attachment.type.startsWith("audio/") ? <AudioMessage url={message.attachment.url}/> : message.attachment.type.startsWith("video/") ? <video controls playsInline preload="metadata" src={message.attachment.url}/> : <a className="chat-attachment" href={message.attachment.url} download={message.attachment.name}><FileText size={24}/><span>{message.attachment.name}<small>Descargar archivo</small></span></a>)}
+        {message.attachment && (attachmentUrl ? message.attachment.type.startsWith("image/") && !message.attachment.type.includes("svg") ? <button type="button" className="chat-image-button" onClick={() => setImageOpen(true)} aria-label={"Ampliar " + message.attachment.name}><img src={attachmentUrl} alt={message.attachment.name} loading="lazy" decoding="async"/></button> : message.attachment.type.startsWith("audio/") ? <AudioMessage url={attachmentUrl}/> : message.attachment.type.startsWith("video/") ? <video controls playsInline preload="metadata" src={attachmentUrl}/> : <a className="chat-attachment" href={attachmentUrl} download={message.attachment.name}><FileText size={24}/><span>{message.attachment.name}<small>Descargar archivo</small></span></a> : <span className="chat-attachment"><FileText size={24}/><span>Abriendo {message.attachment.name}…</span></span>)}
         {message.text && <p>{linkParts(message.text)}</p>}
         <time className="message-meta" dateTime={new Date(message.at).toISOString()}>{new Date(message.at).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" })}</time>
       </div>
@@ -84,13 +100,15 @@ function MessageItem({ message, name, groupStart, groupEnd, onReply, onReact }: 
         {message.reaction && <DropdownMenuItem onSelect={() => onReact(message.id, message.reaction!)}><X size={20}/>Quitar reacción</DropdownMenuItem>}
       </DropdownMenuContent>
     </DropdownMenu>
-    {message.attachment && <Dialog open={imageOpen} onOpenChange={setImageOpen}><DialogContent className="chat-media-dialog"><DialogHeader className="sr-only"><DialogTitle>{message.attachment.name}</DialogTitle><DialogDescription>Imagen compartida en esta conversación.</DialogDescription></DialogHeader><img src={message.attachment.url} alt={message.attachment.name}/></DialogContent></Dialog>}
+    {message.attachment&&attachmentUrl&&<Dialog open={imageOpen} onOpenChange={setImageOpen}><DialogContent className="chat-media-dialog"><DialogHeader className="sr-only"><DialogTitle>{message.attachment.name}</DialogTitle><DialogDescription>Imagen compartida en esta conversación.</DialogDescription></DialogHeader><img src={attachmentUrl} alt={message.attachment.name}/></DialogContent></Dialog>}
   </div>;
 }
 
 export function ChatsView({ contact, onContactConsumed }: { contact: string | null; onContactConsumed: () => void }) {
-  const { state, update, ready } = useDemo();
+  const { state, update, ready, socialEnabled, people:directory, sendMessage, reactMessage, refresh } = useDemo();
+  const auth=useNexoAuth();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [pending,setPending]=useState<Conversation|null>(null);
   const [query, setQuery] = useState("");
   const [draft, setDraft] = useState("");
   const [newChat, setNewChat] = useState(false);
@@ -116,9 +134,9 @@ export function ChatsView({ contact, onContactConsumed }: { contact: string | nu
   const currentId = useRef<string | null>(null);
   const audioRequest = useRef(0);
   const recordTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const selected = state.conversations.find(conversation => conversation.id === selectedId);
-  const people = Array.from(new Set(state.posts.filter(post => !post.own).map(post => post.author)));
-  const filtered = state.conversations.filter(conversation => conversation.name.toLocaleLowerCase("es").includes(query.toLocaleLowerCase("es"))).sort((a, b) => (b.messages.at(-1)?.at || 0) - (a.messages.at(-1)?.at || 0));
+  const selected = state.conversations.find(conversation => conversation.id === selectedId)||(pending?.id===selectedId?pending:null);
+  const people = socialEnabled ? directory.filter(person=>person.id!==auth.account?.id).map(person=>({name:person.name,handle:person.handle,id:person.id})) : Array.from(new Set(state.posts.filter(post => !post.own).map(post => post.author))).map(name=>({name,handle:name,id:name}));
+  const filtered = [...(pending?[pending]:[]),...state.conversations].filter(conversation => conversation.name.toLocaleLowerCase("es").includes(query.toLocaleLowerCase("es"))).sort((a, b) => (b.messages.at(-1)?.at || 0) - (a.messages.at(-1)?.at || 0));
   const pinned = filtered.filter(isPinned);
   function cancelRecording() {
     audioRequest.current += 1;
@@ -126,13 +144,17 @@ export function ChatsView({ contact, onContactConsumed }: { contact: string | nu
     if (recorder.current) { recorder.current.onstop = null; recorder.current.ondataavailable = null; if (recorder.current.state === "recording") recorder.current.stop(); recorder.current.stream.getTracks().forEach(track => track.stop()); }
     setRecording(false); setAudioStarting(false);
   }
-  function chooseConversation(id: string | null) { currentId.current = id; cancelRecording(); setSelectedId(id); setDraft(""); setAttachment(null); setReplyTo(null); setError(""); followBottom.current = true; }
-  function open(name: string) {
-    let found = state.conversations.find(conversation => conversation.name === name);
-    if (!found) { found = { id: uid(), name, initials: initials(name), active: false, createdAt: Date.now(), firstMessageAt: null, messages: [], theme: "verde" }; const next = found; update(current => ({ ...current, conversations: [next, ...current.conversations] })); }
+  function chooseConversation(id: string | null) { currentId.current = id; cancelRecording(); setSelectedId(id); if(id===null)setPending(null); setDraft(""); setAttachment(null); setReplyTo(null); setError(""); followBottom.current = true; }
+  function open(identifier: string) {
+    const person=people.find(item=>item.handle===identifier||item.id===identifier||item.name===identifier);
+    if(socialEnabled&&!person){toast.error("No encontramos a esa persona en Nexo.");return;}
+    const name=person?.name||identifier;
+    let found = state.conversations.find(conversation => socialEnabled?conversation.peerId===person?.id:conversation.name===name);
+    if (!found) { found = { id: uid(), peerId:person?.id, handle:person?.handle, name, initials: initials(name), active: false, createdAt: Date.now(), firstMessageAt: null, messages: [], theme: "verde" }; const next = found; if(socialEnabled)setPending(next);else update(current => ({ ...current, conversations: [next, ...current.conversations] })); }
     chooseConversation(found.id); setNewChat(false);
   }
   useEffect(() => { if (contact) { open(contact); onContactConsumed(); } }, [contact]);
+  useEffect(()=>{if(!socialEnabled||!ready)return;const timer=setInterval(()=>{if(document.visibilityState==="visible")void refresh().catch(()=>{});},12_000);return()=>clearInterval(timer);},[socialEnabled,ready,refresh]);
   useEffect(() => { if (followBottom.current) bottom.current?.scrollIntoView({ block: "nearest", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); }, [selected?.messages.length, selectedId]);
   useEffect(() => { if (input.current) { input.current.style.height = "auto"; input.current.style.height = `${Math.min(input.current.scrollHeight, 120)}px`; } }, [draft, selectedId]);
   useEffect(() => { if (!attachment) { setLocalUrl(""); return; } const url = URL.createObjectURL(attachment); setLocalUrl(url); return () => URL.revokeObjectURL(url); }, [attachment]);
@@ -146,17 +168,20 @@ export function ChatsView({ contact, onContactConsumed }: { contact: string | nu
   useEffect(() => () => { audioRequest.current += 1; if (recordTimer.current) clearTimeout(recordTimer.current); if (recorder.current) { recorder.current.onstop = null; if (recorder.current.state === "recording") recorder.current.stop(); recorder.current.stream.getTracks().forEach(track => track.stop()); } }, []);
   function mutate(fn: (conversation: ChatConversation) => ChatConversation) { update(current => ({ ...current, conversations: current.conversations.map(conversation => conversation.id === selectedId ? fn(conversation) : conversation) })); }
   function reply(message: ChatMessage) { setReplyTo({ id: message.id, name: message.mine ? "Tú" : selected?.name || "Mensaje", text: preview(message) }); requestAnimationFrame(() => input.current?.focus()); }
-  function react(id: string, reaction: string) { mutate(conversation => ({ ...conversation, messages: conversation.messages.map(message => message.id === id ? { ...message, reaction: (message as ChatMessage).reaction === reaction ? undefined : reaction } : message) })); }
+  function react(id: string, reaction: string) {if(socialEnabled){const current=(selected?.messages.find(message=>message.id===id) as ChatMessage|undefined)?.reaction;void reactMessage(id,current===reaction?"":reaction).catch(error=>toast.error(error instanceof Error?error.message:"No se pudo reaccionar."));return;} mutate(conversation => ({ ...conversation, messages: conversation.messages.map(message => message.id === id ? { ...message, reaction: (message as ChatMessage).reaction === reaction ? undefined : reaction } : message) })); }
   async function send(event?: FormEvent) {
     event?.preventDefault(); if (!selected || sending.current || recording || (!draft.trim() && !attachment)) return;
     sending.current = true; setBusy(true); setError("");
     const conversationId = selected.id;
     try {
+      if(socialEnabled){if(!selected.peerId)throw new Error("No encontramos a la persona destinataria.");
+        const realId=await sendMessage(selected.peerId,draft.trim(),attachment,replyTo?.id);
+        currentId.current=realId;setPending(null);setSelectedId(realId);followBottom.current=true;setDraft("");setAttachment(null);setReplyTo(null);requestAnimationFrame(()=>input.current?.focus());return;}
       const payload = attachment ? { name: attachment.name, url: await fileData(attachment), type: attachment.type } : undefined;
       const at = Date.now(); const message: ChatMessage = { id: uid(), text: draft.trim(), mine: true, at, attachment: payload, ...(replyTo ? { replyTo } : {}) };
       update(current => ({ ...current, conversations: current.conversations.map(conversation => conversation.id === conversationId ? { ...conversation, firstMessageAt: conversation.firstMessageAt || at, messages: [...conversation.messages, message] } : conversation) }));
       if (currentId.current === conversationId) { followBottom.current = true; setDraft(""); setAttachment(null); setReplyTo(null); requestAnimationFrame(() => input.current?.focus()); }
-    } catch { setError("No se pudo preparar el archivo. Tu mensaje sigue aquí; intenta enviarlo otra vez."); }
+    } catch(cause) { setError(cause instanceof Error?cause.message:"No se pudo enviar. Tu mensaje sigue aquí; intenta otra vez."); }
     finally { sending.current = false; setBusy(false); }
   }
   function attach(event: ChangeEvent<HTMLInputElement>) { const chosen = event.target.files?.[0]; event.target.value = ""; if (!chosen) return; if (chosen.size > 10 * 1024 * 1024) { setError("El archivo supera los 10 MB. Elige uno más pequeño."); return; } setError(""); setAttachment(chosen); }
@@ -181,7 +206,7 @@ export function ChatsView({ contact, onContactConsumed }: { contact: string | nu
   return <div className={"chat-layout " + (selected ? "mobile-conversation" : "") + (viewport?.keyboard ? " keyboard-open" : "")} style={viewportStyle}>
     <aside className="chat-list">
       <div className="chat-list-head"><div><h2>Mensajes</h2><span>Tu comunidad, más cerca</span></div><button className="icon-button" onClick={() => setNewChat(true)} aria-label="Nuevo mensaje"><SquarePen size={22}/></button></div>
-      <div className="chat-notes"><button onClick={() => { setNote(state.profile.note); setEditNote(true); }}><span className="note-bubble">{state.profile.note || "Comparte una nota"}</span><Avatar name={state.profile.name}/><small>Tu nota</small></button></div>
+      <div className="chat-notes"><button onClick={() => { setNote(state.profile.note); setEditNote(true); }}><span className="note-bubble">{state.profile.note || "Comparte una nota"}</span><Avatar name={state.profile.name}/><small>Tu nota</small></button>{socialEnabled&&directory.filter(person=>person.id!==auth.account?.id&&person.note).slice(0,8).map(person=><button key={person.id} onClick={()=>open(person.id)}><span className="note-bubble">{person.note}</span><Avatar name={person.name}/><small>{person.name}</small></button>)}</div>
       <div className="chat-search"><Search size={20}/><input aria-label="Buscar conversaciones" placeholder="Buscar" value={query} onChange={event => setQuery(event.target.value)}/>{query && <button className="icon-button" aria-label="Borrar búsqueda" onClick={() => setQuery("")}><X size={20}/></button>}</div>
       {!query && pinned.length > 0 && <section className="chat-pinned"><h3><Pin size={15}/>Fijados</h3><div>{pinned.map(conversation => <button key={conversation.id} className={conversation.id === selectedId ? "active" : ""} onClick={() => chooseConversation(conversation.id)}><span className="presence-avatar"><Avatar name={conversation.name}/>{conversation.active && <i/>}</span><strong>{conversation.name}</strong><small>{conversation.messages.at(-1)?.text || "Inicia una conversación"}</small></button>)}</div></section>}
       <h3 className="chat-all-title">{query ? "Resultados" : "Todos los mensajes"}</h3><div className="chat-people">{!ready ? <div className="chat-list-loading" role="status" aria-label="Cargando conversaciones"><span/><span/><span/></div> : filtered.map(conversation => <button key={conversation.id} className={conversation.id === selectedId ? "active" : ""} onClick={() => chooseConversation(conversation.id)}><span className="presence-avatar"><Avatar name={conversation.name}/>{conversation.active && <i/>}</span><span className="chat-person-copy"><strong>{conversation.name}</strong><small>{conversation.messages.at(-1)?.text || conversation.messages.at(-1)?.attachment?.name || "Inicia una conversación"}</small></span><time>{conversation.messages.at(-1) ? elapsed(conversation.messages.at(-1)?.at) : ""}</time></button>)}</div>
@@ -191,12 +216,12 @@ export function ChatsView({ contact, onContactConsumed }: { contact: string | nu
     {selected ? <section className={"conversation theme-" + selected.theme}>
       <header><button className="icon-button chat-back" onClick={() => chooseConversation(null)} aria-label="Volver a mensajes"><ArrowLeft size={24}/></button><span className="presence-avatar"><Avatar name={selected.name}/>{selected.active && <i/>}</span><div className="conversation-title"><strong>{selected.name}</strong><small>{selected.active ? "Activo ahora" : "Sin actividad reciente"}</small></div><DropdownMenu><DropdownMenuTrigger asChild><button className="icon-button" aria-label="Opciones de conversación"><MoreHorizontal size={24}/></button></DropdownMenuTrigger><DropdownMenuContent className="chat-context-menu" align="end"><DropdownMenuItem onClick={() => mutate(conversation => ({ ...conversation, theme: "verde" }))}>Tema Nexo {selected.theme === "verde" && <Check size={20}/>}</DropdownMenuItem><DropdownMenuItem onClick={() => mutate(conversation => ({ ...conversation, theme: "gris" }))}>Tema grafito {selected.theme === "gris" && <Check size={20}/>}</DropdownMenuItem><DropdownMenuItem onClick={() => mutate(conversation => ({ ...conversation, theme: "blanco" }))}>Tema perla {selected.theme === "blanco" && <Check size={20}/>}</DropdownMenuItem><DropdownMenuSeparator/><DropdownMenuItem onClick={() => mutate(conversation => ({ ...conversation, pinned: !isPinned(conversation) }))}>{isPinned(selected) ? <PinOff size={20}/> : <Pin size={20}/>} {isPinned(selected) ? "Desfijar conversación" : "Fijar conversación"}</DropdownMenuItem></DropdownMenuContent></DropdownMenu></header>
       <div className="chat-expiry"><Clock3 size={14}/>{selected.firstMessageAt ? "Se borra el " + new Date(selected.firstMessageAt + 3 * 86400000).toLocaleString("es-MX", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "Se borrará 3 días después del primer mensaje"}</div>
-      {offline && <p className="chat-offline" role="status">Sin conexión · puedes seguir probando tus mensajes en este dispositivo.</p>}
+      {offline && <p className="chat-offline" role="status">Sin conexión · los mensajes necesitan Internet para enviarse.</p>}
       <div className="messages" ref={messagesPane} role="log" aria-label={"Conversación con " + selected.name} aria-live="polite" onScroll={() => { const pane = messagesPane.current; if (pane) followBottom.current = pane.scrollHeight - pane.scrollTop - pane.clientHeight < 100; }}>
-        <div className="chat-person-intro"><Avatar name={selected.name}/><strong>{selected.name}</strong><small>Comunidad UPA</small></div>
+        <div className="chat-person-intro"><Avatar name={selected.name}/><strong>{selected.name}</strong><small>{directory.find(person=>person.id===selected.peerId)?.note||"Comunidad UPA"}</small></div>
         {!selected.messages.length && <div className="chat-thread-empty"><span>Una idea puede empezar algo.</span><p>Saluda a {selected.name.split(" ")[0]} para comenzar.</p></div>}
         {selected.messages.map((message, index, messages) => <Fragment key={message.id}>{(!index || message.at - messages[index - 1].at >= groupWindow || new Date(message.at).toDateString() !== new Date(messages[index - 1].at).toDateString()) && <div className="chat-time-divider"><time dateTime={new Date(message.at).toISOString()}>{timeLabel(message.at)}</time></div>}<MessageItem message={message as ChatMessage} name={selected.name} groupStart={!sameGroup(messages[index - 1], message)} groupEnd={!sameGroup(message, messages[index + 1])} onReply={reply} onReact={react}/></Fragment>)}
-        {selected.messages.at(-1)?.mine && <p className="chat-local-status"><Check size={12}/>En este dispositivo</p>}
+        {selected.messages.at(-1)?.mine && <p className="chat-local-status"><Check size={12}/>{socialEnabled?"Enviado":"En este dispositivo"}</p>}
         <div ref={bottom}/>
       </div>
       {error && <div className="chat-error" role="alert"><p>{error}</p><button className="icon-button" aria-label="Cerrar aviso" onClick={() => setError("")}><X size={20}/></button></div>}
@@ -205,7 +230,7 @@ export function ChatsView({ contact, onContactConsumed }: { contact: string | nu
       {recording&&<div className="recording-status" role="status"><span/>Grabando {audioTime(recordSeconds)} · máximo 2:00</div>}
       <form className="chat-send" onSubmit={send}><input ref={file} type="file" hidden onChange={attach}/><DropdownMenu><DropdownMenuTrigger asChild><button type="button" className="icon-button chat-add" aria-label="Añadir fotos, cámara, audio o archivos" disabled={recording || busy}><Plus size={24}/></button></DropdownMenuTrigger><DropdownMenuContent className="chat-context-menu chat-attachment-menu" align="start" side="top"><DropdownMenuItem onSelect={() => pick("photo")}><ImageIcon size={24}/><span>Fotos y videos<small>Elige de tu galería</small></span></DropdownMenuItem><DropdownMenuItem onSelect={() => pick("camera")}><Camera size={24}/><span>Cámara<small>Captura un momento</small></span></DropdownMenuItem><DropdownMenuItem onSelect={audio}><Mic size={24}/><span>Nota de voz<small>Usa tu micrófono</small></span></DropdownMenuItem><DropdownMenuItem onSelect={() => pick("file")}><FileText size={24}/><span>Archivos<small>Hasta 10 MB</small></span></DropdownMenuItem></DropdownMenuContent></DropdownMenu><textarea ref={input} rows={1} aria-label="Mensaje" placeholder={recording ? "Grabando nota de voz…" : "Mensaje…"} value={draft} onChange={event => setDraft(event.target.value)} maxLength={4000} disabled={busy || audioStarting} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing && window.matchMedia("(pointer: fine)").matches) { event.preventDefault(); void send(); } }}/>{recording ? <button type="button" className="icon-button recording" aria-label="Detener grabación" onClick={audio}><Square size={20}/></button> : draft.trim() || attachment ? <button className="chat-send-button" aria-label={busy ? "Preparando mensaje" : "Enviar mensaje"} disabled={busy}><ArrowUp size={24}/></button> : <button type="button" className="icon-button chat-mic" aria-label="Grabar nota de voz" onClick={audio}><Mic size={24}/></button>}</form>
     </section> : <section className="conversation chat-empty"><div className="chat-empty-icon"><Send size={40}/></div><h2>Tus conversaciones, más cerca.</h2><p>Comparte una idea, pregunta o un archivo.<br/>Los mensajes son temporales.</p><button className="button-primary" onClick={() => setNewChat(true)}>Nuevo mensaje</button></section>}
-    <Dialog open={newChat} onOpenChange={setNewChat}><DialogContent className="edit-dialog"><DialogHeader><DialogTitle>Nuevo mensaje</DialogTitle><DialogDescription>Elige a alguien de tu comunidad.</DialogDescription></DialogHeader><div className="new-chat-people">{!people.length&&<p className="empty-text">Las personas de tu comunidad aparecerán aquí cuando estén disponibles.</p>}{people.map(name => <button key={name} onClick={() => open(name)}><Avatar name={name}/>{name}<Send size={20}/></button>)}</div></DialogContent></Dialog>
-    <Dialog open={editNote} onOpenChange={setEditNote}><DialogContent className="edit-dialog"><DialogHeader><DialogTitle>Tu nota</DialogTitle><DialogDescription>Un pensamiento para tu comunidad.</DialogDescription></DialogHeader><form className="auth-form" onSubmit={event => { event.preventDefault(); update(current => ({ ...current, profile: { ...current.profile, note: note.trim() } })); setEditNote(false); toast("Nota actualizada"); }}><label>¿Qué estás pensando?<input value={note} onChange={event => setNote(event.target.value)} maxLength={60} placeholder="Comparte algo breve…"/></label><button className="button-primary">Guardar nota</button></form></DialogContent></Dialog>
+    <Dialog open={newChat} onOpenChange={setNewChat}><DialogContent className="edit-dialog"><DialogHeader><DialogTitle>Nuevo mensaje</DialogTitle><DialogDescription>Elige a alguien de tu comunidad.</DialogDescription></DialogHeader><div className="new-chat-people">{!people.length&&<p className="empty-text">Las personas de tu comunidad aparecerán aquí cuando estén disponibles.</p>}{people.map(person => <button key={person.id} onClick={() => open(person.id)}><Avatar name={person.name}/>{person.name}<Send size={20}/></button>)}</div></DialogContent></Dialog>
+    <Dialog open={editNote} onOpenChange={setEditNote}><DialogContent className="edit-dialog"><DialogHeader><DialogTitle>Tu nota</DialogTitle><DialogDescription>Un pensamiento para tu comunidad.</DialogDescription></DialogHeader><form className="auth-form" onSubmit={event => { event.preventDefault();const next=note.trim();if(socialEnabled){void auth.saveProfile({name:state.profile.name,username:state.profile.username||"",program:state.profile.program,bio:state.profile.bio,note:next,phone:state.profile.phone||""}).then(()=>{update(current=>({...current,profile:{...current.profile,note:next}}));setEditNote(false);toast("Nota actualizada");}).catch(error=>toast.error(error instanceof Error?error.message:"No se pudo guardar la nota."));}else{update(current => ({ ...current, profile: { ...current.profile, note: next } })); setEditNote(false); toast("Nota actualizada");} }}><label>¿Qué estás pensando?<input value={note} onChange={event => setNote(event.target.value)} maxLength={60} placeholder="Comparte algo breve…"/></label><button className="button-primary">Guardar nota</button></form></DialogContent></Dialog>
   </div>;
 }

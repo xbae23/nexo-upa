@@ -10,7 +10,7 @@
     "build:demo": "vite build --config vite.demo.config.ts",
     "preview:demo": "vite preview --config vite.demo.config.ts",
     "check": "tsc --noEmit --incremental false",
-    "test:release": "node --experimental-strip-types --test tests/*.test.mjs server/*.test.mjs"
+    "test:release": "node --experimental-strip-types --test tests/*.test.mjs server/*.test.mjs social-worker/*.test.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
