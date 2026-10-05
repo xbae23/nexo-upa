@@ -1,7 +1,7 @@
 // Configuración pública: nunca escribas contraseñas ni claves en este archivo.
 window.NEXO_CONFIG = {
-  loginUrl: "",
+  loginUrl: "https://xbae23.github.io/practica-kj/",
   createAccountUrl: "",
-  providerImage: "./login-provider.svg",
+  providerImage: "https://static.vecteezy.com/system/resources/previews/028/339/965/original/microsoft-icon-logo-symbol-free-png.png",
   previewEnabled: true
 };
