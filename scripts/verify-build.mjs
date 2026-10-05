@@ -1,0 +1,13 @@
+import { readFile,readdir } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const html=await readFile('dist-demo/index.html','utf8');
+assert.match(html,/app-config\.js/,'La configuración reemplazable debe cargarse.');
+const assets=await readdir('dist-demo/assets');
+const css=(await Promise.all(assets.filter(x=>x.endsWith('.css')).map(x=>readFile('dist-demo/assets/'+x,'utf8')))).join('\n');
+assert.match(css,/--nexo-fullscreen-offset:0(px)? 0(px)?/,'Debe sobrevivir la corrección del visor al compilar.');
+assert.match(css,/translate:var\(--nexo-fullscreen-offset\)!important/,'No permitir que el compilador elimine el translate independiente.');
+assert.match(css,/--tw-translate-x:0(px)?!important/);
+const js=(await Promise.all(assets.filter(x=>x.endsWith('.js')).map(x=>readFile('dist-demo/assets/'+x,'utf8')))).join('\n');
+for(const removed of ['demo-password','Simular respuesta','Club de Robótica','Brownies para la salida'])assert.equal(js.includes(removed),false,`Contenido ficticio retirado: ${removed}`);
+assert.equal((await readdir('dist-demo')).includes('media'),false,'No publicar las fotos de ejemplo archivadas.');
+console.log('Compilado verificado: ventanas móviles, configuración y ausencia de contenido ficticio.');

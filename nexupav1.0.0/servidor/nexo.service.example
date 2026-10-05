@@ -1,0 +1,21 @@
+[Unit]
+Description=Nexo UPA web
+After=network.target
+
+[Service]
+Type=simple
+User=nexo
+Group=nexo
+WorkingDirectory=/opt/nexo/nexupav1.0.0
+ExecStart=/usr/bin/node servidor/static-server.mjs
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=8080
+Restart=on-failure
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

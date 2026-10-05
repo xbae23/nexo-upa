@@ -1,0 +1,245 @@
+/* Shared Nexo tokens. Screen-specific composition remains in reference-*.css. */
+:root {
+  --font-native: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Manrope", var(--font-native);
+  --weight-regular: 400;
+  --weight-medium: 600;
+  --weight-bold: 700;
+  --text-caption-2: .6875rem;
+  --text-caption: .75rem;
+  --text-footnote: .8125rem;
+  --text-subhead: .9375rem;
+  --text-callout: 1rem;
+  --text-body: 1.0625rem;
+  --text-title-3: 1.25rem;
+  --text-title-2: 1.375rem;
+  --text-title-1: 1.75rem;
+  --text-large-title: 2.125rem;
+  --line-caption: 1.3333;
+  --line-body: 1.375;
+  --line-title: 1.2;
+  --tracking-title: -.035em;
+  --space-0: 0;
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-14: 3.5rem;
+  --space-16: 4rem;
+  --radius-chip: .5rem;
+  --radius-control: .875rem;
+  --radius-card: 1.25rem;
+  --radius-message: 1.125rem;
+  --radius-sheet: 2.375rem;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+  --hairline: .5px;
+  --focus-width: 2px;
+  --focus-offset: 3px;
+  --touch: 44px;
+  --icon-small: 20px;
+  --icon-base: 24px;
+  --switch-width: 51px;
+  --switch-height: 31px;
+  --switch-thumb: 27px;
+  --switch-inset: 2px;
+  --switch-travel: 20px;
+  --switch-touch-inset: -7px;
+  --up-rise: -3px;
+  --up-settle: 1px;
+  --header-height: 68px;
+  --navbar-native-height: 44px;
+  --tabbar-native-height: 49px;
+  --dock-height: 64px;
+  --dock-offset: 10px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --dur-press: 120ms;
+  --dur-fast: 180ms;
+  --dur-base: 250ms;
+  --dur-sheet: 400ms;
+  --dur-pulse: 1600ms;
+  --ease-ui: cubic-bezier(.25, .1, .25, 1);
+  --ease-sheet: cubic-bezier(.32, .72, 0, 1);
+  --ease-up: cubic-bezier(.22, 1, .36, 1);
+  --tap-scale: .97;
+  --tap-opacity: .76;
+  --blur-nav: 16px;
+  --blur-sheet: 20px;
+  --nexo-brand: #087f4f;
+  --nexo-brand-light: #8de5b5;
+  --nexo-signal: #168359;
+  --nexo-signal-hover: #106a48;
+  --nexo-signal-ink: #ffffff;
+  --nexo-charcoal: #17191a;
+  --nexo-white: #ffffff;
+  --nexo-clear: transparent;
+  --nexo-overlay: rgb(0 0 0 / 54%);
+  --shadow-floating: 0 10px 28px rgb(10 32 25 / 13%);
+  --shadow-sheet: 0 24px 70px rgb(0 0 0 / 18%);
+  --shadow-control: 0 2px 8px rgb(0 0 0 / 7%);
+  color-scheme: light dark;
+}
+
+html.nexo-2026 {
+  --nexo-signal: #168359;
+  --nexo-signal-hover: #106a48;
+  --nexo-signal-ink: #ffffff;
+  --sys-background: #f8faf9;
+  --sys-surface: #ffffff;
+  --sys-surface-raised: #ffffff;
+  --sys-surface-2: #f2f6f5;
+  --sys-surface-3: #e8eeec;
+  --sys-text: #161c1d;
+  --sys-text-secondary: #657276;
+  --sys-text-tertiary: #697575;
+  --sys-primary: var(--nexo-brand);
+  --sys-on-primary: var(--nexo-white);
+  --sys-secondary: #e4f3f0;
+  --sys-on-secondary: #164b4a;
+  --sys-muted: #f1f4f3;
+  --sys-accent: #e5f5f2;
+  --sys-on-accent: #115653;
+  --sys-separator: #e5ebe9;
+  --sys-input: #849391;
+  --sys-success: #176c49;
+  --sys-warning: #825509;
+  --sys-danger: #a52d3f;
+  --sys-info: #087f4f;
+  --sys-teal: var(--nexo-brand);
+  --sys-glass: rgb(255 255 255 / 94%);
+  --sys-nav: rgb(255 255 255 / 96%);
+  --sys-glow: rgb(8 127 79 / 9%);
+  --sys-shadow: 0 8px 28px rgb(16 43 43 / 6%);
+}
+
+@media (prefers-color-scheme: dark) {
+  html.nexo-2026:not([data-theme="light"]) {
+    --nexo-signal: #85deb0;
+    --nexo-signal-hover: #a0eaca;
+    --nexo-signal-ink: #13231b;
+    --sys-background: var(--nexo-charcoal);
+    --sys-surface: #232526;
+    --sys-surface-raised: #282b2b;
+    --sys-surface-2: #2a2d2d;
+    --sys-surface-3: #333637;
+    --sys-text: #f7f8f6;
+    --sys-text-secondary: #aab0ab;
+    --sys-text-tertiary: #9ca69f;
+    --sys-primary: var(--nexo-signal);
+    --sys-on-primary: #161916;
+    --sys-secondary: #343932;
+    --sys-on-secondary: #f4f7df;
+    --sys-muted: #2d3030;
+    --sys-accent: #303b34;
+    --sys-on-accent: #eef5e9;
+    --sys-separator: #3c403d;
+    --sys-input: #8c958e;
+    --sys-success: #75d7a4;
+    --sys-warning: #efc878;
+    --sys-danger: #ff8f91;
+    --sys-info: var(--nexo-brand-light);
+    --sys-teal: var(--nexo-brand-light);
+    --sys-glass: rgb(34 37 37 / 94%);
+    --sys-nav: rgb(35 37 38 / 96%);
+    --sys-glow: rgb(22 131 89 / 14%);
+    --sys-shadow: 0 14px 38px rgb(0 0 0 / 18%);
+    color-scheme: dark;
+  }
+}
+
+html.nexo-2026[data-theme="dark"] {
+  --nexo-signal: #85deb0;
+  --nexo-signal-hover: #a0eaca;
+  --nexo-signal-ink: #13231b;
+  --sys-background: var(--nexo-charcoal);
+  --sys-surface: #232526;
+  --sys-surface-raised: #282b2b;
+  --sys-surface-2: #2a2d2d;
+  --sys-surface-3: #333637;
+  --sys-text: #f7f8f6;
+  --sys-text-secondary: #aab0ab;
+  --sys-text-tertiary: #9ca69f;
+  --sys-primary: var(--nexo-signal);
+  --sys-on-primary: #161916;
+  --sys-secondary: #343932;
+  --sys-on-secondary: #f4f7df;
+  --sys-muted: #2d3030;
+  --sys-accent: #303b34;
+  --sys-on-accent: #eef5e9;
+  --sys-separator: #3c403d;
+  --sys-input: #8c958e;
+  --sys-success: #75d7a4;
+  --sys-warning: #efc878;
+  --sys-danger: #ff8f91;
+  --sys-info: var(--nexo-brand-light);
+  --sys-teal: var(--nexo-brand-light);
+  --sys-glass: rgb(34 37 37 / 94%);
+  --sys-nav: rgb(35 37 38 / 96%);
+  --sys-glow: rgb(22 131 89 / 14%);
+  --sys-shadow: 0 14px 38px rgb(0 0 0 / 18%);
+  color-scheme: dark;
+}
+
+html.nexo-2026[data-theme="light"] {
+  --nexo-signal: #168359;
+  --nexo-signal-hover: #106a48;
+  --nexo-signal-ink: #ffffff;
+  color-scheme: light;
+}
+
+/* Compatibility aliases keep the existing React components and all screenshots' layers. */
+html.nexo-2026,
+html.nexo-2026[data-theme] {
+  --background: var(--sys-background);
+  --foreground: var(--sys-text);
+  --card: var(--sys-surface);
+  --card-foreground: var(--sys-text);
+  --popover: var(--sys-surface-raised);
+  --popover-foreground: var(--sys-text);
+  --primary: var(--sys-primary);
+  --primary-foreground: var(--sys-on-primary);
+  --secondary: var(--sys-secondary);
+  --secondary-foreground: var(--sys-on-secondary);
+  --muted: var(--sys-muted);
+  --muted-foreground: var(--sys-text-secondary);
+  --accent: var(--sys-accent);
+  --accent-foreground: var(--sys-on-accent);
+  --destructive: var(--sys-danger);
+  --border: var(--sys-separator);
+  --input: var(--sys-input);
+  --ring: var(--sys-primary);
+  --green-500: var(--sys-primary);
+  --green-600: var(--sys-primary);
+  --green-700: var(--sys-primary);
+  --nexo-teal: var(--sys-teal);
+  --nexo-surface-2: var(--sys-surface-2);
+  --nexo-surface-3: var(--sys-surface-3);
+  --nexo-glass: var(--sys-glass);
+  --nexo-nav: var(--sys-nav);
+  --nexo-glow: var(--sys-glow);
+  --nexo-shadow: var(--sys-shadow);
+  --nexo-ring-inner: var(--sys-surface);
+}
+
+@media (max-width: 767px) {
+  html.nexo-2026 { --header-height: 58px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexo-2026 {
+    --dur-press: .01ms;
+    --dur-fast: .01ms;
+    --dur-base: .01ms;
+    --dur-sheet: .01ms;
+    --tap-scale: 1;
+    --tap-opacity: .85;
+  }
+}

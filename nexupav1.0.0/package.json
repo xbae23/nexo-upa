@@ -1,0 +1,14 @@
+{
+  "name": "nexupa-release",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node servidor/static-server.mjs",
+    "verify": "node verify.mjs",
+    "test": "node --test servidor/static-server.test.mjs"
+  }
+}

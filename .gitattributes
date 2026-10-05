@@ -1,0 +1,2 @@
+# Preserve exact release bytes so SHA-256 verification works on every OS.
+nexupav1.0.0/** -text

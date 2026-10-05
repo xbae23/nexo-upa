@@ -41,6 +41,7 @@
     "**/*.mts"
   ],
   "exclude": [
+    "nexupav1.0.0",
     "node_modules",
     "examples"
   ]

@@ -1,0 +1,361 @@
+/* Nexo 2026 — Campus Signal. Scoped so ?nexo2026=legacy keeps the old demo. */
+html.nexo-2026 {
+  --background: #17191a;
+  --foreground: #f7f8f6;
+  --card: #232526;
+  --card-foreground: #f7f8f6;
+  --popover: #282b2b;
+  --popover-foreground: #f7f8f6;
+  --primary: #85deb0;
+  --primary-foreground: #161916;
+  --secondary: #343932;
+  --secondary-foreground: #f4f7df;
+  --muted: #2d3030;
+  --muted-foreground: #aab0ab;
+  --accent: #303b34;
+  --accent-foreground: #eef5e9;
+  --destructive: #ff8f91;
+  --border: #3c403d;
+  --input: #8c958e;
+  --ring: #85deb0;
+  --green-50: #303729;
+  --green-100: #3e492e;
+  --green-200: #58673a;
+  --green-300: #819a3d;
+  --green-400: #add042;
+  --green-500: #85deb0;
+  --green-600: #85deb0;
+  --green-700: #85deb0;
+  --green-800: #bedc0d;
+  --green-900: #222826;
+  --nexo-signal: #85deb0;
+  --nexo-teal: #8de5b5;
+  --nexo-surface-2: #2a2d2d;
+  --nexo-surface-3: #333637;
+  --nexo-glass: rgb(34 37 37 / 94%);
+  --nexo-nav: rgb(35 37 38 / 96%);
+  --nexo-glow: rgb(214 245 20 / 14%);
+  --nexo-shadow: 0 14px 38px rgb(0 0 0 / 18%);
+  --nexo-ring-inner: #232526;
+  --nexo-neutral-50: #f7f8f6;
+  --nexo-neutral-100: #e8ebe6;
+  --nexo-neutral-200: #cfd5ce;
+  --nexo-neutral-300: #b6bdb5;
+  --nexo-neutral-400: #929b92;
+  --nexo-neutral-500: #727b73;
+  --nexo-neutral-600: #585f59;
+  --nexo-neutral-700: #414642;
+  --nexo-neutral-800: #323533;
+  --nexo-neutral-900: #242726;
+  --nexo-neutral-950: #17191a;
+  color-scheme: dark;
+}
+
+html.nexo-2026[data-theme="light"] {
+  --background: #f8faf9;
+  --foreground: #161c1d;
+  --card: #ffffff;
+  --card-foreground: #161c1d;
+  --popover: #ffffff;
+  --popover-foreground: #161c1d;
+  --primary: #087f4f;
+  --primary-foreground: #ffffff;
+  --secondary: #e4f3f0;
+  --secondary-foreground: #164b4a;
+  --muted: #f1f4f3;
+  --muted-foreground: #657276;
+  --accent: #e5f5f2;
+  --accent-foreground: #115653;
+  --destructive: #a52d3f;
+  --border: #e5ebe9;
+  --input: #849391;
+  --ring: #087f4f;
+  --green-50: #e8f5f2;
+  --green-100: #d7eeea;
+  --green-200: #b9e1dc;
+  --green-300: #8bc7c0;
+  --green-400: #54aaa3;
+  --green-500: #238985;
+  --green-600: #087f4f;
+  --green-700: #0b625f;
+  --green-800: #094d4b;
+  --green-900: #123b39;
+  --nexo-signal: #85deb0;
+  --nexo-teal: #087f4f;
+  --nexo-surface-2: #f2f6f5;
+  --nexo-surface-3: #e8eeec;
+  --nexo-glass: rgb(255 255 255 / 94%);
+  --nexo-nav: rgb(255 255 255 / 96%);
+  --nexo-glow: rgb(13 116 112 / 9%);
+  --nexo-shadow: 0 8px 28px rgb(16 43 43 / 6%);
+  --nexo-ring-inner: #ffffff;
+  --nexo-neutral-50: #f8faf9;
+  --nexo-neutral-100: #edf2f0;
+  --nexo-neutral-200: #dce5e2;
+  --nexo-neutral-300: #c4d0cc;
+  --nexo-neutral-400: #a2b0ac;
+  --nexo-neutral-500: #7e8c88;
+  --nexo-neutral-600: #606e6b;
+  --nexo-neutral-700: #475553;
+  --nexo-neutral-800: #303b39;
+  --nexo-neutral-900: #202a29;
+  --nexo-neutral-950: #161c1d;
+  color-scheme: light;
+}
+
+html.nexo-2026 body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-feature-settings: "ss01" on;
+}
+
+html.nexo-2026 button,
+html.nexo-2026 a,
+html.nexo-2026 input,
+html.nexo-2026 textarea { -webkit-tap-highlight-color: transparent; }
+html.nexo-2026 button { transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, transform 120ms ease-out; }
+html.nexo-2026 button:active:not(:disabled) { transform: scale(.96); }
+html.nexo-2026 :is(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+
+html.nexo-2026 .app-shell { max-width: 1392px; grid-template-columns: 224px minmax(0, 636px) 292px; gap: 28px; padding: 0 24px; }
+html.nexo-2026 .app-shell.wide-chat { grid-template-columns: 224px minmax(0, 904px); }
+html.nexo-2026 .sidebar { width: 224px!important; background: transparent!important; padding: 24px 4px 24px 0; }
+html.nexo-2026 .main-column { background: var(--card); border-color: var(--border); box-shadow: var(--nexo-shadow); }
+html.nexo-2026 .brand-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
+html.nexo-2026 .sidebar > .brand-line { margin: 0 4px 34px 12px; }
+html.nexo-2026 .brand { gap: 9px; min-width: 0; }
+html.nexo-2026 .brand-mark { width: 38px; height: 38px; border-radius: 13px; background: linear-gradient(145deg, var(--primary), var(--green-800)); color: var(--primary-foreground); box-shadow: 0 8px 24px var(--nexo-glow); font-size: 29px; }
+html.nexo-2026 .brand-name { color: var(--foreground); font-size: 27px; letter-spacing: -.07em; }
+html.nexo-2026 .brand-name em { color: var(--primary); font-size: 11px; letter-spacing: .12em; }
+html.nexo-2026 .appearance-button { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 15px; background: var(--nexo-surface-2); color: var(--foreground); }
+html.nexo-2026 .appearance-button:hover { border-color: var(--primary); background: var(--green-50); }
+html.nexo-2026 .sidebar nav { gap: 6px; }
+html.nexo-2026 .sidebar nav button { position: relative; min-height: 52px; padding: 11px 15px; border-radius: 16px; color: var(--muted-foreground); font-size: 16px; font-weight: 550; }
+html.nexo-2026 .sidebar nav button.active { color: var(--foreground); background: var(--green-50); }
+html.nexo-2026 .sidebar nav button.active::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 4px; background: var(--primary); }
+html.nexo-2026 .sidebar nav button.active svg { color: var(--primary); }
+html.nexo-2026 .sidebar-create { margin: 28px 4px 0; border-radius: 16px; background: var(--primary); color: var(--primary-foreground); box-shadow: 0 12px 24px var(--nexo-glow); }
+html.nexo-2026 .sidebar-create:hover,
+html.nexo-2026 .button-primary:hover,
+html.nexo-2026 .register-link:hover { background: var(--green-800); color: var(--primary-foreground); }
+html.nexo-2026 .sidebar-user { border: 1px solid var(--border); background: var(--card); padding: 11px; }
+
+html.nexo-2026 .header { min-height: 68px; background: var(--nexo-glass); border-color: var(--border); }
+@supports (backdrop-filter: blur(16px)) {
+  html.nexo-2026 .header { backdrop-filter: blur(16px) saturate(130%); }
+}
+html.nexo-2026 .header h1 { font-size: 19px; letter-spacing: -.03em; }
+html.nexo-2026 .chat-scroll { height: calc(100svh - 68px); }
+html.nexo-2026 .header-actions { gap: 8px; }
+html.nexo-2026 .icon-button { color: var(--foreground); }
+html.nexo-2026 .header-actions .notification { flex: 0 0 44px; }
+html.nexo-2026 .notification-dot,
+html.nexo-2026 .unread-dot { background: var(--primary); border-color: var(--card); }
+html.nexo-2026 .nav-unread,
+html.nexo-2026 .comments-panel form button { color: var(--primary-foreground); }
+html.nexo-2026 .login-link { color: var(--foreground); }
+html.nexo-2026 .register-link,
+html.nexo-2026 .button-primary { background: var(--primary); color: var(--primary-foreground); border-radius: 14px; }
+html.nexo-2026 .demo-note { background: var(--nexo-surface-2); border-bottom: 1px solid var(--border); color: var(--muted-foreground); }
+html.nexo-2026 .offline-banner { color: var(--foreground); background: var(--accent); border-color: var(--border); }
+
+html.nexo-2026 .stories-block { background: linear-gradient(180deg, var(--nexo-surface-2), var(--card)); border-color: var(--border); }
+html.nexo-2026 .stories-block .section-title h2 { font-size: 16px; letter-spacing: -.02em; }
+html.nexo-2026 .story-avatar { background: linear-gradient(140deg, var(--primary), var(--green-400) 60%, var(--green-800)); box-shadow: 0 0 0 1px var(--border); }
+html.nexo-2026 .story-avatar > span { border-color: var(--nexo-ring-inner); background: var(--nexo-surface-3); color: var(--foreground); }
+html.nexo-2026 .story-avatar.mine { background: var(--border); }
+html.nexo-2026 .story-avatar.mine > span { color: var(--primary); }
+html.nexo-2026 .story strong { color: var(--foreground); font-size: 12px; font-weight: 550; }
+html.nexo-2026 .avatar { background: var(--nexo-surface-3); color: var(--foreground); }
+html.nexo-2026 .compose-card { border-color: var(--border); }
+html.nexo-2026 .compose-options { border-color: var(--border); }
+html.nexo-2026 .compose-options button { color: var(--foreground); }
+html.nexo-2026 .compose-options svg { color: var(--primary); }
+html.nexo-2026 .feed-tabs { background: var(--card)!important; border-color: var(--border); }
+html.nexo-2026 .feed-tabs button { color: var(--muted-foreground); }
+html.nexo-2026 .feed-tabs button[data-state=active] { color: var(--foreground)!important; }
+html.nexo-2026 .feed-tabs button[data-state=active]:after { background: var(--primary)!important; }
+
+html.nexo-2026 .post-card { border-color: var(--border); }
+html.nexo-2026 .author-avatar { min-width: 44px; min-height: 44px; }
+html.nexo-2026 .author-name { min-height: 44px!important; }
+html.nexo-2026 .post-head button,
+html.nexo-2026 .post-content h3 button { color: var(--foreground); }
+html.nexo-2026 .post-content h3 button { min-height: 44px; }
+html.nexo-2026 .post-strip { color: var(--primary); }
+html.nexo-2026 .post-strip .post-type-label { color: var(--primary); }
+html.nexo-2026 .post-media { border-color: var(--border); background: var(--muted); border-radius: 16px; }
+html.nexo-2026 .post-media-trigger { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+html.nexo-2026 .post-media-trigger img { width: 100%; }
+html.nexo-2026 .post-media .media-price { pointer-events: none; }
+html.nexo-2026 .media-price { background: var(--popover); color: var(--foreground); }
+html.nexo-2026 .post-actions button { color: var(--muted-foreground); min-width: 44px; }
+html.nexo-2026 .post-actions button.selected { color: var(--primary); }
+html.nexo-2026 .post-actions button:hover { background: var(--green-50); }
+html.nexo-2026 .follow-button { color: var(--primary); }
+html.nexo-2026 .following-button { color: var(--muted-foreground); }
+html.nexo-2026 .form-note { color: var(--foreground); }
+html.nexo-2026 .publish-success > span { color: var(--foreground); }
+html.nexo-2026 .reply-indicator { background: var(--green-50); color: var(--primary); }
+html.nexo-2026 .comments-panel { border-color: var(--border); }
+
+html.nexo-2026 .right-rail { padding-top: 24px; }
+html.nexo-2026 .rail-search { color: var(--muted-foreground); background: var(--card); border: 1px solid var(--border); }
+html.nexo-2026 .rail-card { background: var(--card); border-color: var(--border); border-radius: 20px; box-shadow: var(--nexo-shadow); }
+html.nexo-2026 .rail-head svg,
+html.nexo-2026 .quota-row b { color: var(--primary); }
+html.nexo-2026 .quota-row button { background: var(--nexo-surface-2); border: 1px solid var(--border); }
+
+html.nexo-2026 input:not([type=file]),
+html.nexo-2026 textarea,
+html.nexo-2026 select { background: var(--popover); color: var(--foreground); border-color: var(--input); border-radius: 12px; }
+html.nexo-2026 input::placeholder,
+html.nexo-2026 textarea::placeholder { color: var(--muted-foreground); opacity: 1; }
+html.nexo-2026 .feature-search,
+html.nexo-2026 .chat-search { background: var(--nexo-surface-2); border: 1px solid var(--border); }
+html.nexo-2026 .feature-search input,
+html.nexo-2026 .chat-search input,
+html.nexo-2026 .chat-send input { background: transparent; border: 0; }
+html.nexo-2026 .community-list button,
+html.nexo-2026 .button-secondary,
+html.nexo-2026 .market-filters button { background: var(--card); border-color: var(--border); color: var(--foreground); }
+html.nexo-2026 .market-filters button.active { background: var(--green-50); border-color: var(--primary); color: var(--primary); }
+html.nexo-2026 .product-grid article { border-color: var(--border); border-radius: 16px; background: var(--card); }
+html.nexo-2026 .product-info strong,
+html.nexo-2026 .product-info button { color: var(--primary); }
+html.nexo-2026 .profile-note { background: var(--nexo-surface-2); border-color: var(--border); }
+html.nexo-2026 .notification-list button.unread { background: var(--green-50); }
+
+html.nexo-2026 [data-slot="dialog-content"]:not(.story-dialog) { background: var(--popover); color: var(--foreground); border: 1px solid var(--border); box-shadow: var(--nexo-shadow); }
+html.nexo-2026 [data-slot="dialog-overlay"] { background: rgb(1 9 4 / 68%); }
+html.nexo-2026 [data-slot="dialog-close"] { color: var(--muted-foreground); min-width: 44px; min-height: 44px; display: grid; place-items: center; }
+html.nexo-2026 .publish-kinds button { background: var(--nexo-surface-2); color: var(--foreground); border-color: var(--border); }
+html.nexo-2026 .publish-kinds button.active { color: var(--primary); background: var(--green-50); border-color: var(--primary); }
+html.nexo-2026 .media-actions button,
+html.nexo-2026 .upload-preview button { color: var(--foreground); background: var(--nexo-surface-2); border-color: var(--border); }
+html.nexo-2026 .form-error { background: color-mix(in srgb, var(--destructive) 12%, var(--popover)); color: var(--destructive); }
+html.nexo-2026 .story-dialog { background: var(--green-900)!important; color: #f4fff7!important; }
+html.nexo-2026 .story-dialog.story-gestures { touch-action: none; user-select: none; }
+html.nexo-2026 .story-dialog.story-gestures .story-progress,
+html.nexo-2026 .story-dialog.story-gestures .story-top,
+html.nexo-2026 .story-dialog.story-gestures .story-controls,
+html.nexo-2026 .story-dialog.story-gestures .story-bottom { transition: opacity 160ms ease-out; }
+html.nexo-2026 .story-dialog.is-holding .story-progress,
+html.nexo-2026 .story-dialog.is-holding .story-top,
+html.nexo-2026 .story-dialog.is-holding .story-controls,
+html.nexo-2026 .story-dialog.is-holding .story-bottom { opacity: 0; pointer-events: none; }
+html.nexo-2026 .story-top button,
+html.nexo-2026 .story-controls button { color: #f4fff7; }
+html.nexo-2026 .story-bottom button { color: #f4fff7; }
+@media (max-width: 767px) {
+  html.nexo-2026 .story-dialog {
+    padding-top: calc(20px + env(safe-area-inset-top))!important;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom))!important;
+  }
+}
+
+html.nexo-2026 .chat-list { background: var(--card); border-color: var(--border); }
+html.nexo-2026 .chat-people > button { color: var(--foreground); }
+html.nexo-2026 .chat-people > button.active { background: var(--green-50); }
+html.nexo-2026 .note-bubble { background: var(--popover); color: var(--foreground); border-color: var(--border); }
+html.nexo-2026 .conversation,
+html.nexo-2026 .conversation > header { background: var(--card); color: var(--foreground); border-color: var(--border); }
+html.nexo-2026 .chat-expiry { background: var(--nexo-surface-2); color: var(--muted-foreground); }
+html.nexo-2026 .message-bubble { background: var(--nexo-surface-2); color: var(--foreground); }
+html.nexo-2026 .message-row.mine .message-bubble { background: var(--primary); color: var(--primary-foreground); }
+html.nexo-2026 .theme-gris .mine .message-bubble { background: var(--nexo-surface-3); color: var(--foreground); }
+html.nexo-2026 .theme-blanco .mine .message-bubble { background: var(--popover); color: var(--foreground); border: 1px solid var(--border); }
+html.nexo-2026 .chat-send { background: var(--popover); border-color: var(--border); }
+html.nexo-2026 .chat-send-button { background: var(--primary); color: var(--primary-foreground); }
+html.nexo-2026 .chat-empty-icon { border-color: var(--primary); color: var(--primary); }
+html.nexo-2026 .new-chat-people button { color: var(--foreground); }
+html.nexo-2026 [data-sonner-toast] { background: var(--popover)!important; color: var(--foreground)!important; border-color: var(--border)!important; }
+
+html.nexo-2026 [data-slot="dialog-content"].media-viewer-dialog {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  left: 0;
+  translate: none!important;
+  transform: none!important;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0;
+  width: 100vw!important;
+  max-width: none!important;
+  height: 100dvh;
+  max-height: none!important;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0!important;
+  background: #050b08!important;
+  color: #edf8ef!important;
+  overflow: hidden;
+}
+html.nexo-2026 .media-viewer-toolbar,
+html.nexo-2026 .media-viewer-controls { display: flex; align-items: center; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right)); background: rgb(5 11 8 / 90%); }
+html.nexo-2026 .media-viewer-toolbar { justify-content: space-between; padding-top: calc(12px + env(safe-area-inset-top)); padding-left: max(16px, env(safe-area-inset-left)); font-size: 14px; font-weight: 600; }
+html.nexo-2026 .media-viewer-toolbar button,
+html.nexo-2026 .media-viewer-controls button { display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 1px solid #365044; border-radius: 14px; background: #192b20; color: #edf8ef; }
+html.nexo-2026 .media-viewer-toolbar button:hover,
+html.nexo-2026 .media-viewer-controls button:hover { background: #294331; }
+html.nexo-2026 .media-viewer-controls { flex-direction: column; justify-content: center; gap: 8px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+html.nexo-2026 .media-zoom-controls,
+html.nexo-2026 .media-pan-controls { display: flex; align-items: center; justify-content: center; gap: 8px; }
+html.nexo-2026 .media-zoom-controls span { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; font-size: 14px; }
+html.nexo-2026 .media-viewer-controls button:disabled { opacity: .4; cursor: not-allowed; }
+html.nexo-2026 .media-viewer-stage { min-height: 0; display: grid; place-items: center; overflow: hidden; touch-action: none; user-select: none; overscroll-behavior: contain; }
+html.nexo-2026 .media-viewer-stage img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center; will-change: transform; transition: transform 220ms cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexo-2026 .media-viewer-stage img { transition: none; }
+}
+
+@media (max-width: 1279px) {
+  html.nexo-2026 .app-shell { grid-template-columns: 212px minmax(0, 636px); gap: 20px; padding: 0 20px; }
+  html.nexo-2026 .app-shell.wide-chat { grid-template-columns: 176px minmax(0, 840px); gap: 16px; padding: 0 16px; }
+  html.nexo-2026 .sidebar { width: 212px!important; }
+  html.nexo-2026 .wide-chat .sidebar { width: 176px!important; }
+}
+
+@media (max-width: 767px) {
+  html.nexo-2026 body { background: var(--card); }
+  html.nexo-2026 .app-shell { display: block!important; padding: 0; }
+  html.nexo-2026 .app-shell.wide-chat { padding: 0; }
+  html.nexo-2026 .main-column { border: 0; box-shadow: none; }
+  html.nexo-2026 .header { min-height: 60px; padding: 6px 12px; }
+  html.nexo-2026 .chat-scroll { height: calc(100dvh - 124px - env(safe-area-inset-bottom, 0px)); }
+  html.nexo-2026 .mobile-brand { display: block; min-width: 0; }
+  html.nexo-2026 .mobile-brand .brand-line { gap: 7px; }
+  html.nexo-2026 .mobile-brand .brand-mark { width: 30px; height: 30px; border-radius: 10px; font-size: 23px; }
+  html.nexo-2026 .mobile-brand .brand-name { font-size: 22px; }
+  html.nexo-2026 .mobile-brand .appearance-button { flex-basis: 44px; width: 44px; height: 44px; border-radius: 13px; }
+  html.nexo-2026 .header-actions { gap: 2px; }
+  html.nexo-2026 .header-actions .notification { width: 44px; height: 44px; }
+  html.nexo-2026 .header-actions .login-link,
+  html.nexo-2026 .header-actions .register-link { font-size: 14px; }
+  html.nexo-2026 .header-actions .register-link { min-height: 44px; padding: 8px 11px; }
+  html.nexo-2026 .mobile-nav { background: var(--nexo-nav); border-color: var(--border); }
+  @supports (backdrop-filter: blur(18px)) {
+    html.nexo-2026 .mobile-nav { backdrop-filter: blur(18px) saturate(135%); }
+  }
+  html.nexo-2026 .mobile-nav button { color: var(--muted-foreground); }
+  html.nexo-2026 .mobile-nav button.active { color: var(--primary); }
+  html.nexo-2026 .mobile-nav button.active svg { background: var(--green-50); border-radius: 12px; }
+  html.nexo-2026 .mobile-nav .mobile-create svg { background: var(--primary); color: var(--primary-foreground); border-radius: 15px; box-shadow: 0 8px 22px var(--nexo-glow); }
+}
+
+@media (max-width: 380px) {
+  html.nexo-2026 .mobile-brand .brand-name { display: none; }
+  html.nexo-2026 .header-actions .login-link,
+  html.nexo-2026 .header-actions .register-link { font-size: 12px; white-space: nowrap; }
+  html.nexo-2026 .header-actions .login-link { padding-inline: 4px; }
+  html.nexo-2026 .header-actions .register-link { padding-inline: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexo-2026 .header,
+  html.nexo-2026 .mobile-nav { backdrop-filter: none; }
+}

@@ -1,0 +1,93 @@
+/* Owner references #4/#12: media-first, immersive Dump. Existing controls stay functional. */
+html.nexo-2026 .story-dialog {
+  position: fixed;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 0!important;
+  border: 0!important;
+  border-radius: var(--radius-card)!important;
+  background: var(--nexo-charcoal)!important;
+  color: var(--nexo-white)!important;
+  box-shadow: var(--shadow-sheet);
+}
+html.nexo-2026 .story-dialog::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--nexo-charcoal) 60%, transparent), transparent 24%, transparent 52%, color-mix(in srgb, var(--nexo-charcoal) 80%, transparent));
+}
+html.nexo-2026 .story-dialog .story-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: dump-media-in var(--dur-base) var(--ease-ui);
+}
+html.nexo-2026 .story-dialog .story-media :is(img, video) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border-radius: 0;
+  object-fit: cover;
+}
+html.nexo-2026 .story-dialog .story-progress,
+html.nexo-2026 .story-dialog .story-top,
+html.nexo-2026 .story-dialog .story-copy,
+html.nexo-2026 .story-dialog .story-bottom { position: absolute; z-index: 2; }
+html.nexo-2026 .story-dialog .story-progress { top: 18px; left: 16px; right: 16px; height: 3px; background: transparent; }
+html.nexo-2026 .story-dialog .story-progress > div { height: 3px; background: rgb(255 255 255 / 38%); }
+html.nexo-2026 .story-dialog .story-progress span { width: 100%; transform-origin: left; transition: transform 100ms linear; }
+html.nexo-2026 .story-dialog .story-top { top: 32px; left: 16px; right: 16px; min-height: 44px; }
+html.nexo-2026 .story-dialog .story-top > div { text-shadow: 0 1px 5px rgb(0 0 0 / 45%); }
+html.nexo-2026 .story-dialog .story-top button { border-radius: 999px; background: rgb(0 0 0 / 20%); }
+html.nexo-2026 .story-dialog .story-copy {
+  left: 22px;
+  right: 22px;
+  top: 50%;
+  margin: 0;
+  transform: translateY(-50%);
+  color: var(--nexo-white);
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: var(--weight-medium);
+  line-height: 1.35;
+  text-shadow: 0 2px 10px rgb(0 0 0 / 62%);
+}
+html.nexo-2026 .story-dialog:has(.story-media) .story-copy {
+  top: auto;
+  bottom: 148px;
+  transform: none;
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 550;
+  text-align: left;
+  line-height: 1.42;
+}
+html.nexo-2026 .story-accessible-navigation { position: absolute; top: 100px; z-index: 3; left: var(--space-4); right: var(--space-4); display: flex; justify-content: space-between; pointer-events: none; }
+html.nexo-2026 .story-accessible-navigation button:focus-visible { position: static; width: auto; height: auto; margin: 0; padding: var(--space-3); overflow: visible; clip: auto; min-height: var(--touch); background: var(--nexo-charcoal); color: var(--nexo-white); border-radius: var(--radius-pill); pointer-events: auto; }
+html.nexo-2026 .story-dialog .story-bottom { display: grid; gap: 8px; left: 16px; right: 16px; bottom: 18px; color: #fff; }
+html.nexo-2026 .story-dialog .story-bottom > span { max-width: 100%; font-size: 10px; line-height: 1.25; opacity: .77; text-shadow: 0 1px 5px rgb(0 0 0 / 55%); }
+html.nexo-2026 .story-dialog .story-bottom button { justify-content: space-between; width: 100%; min-width: 44px; min-height: 44px; background: rgb(0 0 0 / 16%); border-color: rgb(255 255 255 / 72%); text-align: left; }
+
+@media (max-width: 767px) {
+  html.nexo-2026 .story-dialog {
+    width: 100vw!important;
+    max-width: 100vw!important;
+    height: 100dvh!important;
+    max-height: 100dvh!important;
+    border-radius: 0!important;
+  }
+  html.nexo-2026 .story-dialog .story-progress { top: calc(12px + env(safe-area-inset-top)); }
+  html.nexo-2026 .story-dialog .story-top { top: calc(25px + env(safe-area-inset-top)); }
+  html.nexo-2026 .story-dialog .story-bottom { bottom: calc(16px + env(safe-area-inset-bottom)); }
+  html.nexo-2026 .story-dialog:has(.story-media) .story-copy { bottom: calc(143px + env(safe-area-inset-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexo-2026 .story-dialog .story-progress span { transition: none; }
+  html.nexo-2026 .story-dialog .story-media { animation: none; }
+}
+@keyframes dump-media-in { from { opacity: .6; } to { opacity: 1; } }

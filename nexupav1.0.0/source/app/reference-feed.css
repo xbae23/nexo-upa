@@ -1,0 +1,652 @@
+/* Nexo feed: the supplied mobile references specify a quiet, image-led canvas.
+   This layer changes presentation only; feed, Dump and post controls keep their handlers. */
+html.nexo-2026 .feed-scroll:not(.chat-scroll) {
+  background: var(--card);
+}
+
+html.nexo-2026 .demo-note {
+  min-height: 25px;
+  padding: 3px 18px;
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-size: 10px;
+  line-height: 1.25;
+  letter-spacing: .01em;
+}
+
+/* The stories in references 8/9 are a horizontal strip, not a separate card. */
+html.nexo-2026 .stories-block {
+  margin: 0;
+  padding: 15px 18px 13px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+
+html.nexo-2026 .stories-block .section-title h2 {
+  color: var(--foreground);
+  font-size: 15px;
+  font-weight: 760;
+  line-height: 1.2;
+  letter-spacing: -.035em;
+}
+
+html.nexo-2026 .stories-block .section-title h2 small {
+  margin-left: 4px;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 480;
+  letter-spacing: 0;
+}
+
+html.nexo-2026 .stories-all {
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 620;
+}
+
+html.nexo-2026 .stories-scroll {
+  gap: 9px;
+  margin-top: 11px;
+  margin-right: -18px;
+  padding-right: 18px;
+  padding-bottom: 1px;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-inline: contain;
+}
+
+html.nexo-2026 .story {
+  flex: 0 0 72px;
+  gap: 4px;
+  scroll-snap-align: start;
+  color: var(--foreground);
+}
+
+html.nexo-2026 .story-avatar {
+  width: 72px;
+  height: 72px;
+  position: relative;
+  padding: 2px;
+  border: 0;
+  border-radius: var(--radius-circle);
+  background: linear-gradient(145deg, var(--primary), var(--nexo-brand-light));
+  box-shadow: none;
+}
+
+html.nexo-2026 .story-avatar > span {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 2px solid var(--card);
+  border-radius: var(--radius-circle);
+  background: var(--nexo-surface-2);
+  color: var(--primary);
+  font-size: 15px;
+  letter-spacing: -.03em;
+}
+
+html.nexo-2026 .story-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+}
+
+html.nexo-2026 .story-avatar.mine {
+  border-color: var(--border);
+  background: var(--card);
+}
+
+html.nexo-2026 .story-avatar .avatar { width: 100%; height: 100%; border-radius: var(--radius-circle); }
+html.nexo-2026 .story-avatar .story-add { position: absolute; right: 0; bottom: 0; display: grid; place-items: center; width: var(--space-6); height: var(--space-6); border: 2px solid var(--card); border-radius: var(--radius-circle); color: var(--primary-foreground); background: var(--primary); }
+
+html.nexo-2026 .story-avatar.mine > span {
+  background: var(--green-50);
+  color: var(--primary);
+}
+
+html.nexo-2026 .story strong {
+  display: block;
+  max-width: 72px;
+  color: var(--foreground);
+  font-size: 10px;
+  font-weight: 590;
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* Reference 8 has an almost inline composer. The three posting types stay visible. */
+html.nexo-2026 .compose-card {
+  margin: 0;
+  padding: 9px 18px 0;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--card);
+  box-shadow: none;
+}
+
+html.nexo-2026 .compose-top {
+  min-height: 42px;
+  gap: 10px;
+  padding: 0 2px 8px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  font-weight: 450;
+}
+
+html.nexo-2026 .compose-top .avatar {
+  width: 35px;
+  height: 35px;
+  font-size: 12px;
+}
+
+html.nexo-2026 .compose-top > svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+}
+
+html.nexo-2026 .compose-options {
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+html.nexo-2026 .compose-options button {
+  min-width: 0;
+  min-height: 38px;
+  gap: 5px;
+  padding: 4px 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 610;
+}
+
+html.nexo-2026 .compose-options button + button {
+  border-left: 1px solid var(--border);
+}
+
+html.nexo-2026 .compose-options button:hover {
+  background: var(--green-50);
+  color: var(--foreground);
+}
+
+html.nexo-2026 .compose-options svg {
+  width: 16px;
+  height: 16px;
+  color: var(--primary);
+}
+
+html.nexo-2026 .compose-options em {
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+
+/* Image 7 informs post anatomy: author, text, full-width media, quiet action row. */
+html.nexo-2026 .feed-tabs {
+  height: 44px !important;
+  background: var(--card) !important;
+}
+
+html.nexo-2026 .feed-tabs button {
+  min-height: 44px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  font-weight: 620;
+}
+
+html.nexo-2026 .feed-tabs button[data-state=active]::after {
+  right: 31% !important;
+  left: 31% !important;
+  height: 3px !important;
+  border-radius: 999px !important;
+}
+
+html.nexo-2026 .posts,
+html.nexo-2026 .feed-tab-root > [data-slot="tabs-content"] {
+  background: var(--nexo-surface-2);
+}
+
+html.nexo-2026 .posts { padding: var(--space-3); }
+
+html.nexo-2026 .post-card {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-1);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--card);
+  box-shadow: none;
+}
+
+html.nexo-2026 .post-strip {
+  width: fit-content;
+  min-height: 21px;
+  gap: 5px;
+  margin: 0 0 7px;
+  padding: 1px 7px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--green-50);
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 690;
+  line-height: 1.25;
+}
+
+html.nexo-2026 .post-strip > span:last-child {
+  margin-left: 4px;
+}
+
+html.nexo-2026 .post-head {
+  gap: 7px;
+  min-height: 39px;
+}
+
+html.nexo-2026 .post-head .author-avatar {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+html.nexo-2026 .post-head .avatar {
+  width: 39px;
+  height: 39px;
+  font-size: 12px;
+}
+
+html.nexo-2026 .post-head .author-name {
+  min-height: 24px !important;
+  padding: 0;
+  color: var(--foreground);
+  font-size: var(--text-subhead);
+  font-weight: 750;
+  line-height: 1.15;
+  text-align: left;
+}
+
+html.nexo-2026 .post-head small {
+  max-width: min(40vw, 210px);
+  color: var(--muted-foreground);
+  font-size: var(--text-caption);
+  line-height: 1.25;
+}
+
+html.nexo-2026 .post-head .follow-button,
+html.nexo-2026 .post-head .following-button {
+  min-width: 44px;
+  min-height: 38px;
+  padding: 3px 5px;
+  font-size: 11px;
+  font-weight: 680;
+}
+
+html.nexo-2026 .post-head .more-button {
+  width: 33px;
+  min-height: 40px;
+}
+
+html.nexo-2026 .post-content {
+  padding: 7px 0 10px;
+}
+
+html.nexo-2026 .post-content h3 {
+  margin-bottom: 2px;
+  color: var(--foreground);
+  font-size: var(--text-subhead);
+  font-weight: var(--weight-medium);
+  line-height: 1.34;
+  letter-spacing: -.018em;
+}
+
+html.nexo-2026 .post-content h3 button {
+  min-height: 0;
+  padding: 0;
+  text-align: left;
+}
+
+html.nexo-2026 .post-content p {
+  color: var(--foreground);
+  font-size: var(--text-subhead);
+  line-height: 1.45;
+}
+
+html.nexo-2026 .post-content .location {
+  margin-top: 6px;
+  font-size: 10px;
+}
+
+html.nexo-2026 .post-media {
+  margin-inline: calc(-1 * var(--space-3));
+  border: 0;
+  border-radius: 0;
+  background: var(--nexo-surface-2);
+}
+
+html.nexo-2026 .post-media img {
+  width: 100%;
+  aspect-ratio: 1.6;
+  object-fit: cover;
+}
+
+html.nexo-2026 .post-media video {
+  width: 100%;
+  max-height: 550px;
+}
+
+html.nexo-2026 .post-actions {
+  gap: 0;
+  padding: 4px 0 0;
+}
+
+html.nexo-2026 .post-actions button {
+  gap: 4px;
+  min-width: 38px;
+  min-height: 42px;
+  padding: 5px 3px;
+  border-radius: 9px;
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+
+html.nexo-2026 .post-actions button svg {
+  width: 18px;
+  height: 18px;
+}
+
+html.nexo-2026 .post-actions button strong {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+html.nexo-2026 .post-actions button.selected {
+  color: var(--primary);
+}
+
+html.nexo-2026 .photo-credit {
+  padding: 1px 0 4px;
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+
+@media (max-width: 767px) {
+  html.nexo-2026 .header {
+    min-height: 58px;
+    padding: 6px 12px;
+    background: var(--card);
+  }
+
+  html.nexo-2026 .header-actions {
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  html.nexo-2026 .header-actions .notification {
+    width: 38px;
+    height: 40px;
+    flex-basis: 38px;
+  }
+
+  html.nexo-2026 .header-actions .login-link {
+    padding-inline: 4px;
+    color: var(--muted-foreground);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  html.nexo-2026 .header-actions .register-link {
+    min-height: 36px;
+    padding: 7px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  html.nexo-2026 .mobile-brand .brand-mark {
+    width: 33px;
+    height: 33px;
+    border-radius: 10px;
+    font-size: 25px;
+  }
+
+  html.nexo-2026 .mobile-brand .appearance-button {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    border-radius: 11px;
+  }
+
+  html.nexo-2026 .feed-scroll:not(.chat-scroll) {
+    min-height: calc(100svh - 58px);
+    padding-bottom: calc(102px + env(safe-area-inset-bottom, 0px));
+  }
+
+  html.nexo-2026 .demo-note {
+    padding-inline: 13px;
+  }
+
+  html.nexo-2026 .stories-block {
+    padding: 10px 13px 10px;
+  }
+
+  html.nexo-2026 .stories-scroll {
+    margin-top: 8px;
+    margin-right: -13px;
+    padding-right: 13px;
+  }
+
+  html.nexo-2026 .story {
+    flex-basis: 67px;
+  }
+
+  html.nexo-2026 .story-avatar {
+    width: 67px;
+    height: 67px;
+    border-radius: var(--radius-circle);
+  }
+
+  html.nexo-2026 .story-avatar > span {
+    border-radius: var(--radius-circle);
+  }
+
+  html.nexo-2026 .story-avatar img {
+    border-radius: var(--radius-circle);
+  }
+
+  html.nexo-2026 .story strong {
+    max-width: 67px;
+    font-size: 10px;
+  }
+
+  html.nexo-2026 .compose-card {
+    padding: 6px 13px 0;
+  }
+
+  html.nexo-2026 .compose-top {
+    min-height: 38px;
+    padding-bottom: 5px;
+  }
+
+  html.nexo-2026 .compose-options button {
+    min-height: 35px;
+  }
+
+  html.nexo-2026 .feed-tabs {
+    position: sticky;
+    top: 58px;
+    z-index: 8;
+    height: 42px !important;
+  }
+
+  html.nexo-2026 .feed-tabs button {
+    min-height: 42px;
+  }
+
+  html.nexo-2026 .post-card {
+    padding: var(--space-3) var(--space-3) var(--space-1);
+  }
+
+  html.nexo-2026 .post-content {
+    padding: 6px 0 8px;
+  }
+
+  html.nexo-2026 .post-media img {
+    aspect-ratio: 1.6;
+  }
+
+  /* Image 13's white floating dock, adapted to Nexo green. */
+  html.nexo-2026 .mobile-nav {
+    right: auto;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    width: min(calc(100vw - 24px), 430px);
+    height: 64px;
+    transform: translateX(-50%);
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--nexo-nav);
+    box-shadow: 0 10px 28px rgb(10 32 25 / 13%);
+  }
+
+  html.nexo-2026 .mobile-nav button {
+    position: relative;
+    min-height: 50px;
+    min-width: 0;
+    gap: 0;
+    border-radius: 999px;
+    color: var(--muted-foreground);
+  }
+
+  html.nexo-2026 .mobile-nav button svg {
+    box-sizing: border-box;
+    width: 37px;
+    height: 37px;
+    padding: 8px;
+    border-radius: 50%;
+  }
+
+  html.nexo-2026 .mobile-nav button.active {
+    background: transparent;
+    color: var(--primary-foreground);
+  }
+
+  html.nexo-2026 .mobile-nav button.active svg {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: 50%;
+  }
+
+  html.nexo-2026 .mobile-nav .mobile-create svg {
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow: none;
+  }
+
+  html.nexo-2026 .mobile-nav button span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 520px) {
+  html.nexo-2026 .mobile-brand .brand-name {
+    display: none;
+  }
+}
+
+@media (max-width: 350px) {
+  html.nexo-2026 .mobile-brand .appearance-button {
+    display: none;
+  }
+
+  html.nexo-2026 .header-actions .login-link {
+    padding-inline: 2px;
+  }
+
+  html.nexo-2026 .header-actions .register-link {
+    padding-inline: 7px;
+  }
+
+  html.nexo-2026 .post-head small {
+    max-width: 110px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.nexo-2026 .mobile-nav,
+  html.nexo-2026 .story,
+  html.nexo-2026 .post-card {
+    scroll-behavior: auto;
+    transition-duration: 0ms;
+  }
+}
+
+/* A compact social composer: modes switch in place, writing gets the canvas. */
+html.nexo-2026 .publish-dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(620px, calc(100vw - var(--space-8)));
+  max-width: min(620px, calc(100vw - var(--space-8)))!important;
+  min-height: 460px;
+  max-height: calc(100dvh - var(--space-8))!important;
+  padding: 0!important;
+  gap: 0;
+  overflow: hidden;
+  border-radius: var(--radius-card)!important;
+  background: var(--card);
+}
+html.nexo-2026 .publish-topbar { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; min-height: var(--space-16); padding: var(--space-2) var(--space-4); border-bottom: var(--hairline) solid var(--border); }
+html.nexo-2026 .publish-topbar > span { font-size: var(--text-body); font-weight: var(--weight-medium); }
+html.nexo-2026 .publish-cancel { min-height: var(--touch); padding-inline: 0; color: var(--foreground); font-size: var(--text-callout); }
+html.nexo-2026 .publish-topbar .button-primary { width: auto; min-height: var(--touch); padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill); font-size: var(--text-subhead); }
+html.nexo-2026 .publish-form { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 0; overflow-y: auto; overscroll-behavior: contain; }
+html.nexo-2026 .publish-kinds { flex-shrink: 0; display: flex; gap: var(--space-1); padding: var(--space-2) var(--space-4); border-bottom: var(--hairline) solid var(--border); overflow-x: auto; }
+html.nexo-2026 .publish-kinds button { flex: 1 0 auto; display: flex; align-items: center; justify-content: center; gap: var(--space-1); min-width: 0; min-height: var(--touch); padding: var(--space-2); border: 0; border-radius: var(--radius-pill); color: var(--muted-foreground); background: transparent; font-size: var(--text-footnote); transition: color var(--dur-fast) var(--ease-ui), background var(--dur-fast) var(--ease-ui), transform var(--dur-press) var(--ease-ui); }
+html.nexo-2026 .publish-kinds button.active { color: var(--primary); background: var(--secondary); border-color: transparent; }
+html.nexo-2026 .publish-kinds button b { font-weight: var(--weight-medium); }
+html.nexo-2026 .publish-author { display: flex; align-items: center; gap: var(--space-3); margin: var(--space-5) var(--space-4) var(--space-3); }
+html.nexo-2026 .publish-author .avatar { width: var(--touch); height: var(--touch); }
+html.nexo-2026 .publish-author > div { display: grid; min-width: 0; gap: var(--space-1); }
+html.nexo-2026 .publish-author b { font-size: var(--text-callout); font-weight: var(--weight-medium); }
+html.nexo-2026 .publish-author span { font-size: var(--text-caption); color: var(--muted-foreground); }
+html.nexo-2026 .publish-writing { display: flex; flex-direction: column; flex: 1; padding: 0 var(--space-4) var(--space-4); gap: var(--space-3); }
+html.nexo-2026 .publish-writing textarea { flex: 1; min-height: 180px; padding: var(--space-1) 0; border: 0; border-radius: 0; background: transparent; color: var(--foreground); resize: none; font-family: var(--font-native); font-size: var(--text-title-3); line-height: 1.5; box-shadow: none; outline: none; }
+html.nexo-2026 .publish-writing textarea::placeholder { color: var(--muted-foreground); }
+html.nexo-2026 .publish-writing .publish-title { border: 0; padding: var(--space-1) 0; border-radius: 0; font-size: var(--text-title-3); font-weight: var(--weight-medium); background: transparent; box-shadow: none; }
+html.nexo-2026 .publish-location { display: flex; align-items: center; gap: var(--space-2); color: var(--primary); }
+html.nexo-2026 .publish-location input { border: 0; padding-inline: 0; background: transparent; }
+html.nexo-2026 .publish-form .form-two input, html.nexo-2026 .publish-form .form-two [data-slot="select-trigger"] { background: var(--nexo-surface-2); border-color: var(--border); border-radius: var(--radius-control); min-height: var(--touch); }
+html.nexo-2026 .publish-footer { position: sticky; bottom: 0; margin-top: auto; padding: var(--space-2) var(--space-4) var(--space-3); border-top: var(--hairline) solid var(--border); background: var(--card); }
+html.nexo-2026 .publish-footer .media-actions { justify-content: flex-start; gap: var(--space-1); }
+html.nexo-2026 .publish-footer .media-actions button { width: var(--touch); height: var(--touch); padding: var(--space-2); justify-content: center; border-radius: var(--radius-circle); color: var(--primary); background: transparent; }
+html.nexo-2026 .publish-footer .media-actions button[aria-pressed="true"] { background: var(--secondary); }
+html.nexo-2026 .publish-footer .character-count { margin: 0 0 0 auto; color: var(--muted-foreground); font-size: var(--text-caption); }
+html.nexo-2026 .publish-footer .form-footnote { padding-top: var(--space-1); font-size: var(--text-caption); }
+html.nexo-2026 .publish-dialog .upload-preview { overflow: hidden; border-radius: var(--radius-card); background: var(--nexo-surface-2); }
+html.nexo-2026 .publish-dialog .upload-preview :is(img,video) { width: 100%; max-height: 340px; object-fit: contain; }
+html.nexo-2026 .publish-dialog .upload-preview > button { width: var(--touch); height: var(--touch); padding: var(--space-3); border: 0; background: var(--nexo-charcoal); color: var(--nexo-white); }
+@media (max-width: 767px) {
+  html.nexo-2026 .publish-dialog { top: 0; left: 0; width: 100vw!important; max-width: 100vw!important; height: 100dvh; max-height: 100dvh!important; min-height: 0; transform: none; translate: none; border: 0!important; border-radius: 0!important; }
+  html.nexo-2026 .publish-topbar { padding-top: calc(var(--space-2) + var(--safe-top)); }
+  html.nexo-2026 .publish-kinds { gap: 0; padding-inline: var(--space-2); }
+  html.nexo-2026 .publish-kinds button { padding-inline: var(--space-2); font-size: var(--text-caption); }
+  html.nexo-2026 .publish-kinds button svg { width: 15px; height: 15px; }
+  html.nexo-2026 .publish-footer { padding-bottom: calc(var(--space-3) + var(--safe-bottom)); }
+}

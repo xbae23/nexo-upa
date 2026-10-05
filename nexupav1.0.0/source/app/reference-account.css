@@ -1,0 +1,246 @@
+/* Owner captures 1–3: editorial account card, floating switcher, restrained rows. */
+html.nexo-2026 .brand-mark {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  background: #242b25;
+  color: var(--nexo-signal);
+  box-shadow: none;
+}
+
+html.nexo-2026 .brand-mark svg { display: block; width: 22px; height: 22px; }
+html.nexo-2026 .brand-name { font-weight: 790; letter-spacing: -.055em; }
+html.nexo-2026 .brand-name em { color: var(--nexo-teal); }
+
+html.nexo-2026 .account-access-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(452px, calc(100vw - 28px));
+  min-height: min(650px, calc(100dvh - 32px));
+  max-height: calc(100dvh - 32px);
+  gap: 0;
+  padding: clamp(38px, 8vh, 78px) 32px 28px;
+  overflow-y: auto;
+  border: 0;
+  border-radius: 38px;
+  background: var(--card);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 13%);
+  text-align: center;
+}
+
+html.nexo-2026 .account-access-card .auth-brand-mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 76px;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 34px;
+  border-radius: 50%;
+  background: #282e27;
+  color: var(--nexo-signal);
+  box-shadow: none;
+}
+
+html.nexo-2026 .auth-brand-mark svg { width: 38px; height: 38px; }
+html.nexo-2026 .account-access-card [data-slot="dialog-header"] {
+  width: 100%;
+  gap: 8px;
+  text-align: center;
+}
+
+html.nexo-2026 .account-access-card [data-slot="dialog-title"] {
+  font-size: clamp(25px, 5.7vw, 30px);
+  font-weight: 700;
+  letter-spacing: -.055em;
+  line-height: 1.1;
+}
+
+html.nexo-2026 .account-access-card [data-slot="dialog-description"] {
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+html.nexo-2026 .auth-entry-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 28px;
+}
+
+html.nexo-2026 .auth-social-button {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  min-height: 62px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--nexo-surface-2);
+  color: var(--foreground);
+}
+
+html.nexo-2026 .auth-social-button svg { width: 26px; height: 26px; }
+html.nexo-2026 .auth-social-caption { margin-top: 8px; color: var(--muted-foreground); font-size: 11px; }
+
+html.nexo-2026 .auth-separator {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 14px;
+  margin: 24px 0 27px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+
+html.nexo-2026 .auth-separator::before,
+html.nexo-2026 .auth-separator::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+html.nexo-2026 .account-access-card .button-primary {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 15px;
+  background: var(--nexo-signal);
+  color: var(--nexo-signal-ink);
+  font-size: 15px;
+  font-weight: 720;
+}
+
+html.nexo-2026 .account-access-card .button-primary:hover { background: var(--nexo-signal-hover); color: var(--nexo-signal-ink); }
+html.nexo-2026 .auth-register-copy { margin: 38px 0 0; color: var(--muted-foreground); font-size: 13px; }
+html.nexo-2026 .auth-register-copy button,
+html.nexo-2026 .auth-back-button {
+  min-height: 44px;
+  padding: 0 4px;
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+html.nexo-2026 .auth-demo-caption { margin: auto 0 0; padding-top: 18px; color: var(--muted-foreground); font-size: 11px; line-height: 1.35; }
+
+html.nexo-2026 .account-access-card .auth-form {
+  display: grid;
+  width: 100%;
+  gap: 14px;
+  margin-top: 36px;
+  text-align: left;
+}
+
+html.nexo-2026 .account-access-card .auth-form label { color: var(--foreground); font-size: 12px; font-weight: 650; }
+html.nexo-2026 .account-access-card .auth-form input {
+  min-height: 54px;
+  margin-top: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--nexo-teal);
+  border-radius: 14px;
+  background: var(--card);
+  font-size: 14px;
+}
+
+html.nexo-2026 .account-access-card .auth-form .button-primary { margin-top: 6px; }
+html.nexo-2026 .auth-back-button { justify-self: center; color: var(--muted-foreground); }
+
+/* The provider demo is a separate, smaller dialog above the welcome card. */
+html.nexo-2026 .social-auth-popup {
+  width: min(350px, calc(100vw - 40px));
+  max-height: calc(100dvh - 40px);
+  padding: var(--space-6);
+  gap: var(--space-5);
+  overflow-y: auto;
+  border: var(--hairline) solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  box-shadow: var(--shadow-sheet);
+}
+html.nexo-2026 .social-auth-service { display: flex; align-items: center; gap: var(--space-2); padding-right: var(--space-5); }
+html.nexo-2026 .social-auth-service > span { display: grid; place-items: center; width: 28px; height: 28px; color: var(--primary); }
+html.nexo-2026 .social-auth-service svg { width: var(--icon-base); height: var(--icon-base); }
+html.nexo-2026 .social-auth-service b { font-size: var(--text-footnote); }
+html.nexo-2026 .social-auth-service small { color: var(--muted-foreground); font-size: var(--text-caption); }
+html.nexo-2026 .social-auth-popup [data-slot="dialog-header"] { gap: var(--space-2); text-align: left; }
+html.nexo-2026 .social-auth-popup [data-slot="dialog-title"] { font-family: var(--font-display); font-size: var(--text-title-3); line-height: var(--line-title); letter-spacing: var(--tracking-title); }
+html.nexo-2026 .social-auth-popup [data-slot="dialog-description"] { font-size: var(--text-footnote); }
+html.nexo-2026 .social-auth-popup .auth-form { gap: var(--space-4); margin: 0; }
+html.nexo-2026 .social-auth-popup .auth-form label { font-size: var(--text-footnote); }
+html.nexo-2026 .social-auth-popup .auth-form input { margin-top: var(--space-2); min-height: 48px; background: var(--nexo-surface-2); border: var(--hairline) solid var(--input); border-radius: var(--radius-control); }
+html.nexo-2026 .social-auth-popup .button-primary { width: 100%; min-height: 48px; background: var(--primary); color: var(--primary-foreground); border-radius: var(--radius-pill); }
+
+/* Profile and account menus share the native grouped-list rhythm. */
+html.nexo-2026 .profile-view { background: var(--card); }
+html.nexo-2026 .profile-header { margin: 0; padding: var(--space-3) var(--space-5) var(--space-5); border: 0; border-radius: 0; background: var(--card); box-shadow: none; }
+html.nexo-2026 .profile-topline { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2); color: var(--muted-foreground); font-size: var(--text-footnote); }
+html.nexo-2026 .profile-topline > div { display: flex; }
+html.nexo-2026 .profile-topline button { display: grid; place-items: center; width: var(--touch); height: var(--touch); border-radius: var(--radius-circle); color: var(--foreground); }
+html.nexo-2026 .profile-top { display: flex; align-items: center; gap: var(--space-5); margin-bottom: var(--space-4); }
+html.nexo-2026 .profile-avatar-wrap { position: relative; flex-shrink: 0; }
+html.nexo-2026 .profile-avatar-wrap > .avatar { width: 88px; height: 88px; border-radius: var(--radius-circle); font-size: var(--text-title-1); box-shadow: 0 0 0 var(--space-1) var(--card), 0 0 0 calc(var(--space-1) + var(--hairline)) var(--border); }
+html.nexo-2026 .profile-note-bubble { position: absolute; right: 0; bottom: 0; display: grid; place-items: center; width: var(--space-6); height: var(--space-6); border: 2px solid var(--card); border-radius: var(--radius-circle); color: var(--primary-foreground); background: var(--primary); }
+html.nexo-2026 .profile-stats { display: flex; flex: 1; justify-content: space-around; gap: var(--space-3); margin: 0; }
+html.nexo-2026 .profile-stats > :is(button,div) { display: grid; place-content: center; min-width: 0; min-height: var(--touch); padding: var(--space-2) 0; text-align: center; }
+html.nexo-2026 .profile-stats b { font-size: var(--text-title-3); line-height: var(--line-title); color: var(--foreground); font-weight: var(--weight-bold); }
+html.nexo-2026 .profile-stats span { margin-top: var(--space-1); color: var(--muted-foreground); font-size: var(--text-caption); white-space: nowrap; }
+html.nexo-2026 .profile-header h2 { margin: 0; color: var(--foreground); font-size: var(--text-title-2); font-family: var(--font-native); font-weight: var(--weight-bold); line-height: var(--line-title); letter-spacing: var(--tracking-title); }
+html.nexo-2026 .profile-header .profile-handle { margin: var(--space-1) 0 var(--space-3); color: var(--muted-foreground); font-size: var(--text-footnote); }
+html.nexo-2026 .profile-header .profile-bio { max-width: 38em; margin: 0 0 var(--space-2); color: var(--foreground); font-size: var(--text-subhead); line-height: 1.5; }
+html.nexo-2026 .profile-program { display: flex; align-items: center; gap: var(--space-2); color: var(--muted-foreground); font-size: var(--text-footnote); }
+html.nexo-2026 .profile-controls { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-4); }
+html.nexo-2026 .profile-controls > button { flex: 1; min-height: var(--touch); padding: var(--space-2) var(--space-3); border: 0; border-radius: var(--radius-control); background: var(--nexo-surface-2); color: var(--foreground); font-size: var(--text-subhead); font-weight: var(--weight-medium); }
+html.nexo-2026 .profile-controls > .follow-button { color: var(--primary-foreground); background: var(--primary); }
+html.nexo-2026 .profile-controls > .following-button { color: var(--primary); background: var(--secondary); }
+html.nexo-2026 .profile-note { display: flex; align-items: center; gap: var(--space-2); max-width: 100%; margin-top: var(--space-4); padding: var(--space-2) var(--space-3); min-height: var(--touch); border: 0; border-radius: var(--radius-control); background: var(--nexo-surface-2); color: var(--muted-foreground); font-size: var(--text-footnote); text-align: left; }
+html.nexo-2026 .profile-note > span { flex: 1; min-width: 0; }
+html.nexo-2026 .profile-note > svg { flex-shrink: 0; }
+html.nexo-2026 .profile-tab-root .feed-tabs { border-top: var(--hairline) solid var(--border); }
+html.nexo-2026 .profile-tab-root .feed-tabs button { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-caption); }
+html.nexo-2026 .profile-posts { padding: var(--space-3); background: var(--nexo-surface-2); }
+html.nexo-2026 .profile-grid { gap: 2px; }
+html.nexo-2026 .profile-grid button { position: relative; aspect-ratio: 1; overflow: hidden; }
+html.nexo-2026 .profile-grid button > svg { position: absolute; right: var(--space-2); top: var(--space-2); color: var(--nexo-white); fill: var(--nexo-white); }
+html.nexo-2026 .profile-empty { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-12) var(--space-6); text-align: center; }
+html.nexo-2026 .profile-empty > svg { box-sizing: content-box; padding: var(--space-5); border: var(--hairline) solid var(--border); border-radius: var(--radius-circle); color: var(--primary); }
+html.nexo-2026 .profile-empty h3 { margin: 0; font-size: var(--text-title-3); letter-spacing: var(--tracking-title); }
+html.nexo-2026 .profile-empty p { max-width: 30em; margin: 0; color: var(--muted-foreground); font-size: var(--text-subhead); line-height: 1.5; }
+html.nexo-2026 .account-settings-dialog, html.nexo-2026 .profile-following-dialog { width: min(430px, calc(100vw - var(--space-8))); padding: var(--space-5); border-radius: var(--radius-sheet); background: var(--card); gap: var(--space-4); }
+html.nexo-2026 .settings-identity { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); border: 0; border-radius: var(--radius-control); background: var(--nexo-surface-2); }
+html.nexo-2026 .settings-identity .avatar { width: var(--space-12); height: var(--space-12); }
+html.nexo-2026 .settings-identity > div { flex: 1; min-width: 0; }
+html.nexo-2026 .settings-identity b { display: block; font-size: var(--text-callout); font-weight: var(--weight-medium); }
+html.nexo-2026 .settings-identity small { color: var(--muted-foreground); font-size: var(--text-footnote); }
+html.nexo-2026 .settings-identity > svg { color: var(--primary); }
+html.nexo-2026 .settings-section { padding: 0; border: 0; }
+html.nexo-2026 .settings-section h3 { margin: 0 0 var(--space-2) var(--space-3); color: var(--muted-foreground); font-size: var(--text-footnote); font-weight: var(--weight-regular); }
+html.nexo-2026 .settings-section > button { display: flex; align-items: center; gap: var(--space-3); width: 100%; min-height: 52px; padding: var(--space-3); border-radius: 0; background: var(--nexo-surface-2); color: var(--foreground); text-align: left; }
+html.nexo-2026 .settings-section > button:first-of-type { border-radius: var(--radius-control) var(--radius-control) 0 0; }
+html.nexo-2026 .settings-section > button:last-of-type { border-radius: 0 0 var(--radius-control) var(--radius-control); }
+html.nexo-2026 .settings-section > button + button { border-top: var(--hairline) solid var(--border); }
+html.nexo-2026 .settings-section > button span { flex: 1; font-size: var(--text-callout); }
+html.nexo-2026 .settings-section > button > svg:first-child { color: var(--primary); }
+html.nexo-2026 .settings-section > button > svg:last-child { color: var(--muted-foreground); }
+html.nexo-2026 .settings-theme-options { display: flex; gap: var(--space-1); padding: var(--space-1); border-radius: var(--radius-control); background: var(--nexo-surface-2); }
+html.nexo-2026 .settings-theme-options button { flex: 1; display: flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--touch); border-radius: var(--radius-control); }
+html.nexo-2026 .settings-theme-options button.chosen { background: var(--card); box-shadow: var(--shadow-control); }
+html.nexo-2026 .settings-caption { margin: 0; color: var(--muted-foreground); font-size: var(--text-caption); line-height: 1.5; }
+html.nexo-2026 .profile-following-list { display: grid; gap: var(--space-2); max-height: 60dvh; overflow-y: auto; }
+html.nexo-2026 .profile-following-list > div { display: flex; align-items: center; gap: var(--space-3); }
+html.nexo-2026 .profile-following-list > div > button:first-child { display: flex; align-items: center; gap: var(--space-3); flex: 1; min-width: 0; padding-block: var(--space-2); text-align: left; }
+html.nexo-2026 .profile-following-list span > b, html.nexo-2026 .profile-following-list span > small { display: block; }
+html.nexo-2026 .profile-following-list small { color: var(--muted-foreground); }
+html.nexo-2026 .profile-edit-avatar { display: grid; place-items: center; }
+html.nexo-2026 .profile-edit-avatar > .avatar { width: 80px; height: 80px; }
+
+@media (max-width: 767px) {
+  html.nexo-2026 .mobile-brand .appearance-button { display: none; }
+  html.nexo-2026 .account-access-card { min-height: min(620px, calc(100dvh - 20px)); max-height: calc(100dvh - 20px); padding: 48px 26px 24px; border-radius: 30px; }
+  html.nexo-2026 .profile-header { margin: 0; padding: var(--space-2) var(--space-4) var(--space-4); }
+  html.nexo-2026 .profile-top { gap: var(--space-4); }
+  html.nexo-2026 .profile-avatar-wrap > .avatar { width: 80px; height: 80px; }
+  html.nexo-2026 .profile-stats { gap: var(--space-2); }
+  html.nexo-2026 .profile-stats span { font-size: var(--text-caption-2); }
+  html.nexo-2026 .profile-tab-root .feed-tabs { top: var(--header-height); }
+  html.nexo-2026 .profile-tab-root .feed-tabs button { flex-direction: column; gap: 0; min-height: 52px; }
+  html.nexo-2026 .profile-tab-root .feed-tabs { height: 52px!important; }
+}
