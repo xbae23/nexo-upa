@@ -23,7 +23,7 @@ export function DemoProvider({children}:{children:ReactNode}){
   useEffect(()=>{if(!ready||loadedKey!==storageKey||!db.current)return;try{const tx=db.current.transaction("demo","readwrite");tx.objectStore("demo").put(state,storageKey!);tx.onerror=()=>toast.error("No hay espacio para guardar. Prueba con archivos más pequeños.");}catch{toast.error("No se pudieron guardar los cambios.");}},[state,ready,loadedKey,storageKey]);
   useEffect(()=>{const timer=setInterval(()=>setState(s=>expire(s)),30000);return()=>clearInterval(timer);},[]);
   const update=(fn:(s:DemoState)=>DemoState)=>setState(s=>fn(expire(s)));
-  const follow=(handle:string)=>update(s=>({...s,following:s.following.includes(handle)?s.following.filter(h=>h!==handle):[...s.following,handle]}));
+  const follow=(handle:string)=>update(s=>{const active=s.following.includes(handle);const followingAt={...s.followingAt};if(active)delete followingAt[handle];else followingAt[handle]=Date.now();return {...s,following:active?s.following.filter(h=>h!==handle):[...s.following,handle],followingAt};});
   return <Context.Provider value={{state,ready,update,follow}}>{children}</Context.Provider>;
 }
 export function useDemo(){const value=useContext(Context);if(!value)throw new Error("DemoProvider missing");return value;}

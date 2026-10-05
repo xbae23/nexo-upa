@@ -5,5 +5,5 @@ window.NEXO_CONFIG = {
   createAccountUrl: "https://xbae23.github.io/practica-kj/#registro",
   authApiUrl: "https://nexo-acceso.19salasdechema.workers.dev",
   providerImage: "./login-provider.svg",
-  previewEnabled: true
+  previewEnabled: false
 };
