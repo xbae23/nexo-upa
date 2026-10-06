@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { seed, expire, type DemoState } from "./community-state";
 import { useNexoAuth, type NexoProfile } from "./nexo-auth";
 import { socialApi, type SocialPerson, type SocialSnapshot } from "./social-api";
+import { canApplySocialRefresh } from "./refresh-order";
 export { seed, expire, dayKey } from "./community-state";
 export type { Message, Conversation, Notification, DemoState } from "./community-state";
 export const uid = () => crypto.randomUUID();
@@ -56,9 +57,14 @@ export function DemoProvider({children}:{children:ReactNode}){
   const [socialError,setSocialError]=useState("");
   const db=useRef<IDBDatabase|null>(null);
   const [loadedKey,setLoadedKey]=useState<string|null>(null);
+  const activeAccountId=useRef<string|null>(null);
+  const refreshSequence=useRef(0);
+  const appliedSequence=useRef(0);
+  activeAccountId.current=auth.account?.id??null;
 
   useEffect(()=>{
     let alive=true;db.current?.close();db.current=null;setReady(false);setLoadedKey(null);setState(seed());setPeople([]);
+    refreshSequence.current=0;appliedSequence.current=0;
     if(!storageKey)return()=>{alive=false;};
     openDatabase().then(database=>{
       if(!alive){database.close();return;}
@@ -76,13 +82,19 @@ export function DemoProvider({children}:{children:ReactNode}){
 
   const refresh=useCallback(async()=>{
     if(!socialApi.enabled||!auth.account)return;
+    const accountId=auth.account.id;
+    const sequence=++refreshSequence.current;
     try{
       const snapshot=await socialApi.bootstrap();
-      if(snapshot.me.id!==auth.account.id)throw new Error("La cuenta no coincide con la sesión.");
+      if(activeAccountId.current!==accountId)return;
+      if(snapshot.me.id!==accountId)throw new Error("La cuenta no coincide con la sesión.");
+      if(!canApplySocialRefresh(accountId,activeAccountId.current,sequence,appliedSequence.current))return;
+      appliedSequence.current=sequence;
       setPeople(snapshot.people);
       setState(current=>withSocialSnapshot(current,snapshot));
       setReady(true);setSocialError("");
-    }catch(error){const message=error instanceof Error?error.message:"No se pudo cargar la comunidad.";
+    }catch(error){if(!canApplySocialRefresh(accountId,activeAccountId.current,sequence,appliedSequence.current))return;
+      const message=error instanceof Error?error.message:"No se pudo cargar la comunidad.";
       setSocialError(message);throw error;}
   },[auth.account]);
 

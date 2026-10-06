@@ -13,7 +13,7 @@
     },
     {
       "path": "docs/QA.md",
-      "sha256": "ed48a977bf525cc8207320d08810a5e88e5a72c0b1372d6f4abd158101aa9aaf"
+      "sha256": "ae0e00c0830f746bf3914deb79aa1fe432259b302a80d01c7b15c74fbcff49ac"
     },
     {
       "path": "package.json",
@@ -409,7 +409,7 @@
     },
     {
       "path": "source/lib/demo-store.tsx",
-      "sha256": "38203d66a17afda9c7079decbeb628756a4ec3794fd4936f9d82f34ff8785220"
+      "sha256": "ce93234db932587fc308774710e791033bc0de4265bfa8674aea9a241d188970"
     },
     {
       "path": "source/lib/feature-flags.ts",
@@ -426,6 +426,10 @@
     {
       "path": "source/lib/profile-image.ts",
       "sha256": "d49cd13c234a7a2faa60c4377cccdf57f2f6b9c082289e4b79664753058f6d47"
+    },
+    {
+      "path": "source/lib/refresh-order.ts",
+      "sha256": "b34a8ff2c54307726ed559f27256e8d7c2f9673e9f904775d8aa5491444d2d93"
     },
     {
       "path": "source/lib/social-api.ts",
@@ -520,6 +524,10 @@
       "sha256": "07a289683ddf9d87d08be2dbb2f31f852d7592e2dbd36a44e6f4a383e68f5549"
     },
     {
+      "path": "source/tests/refresh-order.test.mjs",
+      "sha256": "cb4f1e166d8590dcfbdc8d429364fcf1d065039b0d97607f16c2469d95c391e0"
+    },
+    {
       "path": "source/tsconfig.json",
       "sha256": "700cf470af6d7c365e93bf686cecaef753e0621100dd9d7e788165d86a03642a"
     },
@@ -544,8 +552,8 @@
       "sha256": "86746dc6c241b9d9e5af9d7043a2c5decd632fd17e08b6d6ec15f22884471a52"
     },
     {
-      "path": "web/assets/index-CM3YzUho.js",
-      "sha256": "2592335c85f51bf4a5e9d317fed79c1c312aac256937d51a96da1297a9b74c77"
+      "path": "web/assets/index-I7Mg1Q0h.js",
+      "sha256": "9b15ea7bda89fc33bd18c0ffa8f03dd28835dc81a4e3068c7e6cb34f057ac87f"
     },
     {
       "path": "web/assets/index-LBzE787q.css",
@@ -556,12 +564,12 @@
       "sha256": "8a7832223d18cdab4b04d74945f4c5c19245e3dc50e9c708ac987f969fdb3068"
     },
     {
-      "path": "web/assets/nexo-camera-BhzUjfx4.js",
-      "sha256": "e3696ae63c6ffac03ff8cd11e04835e6fead4c9c78afdc935f703221cc0b7cf4"
+      "path": "web/assets/nexo-camera-Dorc8f48.js",
+      "sha256": "7a53dac8c1f3f3cd9f8961c04642db6d6ff55bdf03d5545f411a636f447cba8d"
     },
     {
-      "path": "web/assets/nexo-chat-CckNIVNI.js",
-      "sha256": "8356cebd9a86c934432b64df43080debe35b5d7e51b1c816b527be39287e18a2"
+      "path": "web/assets/nexo-chat-KBrr4fF8.js",
+      "sha256": "1877a8e912731f5fc7b9386ae692ce5a61314ae2cfd6ba022a521d96d160e405"
     },
     {
       "path": "web/favicon.svg",
@@ -581,7 +589,7 @@
     },
     {
       "path": "web/index.html",
-      "sha256": "204156d6a62272b12eca223e0b9f3fb8a4b8f322b52fd701cba7d6154b060695"
+      "sha256": "79fd9d7d1099f393012be8ec6743f51533fa8cfcfe0eb027e882b341cb3bb273"
     },
     {
       "path": "web/login-provider.svg",

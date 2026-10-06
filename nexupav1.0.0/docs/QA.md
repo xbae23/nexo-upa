@@ -18,6 +18,7 @@
 - Tipos de TypeScript y compilación estática.
 - Pruebas automatizadas de cámara, gestos, estado inicial vacío, expiración, cuotas y servidor estático.
 - Siete pruebas de la API social con SQLite/R2 simulados: directorio privado, interacción entre cuentas, fotos y mensajes, notificaciones, cuotas, 50 cuentas visibles e interactuando, y eliminación temporal sin borrar cuentas, perfiles ni fotos de perfil.
+- Las respuestas sociales antiguas no sobrescriben una actualización más reciente ni se aplican después de cambiar de cuenta; dos pruebas cubren el orden de las respuestas.
 - API de Cloudflare desplegada: dos cuentas ficticias probaron directorio, seguir, publicación con imagen en R2, Up!, comentario, Dump, mensaje con adjunto, notificaciones y avatar. El adjunto fue accesible al destinatario y rechazó acceso anónimo (HTTP 401). `/v1/health` devolvió `ok:true`; la respuesta CORS aceptó el origen de GitHub Pages.
 - En la web compilada: subir icono de prueba como avatar, guardar nombre/usuario y conservar foto de 512 px tras recargar.
 - Dump → galería → vista previa → adjuntar; sin activar cámara ni micrófono.
