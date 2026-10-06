@@ -41,15 +41,15 @@ export const socialApi={
   bootstrap:()=>call<SocialSnapshot>("/v1/bootstrap"),
   conversations:()=>call<{conversations:Conversation[]}>("/v1/conversations"),
   post:(payload:{kind:string;title:string;body:string;location?:string;price?:string;category?:string;mediaId?:string})=>
-    json<{id:string}>("/v1/posts","POST",payload),
-  story:(payload:{body:string;mediaId?:string})=>json<{id:string}>("/v1/stories","POST",payload),
+    json<{id:string;createdAt:number;expiresAt:number}>("/v1/posts","POST",payload),
+  story:(payload:{body:string;mediaId?:string})=>json<{id:string;createdAt:number;expiresAt:number}>("/v1/stories","POST",payload),
   follow:(id:string,enabled:boolean)=>call<{ok:boolean}>(`/v1/follows/${encodeURIComponent(id)}`,{method:enabled?"PUT":"DELETE"}),
   flag:(postId:string,kind:"up"|"save"|"repost",enabled:boolean)=>
     call<{ok:boolean}>(`/v1/posts/${encodeURIComponent(postId)}/${kind}`,{method:enabled?"PUT":"DELETE"}),
   comment:(postId:string,text:string,parentId?:string)=>
-    json<{id:string}>(`/v1/posts/${encodeURIComponent(postId)}/comments`,"POST",{text,parentId}),
+    json<{id:string;createdAt:number}>(`/v1/posts/${encodeURIComponent(postId)}/comments`,"POST",{text,parentId}),
   message:(payload:{recipientId:string;text:string;mediaId?:string;fileName?:string;replyTo?:string})=>
-    json<{id:string;conversationId:string}>("/v1/messages","POST",payload),
+    json<{id:string;conversationId:string;createdAt:number;expiresAt:number}>("/v1/messages","POST",payload),
   reactMessage:(id:string,reaction:string)=>json<{ok:boolean}>(`/v1/messages/${encodeURIComponent(id)}/reaction`,"PUT",{reaction}),
   readNotification:(id?:string)=>json<{ok:boolean}>("/v1/notifications/read","POST",{id}),
   avatar:(mediaId:string|null)=>json<{avatarId:string|null}>("/v1/avatar","PUT",{mediaId}),

@@ -8,6 +8,7 @@ import { Avatar, elapsed, linkParts } from "./nexo-features";
 import { fileData, initials, uid, useDemo, type Conversation, type Message } from "@/lib/demo-store";
 import { socialApi } from "@/lib/social-api";
 import { useNexoAuth } from "@/lib/nexo-auth";
+import { CHAT_POLL_MS } from "@/lib/social-polling";
 
 type ReplyPreview = { id: string; name: string; text: string };
 // Optional metadata stays in the existing local message record and shares its 3-day expiry.
@@ -105,7 +106,7 @@ function MessageItem({ message, name, handle, groupStart, groupEnd, onReply, onR
 }
 
 export function ChatsView({ contact, onContactConsumed }: { contact: string | null; onContactConsumed: () => void }) {
-  const { state, update, ready, socialEnabled, people:directory, sendMessage, reactMessage, refresh } = useDemo();
+  const { state, update, ready, socialEnabled, people:directory, sendMessage, reactMessage, refreshConversations } = useDemo();
   const auth=useNexoAuth();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [pending,setPending]=useState<Conversation|null>(null);
@@ -154,7 +155,7 @@ export function ChatsView({ contact, onContactConsumed }: { contact: string | nu
     chooseConversation(found.id); setNewChat(false);
   }
   useEffect(() => { if (contact) { open(contact); onContactConsumed(); } }, [contact]);
-  useEffect(()=>{if(!socialEnabled||!ready)return;const timer=setInterval(()=>{if(document.visibilityState==="visible")void refresh().catch(()=>{});},12_000);return()=>clearInterval(timer);},[socialEnabled,ready,refresh]);
+  useEffect(()=>{if(!socialEnabled||!ready)return;let alive=true;const load=()=>{if(alive&&document.visibilityState==="visible")void refreshConversations().catch(()=>{});};load();const timer=setInterval(load,CHAT_POLL_MS);window.addEventListener("focus",load);return()=>{alive=false;clearInterval(timer);window.removeEventListener("focus",load);};},[socialEnabled,ready,refreshConversations]);
   useEffect(() => { if (followBottom.current) bottom.current?.scrollIntoView({ block: "nearest", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); }, [selected?.messages.length, selectedId]);
   useEffect(() => { if (input.current) { input.current.style.height = "auto"; input.current.style.height = `${Math.min(input.current.scrollHeight, 120)}px`; } }, [draft, selectedId]);
   useEffect(() => { if (!attachment) { setLocalUrl(""); return; } const url = URL.createObjectURL(attachment); setLocalUrl(url); return () => URL.revokeObjectURL(url); }, [attachment]);

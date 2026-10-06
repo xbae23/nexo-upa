@@ -30,6 +30,12 @@ Este Worker es **separado** de `nexo-acceso`. Usa las sesiones, cuentas y perfil
 
 ## Límites y seguridad
 
+### Uso gratuito con unas 50 personas
+
+La app consulta el feed cada 90 segundos y, solo mientras se abre Mensajes, consulta las conversaciones cada 25 segundos. Al abrir o recuperar el foco y después de una acción, actualiza de inmediato. Si las 50 personas mantuvieran abierta la app **ocho horas** y todas estuvieran en Mensajes, el sondeo programado sumaría aproximadamente **73 600 solicitudes al día**; publicaciones, adjuntos, aperturas, autenticación y otras acciones se agregan a esa cifra. Es una estimación de tráfico, **no una garantía de que la cuota alcanzará**.
+
+Cloudflare documenta para Workers Free [100 000 solicitudes diarias](https://developers.cloudflare.com/workers/platform/limits/) y para D1 Free [5 millones de filas leídas y 100 000 escritas por día](https://developers.cloudflare.com/d1/platform/pricing/). Desde septiembre de 2026, D1 rechaza consultas al superar la cuota diaria; los datos guardados no se borran. Revisa **Workers & Pages → nexo-social → Metrics** y **D1 → nexo-usuarios → Metrics → Row Metrics** durante la prueba. R2 Standard tiene [10 GB-mes, un millón de operaciones clase A y diez millones clase B incluidos al mes](https://developers.cloudflare.com/r2/pricing/); mantén `nexo-medios` en Standard y revisa su consumo. Si se acerca a los límites, reduce actividad/archivos o cambia de plan antes de invitar a más personas.
+
 El login actual **no verifica la propiedad del correo**: alguien que conozca un usuario o correo puede entrar como esa persona. Esta integración sirve para pruebas con cuentas ficticias, no para mensajes privados de alumnos reales. Antes de abrirla a estudiantes, añade verificación de identidad al login, moderación, controles contra abuso y una política de privacidad. El Worker social no puede arreglar por sí solo la debilidad del login.
 
 La API valida la sesión en cada operación y el propietario de publicaciones/archivos. Los enlaces a medios de posts, Dumps y avatares son difíciles de adivinar pero pueden compartirse fuera de la app; **no trates esas fotos como privadas**. Los adjuntos de chat sí requieren la sesión de uno de los dos participantes.
