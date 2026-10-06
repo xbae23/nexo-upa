@@ -18,6 +18,7 @@
 - Tipos de TypeScript y compilación estática.
 - Pruebas automatizadas de cámara, gestos, estado inicial vacío, expiración, cuotas y servidor estático.
 - Cinco pruebas de la API social con SQLite/R2 simulados: directorio privado, dos cuentas que interactúan, fotos y mensajes, notificaciones, cuotas y eliminación temporal sin borrar cuentas/perfiles.
+- API de Cloudflare desplegada: dos cuentas ficticias probaron directorio, seguir, publicación con imagen en R2, Up!, comentario, Dump, mensaje con adjunto, notificaciones y avatar. El adjunto fue accesible al destinatario y rechazó acceso anónimo (HTTP 401). `/v1/health` devolvió `ok:true`; la respuesta CORS aceptó el origen de GitHub Pages.
 - En la web compilada: subir icono de prueba como avatar, guardar nombre/usuario y conservar foto de 512 px tras recargar.
 - Dump → galería → vista previa → adjuntar; sin activar cámara ni micrófono.
 - Crear publicación con imagen desde móvil.
@@ -27,4 +28,4 @@
 
 ## Pendientes ajenos a esta validación
 
-No se ha verificado hardware físico de iPhone/Android, grabación con permisos reales ni el Worker social desplegado en tu cuenta Cloudflare. La API está implementada en `source/social-worker/`, pero la funcionalidad multiusuario en línea sigue pendiente de crear sus recursos, desplegarla y probar dos dispositivos. Ver `source/social-worker/README.md`. El login actual tampoco verifica la propiedad del correo.
+No se ha verificado hardware físico de iPhone/Android, grabación con permisos reales ni una sesión de interfaz en dos dispositivos físicos. El chat usa sondeo y no WebSocket. El login actual tampoco verifica la propiedad del correo; no se deben usar datos privados reales. La eliminación programada se probó en SQLite/R2 simulados, pero todavía no se ha observado transcurrir el plazo de tres días en Cloudflare.

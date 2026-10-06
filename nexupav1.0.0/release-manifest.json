@@ -9,11 +9,11 @@
     },
     {
       "path": "docs/LOGIN-Y-DATOS.md",
-      "sha256": "418006ffd56cdc26990f291354800dbead4c63f4c3bc91d8bac3cdac77c36182"
+      "sha256": "61009d8f43561a0b85abc827cdf04046bc4f630644030eed6b2d8cf8c9438525"
     },
     {
       "path": "docs/QA.md",
-      "sha256": "49ef7a3f9598ca2059079798a908512d56fd56d1830c40f0261988d618ab837c"
+      "sha256": "d12c7eaf91f7a7a066d4994b8923cd5d2621d72247fde4964c6b855db0a64eb1"
     },
     {
       "path": "package.json",
@@ -21,7 +21,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "a980bb9a54c64e9f6e5be5a6ac6d09397eefd07cb4ee4b706e43493716d69e63"
+      "sha256": "7bc5f0a1f3a95cf3b2425595cadf5b0e2a7d3e53e36b0d2a83c6d61de4651be9"
     },
     {
       "path": "servidor/nexo.service.example",
@@ -453,7 +453,7 @@
     },
     {
       "path": "source/public/app-config.js",
-      "sha256": "87cee8de11a312505a298927275eee5ac65edf67d5fbd1b8350c3a192d96d69b"
+      "sha256": "86746dc6c241b9d9e5af9d7043a2c5decd632fd17e08b6d6ec15f22884471a52"
     },
     {
       "path": "source/public/favicon.svg",
@@ -493,7 +493,7 @@
     },
     {
       "path": "source/social-worker/README.md",
-      "sha256": "9f108ad277aa2367bdfbd0cdd86b55dba451d2268ebc0e6bd0d6433c5256aba4"
+      "sha256": "54a6f84eec8d4ec5b3fa7fb8c2285f19600e7ba9f0ccbbebb2f658b6a0bffbe6"
     },
     {
       "path": "source/social-worker/schema.sql",
@@ -541,7 +541,7 @@
     },
     {
       "path": "web/app-config.js",
-      "sha256": "87cee8de11a312505a298927275eee5ac65edf67d5fbd1b8350c3a192d96d69b"
+      "sha256": "86746dc6c241b9d9e5af9d7043a2c5decd632fd17e08b6d6ec15f22884471a52"
     },
     {
       "path": "web/assets/index-C-f9N9PU.js",

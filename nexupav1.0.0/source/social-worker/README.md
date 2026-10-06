@@ -11,7 +11,7 @@ Este Worker es **separado** de `nexo-acceso`. Usa las sesiones, cuentas y perfil
 5. En **Settings → Variables and Secrets**, crea una variable de texto `ALLOWED_ORIGINS` con valor exacto `https://xbae23.github.io`. No pongas aquí `ADMIN_KEY` ni claves del login; la API verifica el token de sesión contra D1.
 6. Añade un **Cron Trigger** `*/15 * * * *` al Worker. El Worker deja de mostrar contenido en cuanto vence y el cron borra físicamente filas y objetos de R2. Los Dumps vencen en 3 horas; posts, comentarios, seguimientos, avisos y chats en 3 días. La foto de perfil, la cuenta y el perfil no vencen.
 7. Abre `https://<tu-worker>.workers.dev/v1/health`. Debe responder `{"ok":true,"service":"nexo-social"}`. Si indica `ok:false`, revisa los dos bindings.
-8. Envía **solo la URL pública** del Worker para ponerla en `public/app-config.js` como `socialApiUrl` y desplegar el frontend actualizado en GitHub Pages. No envíes credenciales, tokens ni claves. Tras ese despliegue, prueba con dos cuentas en dispositivos distintos.
+8. La URL pública `https://nexo-social.19salasdechema.workers.dev` ya está configurada como `socialApiUrl` en `public/app-config.js`. Tras publicar el frontend en GitHub Pages, comprueba con dos cuentas en dispositivos distintos. No publiques credenciales, tokens ni claves.
 
 ## Qué habilita
 

@@ -6,7 +6,7 @@ Interfaz móvil de la comunidad UPA. [Vista previa publicada](https://xbae23.git
 
 Acceso como primera pantalla, marca de gorrión de dos colores, fotografía de perfil propia, menús sin duplicados, cámara/galería directa para Dumps y correcciones del editor y visor móvil que se mantienen al compilar. No se precargan usuarios, publicaciones, conversaciones o fotos inventadas.
 
-La app exige una cuenta. El login y panel viven en el [repositorio separado practica-kj](https://github.com/xbae23/practica-kj) y ya usan Cloudflare D1. Esta versión incluye un [Worker social](social-worker/README.md) y la conexión desde la interfaz para compartir usuarios, publicaciones, medios y mensajes. **La función multiusuario no estará activa en GitHub Pages hasta que el propietario despliegue ese Worker, agregue R2 y configure `socialApiUrl`.** Mientras tanto, la actividad sigue limitada al dispositivo.
+La app exige una cuenta. El login y panel viven en el [repositorio separado practica-kj](https://github.com/xbae23/practica-kj) y usan Cloudflare D1. El [Worker social](social-worker/README.md) está desplegado en Cloudflare con D1 y R2, y `socialApiUrl` apunta a él. Publicaciones, Dumps, perfiles, seguimientos, reacciones y chats se comparten entre cuentas; una prueba de dos cuentas ficticias confirmó el flujo de la API real. El login sigue siendo deliberadamente inseguro para datos de alumnos reales.
 
 ## Desarrollo
 

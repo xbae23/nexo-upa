@@ -29,17 +29,17 @@ En un hosting estático, sube únicamente el contenido de `web/`. Mantén `app-c
 
 ## Login y perfil
 
-Edita `web/app-config.js` sin recompilar: `authApiUrl` apunta al Worker de acceso existente. Cuando despliegues la API de `source/social-worker/`, establece `socialApiUrl` con su URL pública. `loginUrl` y `createAccountUrl` apuntan al login separado en `xbae23/practica-kj`.
+Edita `web/app-config.js` sin recompilar: `authApiUrl` apunta al Worker de acceso y `socialApiUrl` al Worker social desplegado. `loginUrl` y `createAccountUrl` apuntan al login separado en `xbae23/practica-kj`.
 
 La ventana pequeña se implementa en `source/components/nexo-access.tsx`, componente `InstitutionalLogin`. No captura credenciales. Tras registrarse, Nexo pide un nombre visible y alias propios, separados del usuario del login; esos datos se guardan en D1 mediante `source/lib/nexo-auth.tsx`. El panel del login solo muestra ID, usuario y correo del registro.
 
 ## Estado real de esta entrega
 
-Esta entrega incluye la interfaz y el código de una API social multiusuario para Cloudflare. **La API no funciona en línea hasta que el propietario cree R2, ejecute la migración D1, despliegue el Worker, configure sus bindings y establezca `socialApiUrl`.** El servidor Node incluido solo sirve archivos; las rutas `/api/` no hacen de backend social.
+Esta entrega incluye la interfaz y el código de una API social multiusuario para Cloudflare. El Worker `nexo-social` ya responde con D1 y R2, y la configuración incluida apunta a su URL. Se comprobó la API real con dos cuentas ficticias. El servidor Node incluido solo sirve archivos; las rutas `/api/` no hacen de backend social.
 
 El flujo de cuenta y perfil ya usa el Worker de acceso separado. **No verifica la propiedad del correo**: cualquiera que conozca el correo o usuario podría entrar. Antes de admitir alumnos reales, añade verificación de identidad y los controles indicados en `source/social-worker/README.md`. No debe anunciarse como servicio para datos privados reales.
 
-Mientras `socialApiUrl` esté vacío, la actividad social sigue limitada al navegador. La entrada sin cuenta está deshabilitada. Cuando la API esté desplegada y se configure su URL, la app pasa a leer y escribir la actividad compartida mediante Cloudflare.
+La entrada sin cuenta está deshabilitada. Con `socialApiUrl` configurado, la app lee y escribe actividad compartida mediante Cloudflare. Si ese Worker no responde, la interfaz muestra un error y no simula que la operación se guardó.
 
 ## Modificar y volver a compilar
 

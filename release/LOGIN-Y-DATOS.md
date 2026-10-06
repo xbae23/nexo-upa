@@ -12,7 +12,7 @@ Puedes reemplazar el aspecto de `index.html` y `styles.css` en el repo del login
 2. Un código de un solo uso devuelve a la persona a Nexo. Nexo lo canjea por una sesión de siete días.
 3. Si no hay perfil interno, Nexo pide un **nombre visible y alias nuevos**. No copia automáticamente el usuario del login. El perfil se guarda en una tabla separada de D1.
 4. El panel del login muestra solo los campos del registro, no el perfil visible de Nexo.
-5. Si `socialApiUrl` está vacío, la actividad social sigue en IndexedDB del navegador. Al desplegar `source/social-worker/` y configurar su URL, publicaciones, medios, seguidores y chats pasan a la D1/R2 compartida.
+5. `socialApiUrl` apunta al Worker social desplegado: publicaciones, medios, seguidores y chats usan la D1/R2 compartida. Si se borra esa URL, la actividad vuelve a quedarse en el navegador de cada persona.
 
 ## Configuración necesaria
 
@@ -22,4 +22,4 @@ En `web/app-config.js`, `authApiUrl` apunta al Worker de login y `socialApiUrl` 
 
 **Este acceso es deliberadamente inseguro para una prueba:** el correo no se verifica. Conocer el correo o usuario de una cuenta permite entrar en ella. No se deben invitar alumnos reales ni subir datos sensibles hasta añadir verificación de identidad, límites de abuso y protección operativa. La sesión en `localStorage` es solo para esta demo; una implementación real debe usar un mecanismo de sesión más robusto.
 
-El código de la API social está incluido, pero **no hay sincronización real hasta desplegarlo en Cloudflare y configurar `socialApiUrl`**. La actualización de chats es por sondeo, no por WebSocket instantáneo. Para un lanzamiento real siguen faltando verificación de identidad, moderación, respaldos y controles de privacidad.
+La API social ya está desplegada y se probó entre dos cuentas ficticias. La actualización de chats es por sondeo, no por WebSocket instantáneo. Para un lanzamiento real siguen faltando verificación de identidad, moderación, respaldos y controles de privacidad.
