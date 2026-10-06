@@ -116,12 +116,17 @@ export function DemoProvider({children}:{children:ReactNode}){
 
   useEffect(()=>{
     if(!socialApi.enabled||!auth.account||!auth.profile||loadedKey!==storageKey)return;
-    let alive=true;
-    const load=()=>{if(alive)void refresh().catch(()=>{});};
+    let alive=true,lastAutomaticLoad=0;
+    const load=()=>{
+      if(!alive||document.visibilityState!=="visible"||Date.now()-lastAutomaticLoad<5000)return;
+      lastAutomaticLoad=Date.now();void refresh().catch(()=>{});
+    };
+    const visible=()=>{if(document.visibilityState==="visible")load();};
     load();
-    const interval=setInterval(()=>{if(document.visibilityState==="visible")load();},FEED_POLL_MS);
+    const interval=setInterval(load,FEED_POLL_MS);
     window.addEventListener("focus",load);
-    return()=>{alive=false;clearInterval(interval);window.removeEventListener("focus",load);};
+    document.addEventListener("visibilitychange",visible);
+    return()=>{alive=false;clearInterval(interval);window.removeEventListener("focus",load);document.removeEventListener("visibilitychange",visible);};
   },[auth.account,auth.profile,loadedKey,storageKey,refresh]);
 
   useEffect(()=>{if(auth.profile&&ready&&loadedKey===storageKey)setState(current=>withOnlineProfile(current,auth.profile));},[auth.profile,ready,loadedKey,storageKey]);

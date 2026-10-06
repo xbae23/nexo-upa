@@ -105,7 +105,7 @@
     },
     {
       "path": "source/components/nexo-chat.tsx",
-      "sha256": "7ab9067966642f30c03a34001ccc784cad75f33d82b7c9fb4c388647daf8facf"
+      "sha256": "3b79b3700da8c8515429831840b9f368c3df8b3ca50ad79cf083ec98695f1976"
     },
     {
       "path": "source/components/nexo-features.tsx",
@@ -409,7 +409,7 @@
     },
     {
       "path": "source/lib/demo-store.tsx",
-      "sha256": "da9877ca886d55f4e5d38bafb105fcad176a33d47ae785a33069d088dfa21abc"
+      "sha256": "b0d3b18ce9604b14014374ec465c13a1e10c6ca6a104e79e209ca285adf791c5"
     },
     {
       "path": "source/lib/feature-flags.ts",
@@ -437,7 +437,7 @@
     },
     {
       "path": "source/lib/social-polling.ts",
-      "sha256": "6f6c0a3a2bb264b68eafafe531f3545bf35879f2b47973135bff34db5a908b60"
+      "sha256": "cfe190a1d88920829a2ba9bce27c9ad30c9a8ec88328e705def1bc91fd6789fc"
     },
     {
       "path": "source/lib/utils.ts",
@@ -501,7 +501,7 @@
     },
     {
       "path": "source/social-worker/README.md",
-      "sha256": "9ee9471acf1510389d30fe515a8c01a2ccd14f771d9e94cc2021d02cb9f4cf7f"
+      "sha256": "0783531362b34703bb3f6ea64d33fca6209d3d28376a9c00f37282c49a8c4e5b"
     },
     {
       "path": "source/social-worker/schema.sql",
@@ -533,7 +533,7 @@
     },
     {
       "path": "source/tests/social-polling.test.mjs",
-      "sha256": "8b746357990bf4880b954709b86a2450faf89b28a28960945cec97fd6bd3f041"
+      "sha256": "411730ae7f5285875e0ae96304eb1a0076081fedcd71b3024fa58907a037fba8"
     },
     {
       "path": "source/tsconfig.json",
@@ -560,24 +560,24 @@
       "sha256": "86746dc6c241b9d9e5af9d7043a2c5decd632fd17e08b6d6ec15f22884471a52"
     },
     {
-      "path": "web/assets/index-LBzE787q.css",
-      "sha256": "6738bae5416ed7f8f1d17956790308da08ff2eb97c1c3da69c3b27284dc37ea8"
+      "path": "web/assets/index-cx2EEEuf.js",
+      "sha256": "5a793599edd5f7b4f2ca93d4230bb3b07cbf4228f219f86c7165997b387ed243"
     },
     {
-      "path": "web/assets/index-Nc1_HIPW.js",
-      "sha256": "fa74ec270993f811271021c0120b9a9c11be939b22f5eeca826f7355dbdc37aa"
+      "path": "web/assets/index-LBzE787q.css",
+      "sha256": "6738bae5416ed7f8f1d17956790308da08ff2eb97c1c3da69c3b27284dc37ea8"
     },
     {
       "path": "web/assets/nexo-camera-3uh1fH2l.css",
       "sha256": "8a7832223d18cdab4b04d74945f4c5c19245e3dc50e9c708ac987f969fdb3068"
     },
     {
-      "path": "web/assets/nexo-camera-BkH8_FZj.js",
-      "sha256": "e4b37f6ccd51241ac5648a19ff300670baa221c86a14fc82892f1d5ddf5b0735"
+      "path": "web/assets/nexo-camera-D20O3hQN.js",
+      "sha256": "4ce081eb47c50b9788f8017b1c43f4f3cd151d88807d55da32231ab069694e17"
     },
     {
-      "path": "web/assets/nexo-chat-I4kWs2ZJ.js",
-      "sha256": "dfb41a2d584d915a2f9286fd50b1b2666db16c25b68da9678c730b0fe10accb8"
+      "path": "web/assets/nexo-chat-9uAo6lTK.js",
+      "sha256": "ea515b2bfdcb7e4f5728fa4066cf4439f016f7a78d7da4bc5f149e7aa0e8b3e6"
     },
     {
       "path": "web/favicon.svg",
@@ -597,7 +597,7 @@
     },
     {
       "path": "web/index.html",
-      "sha256": "118ff05da740f481a87ef9ac2aa9e8677e6f4643e536bf4c629112a93c9778a8"
+      "sha256": "957e59112d3069b48067e6dd47232dd644602c9ea3f6d2319fd90aa997e8fdba"
     },
     {
       "path": "web/login-provider.svg",
