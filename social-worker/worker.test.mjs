@@ -36,7 +36,7 @@ function fixture() {
   };
   const env = { DB: db, MEDIA: media, ALLOWED_ORIGINS: 'https://xbae23.github.io' };
   function user(id, alias) {
-    const token = id.repeat(64);
+    const token = createHash('sha256').update(`fixture:${id}`).digest('hex');
     const hash = createHash('sha256').update(token).digest('hex');
     sqlite.prepare('INSERT INTO usuarios(id,usuario,correo) VALUES (?,?,?)')
       .run(crypto.randomUUID(), alias, `${alias}@example.invalid`);
@@ -59,7 +59,7 @@ function fixture() {
     const result = await worker.fetch(request, env);
     return { status: result.status, data: result.headers.get('Content-Type')?.includes('json') ? await result.json() : await result.arrayBuffer() };
   }
-  return { sqlite, env, objects, a, b, c, call };
+  return { sqlite, env, objects, a, b, c, user, call };
 }
 
 test('las cuentas existentes comparten directorio sin publicar correos', async () => {
@@ -138,4 +138,38 @@ test('post normal avisa a seguidores; Reporte avisa a toda la comunidad', async 
   assert.equal(forCora.some(item => item.text.includes('publicó algo nuevo')), false);
   await call('/v1/posts', a, 'POST', { kind: 'reporte', body: 'Se encontró una credencial' });
   assert.ok((await call('/v1/bootstrap', c)).data.notifications.some(item => item.text.includes('Reporte')));
+});
+
+test('cincuenta cuentas aparecen en el directorio y comparten publicaciones y chat', async () => {
+  const { a, b, user, call } = fixture();
+  const others = Array.from({ length: 47 }, (_, index) => user(`extra-${index}`, `estudiante${index}`));
+  const directory = (await call('/v1/bootstrap', a)).data.people;
+  assert.equal(directory.length, 50);
+  assert.equal(new Set(directory.map(person => person.id)).size, 50);
+  const posted = await call('/v1/posts', others.at(-1), 'POST', { kind: 'post', body: 'Hola desde otra cuenta' });
+  assert.equal(posted.status, 201);
+  assert.ok((await call('/v1/bootstrap', b)).data.posts.some(post => post.id === posted.data.id));
+  const message = await call('/v1/messages', a, 'POST', { recipientId: others[0].id, text: 'Hola UPA' });
+  assert.equal(message.status, 201);
+  assert.ok((await call('/v1/conversations', others[0])).data.conversations[0].messages.some(item => item.text === 'Hola UPA'));
+});
+
+test('la limpieza de tres días conserva foto de perfil, cuenta y perfil', async () => {
+  const { a, call, env, objects, sqlite } = fixture();
+  const picture = new Uint8Array([137, 80, 78, 71, 1, 2, 3]);
+  const uploaded = await call('/v1/media', a, 'POST', picture, {
+    'X-Media-Purpose': 'avatar', 'X-File-Name': 'perfil.png', 'Content-Type': 'image/png'
+  });
+  assert.equal(uploaded.status, 201);
+  assert.equal((await call('/v1/avatar', a, 'PUT', { mediaId: uploaded.data.id })).status, 200);
+  const originalNow = Date.now;
+  try {
+    Date.now = () => originalNow() + 3 * 86_400_000 + 1;
+    await worker.scheduled({}, env);
+    assert.equal(sqlite.prepare('SELECT COUNT(*) AS n FROM usuarios').get().n, 3);
+    assert.equal(sqlite.prepare('SELECT COUNT(*) AS n FROM perfiles_nexo').get().n, 3);
+    assert.equal(sqlite.prepare('SELECT COUNT(*) AS n FROM social_avatars').get().n, 1);
+    assert.equal(objects.size, 1);
+    assert.equal((await call(`/v1/media/${uploaded.data.id}`, a)).status, 200);
+  } finally { Date.now = originalNow; }
 });

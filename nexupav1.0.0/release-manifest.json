@@ -13,7 +13,7 @@
     },
     {
       "path": "docs/QA.md",
-      "sha256": "d12c7eaf91f7a7a066d4994b8923cd5d2621d72247fde4964c6b855db0a64eb1"
+      "sha256": "ed48a977bf525cc8207320d08810a5e88e5a72c0b1372d6f4abd158101aa9aaf"
     },
     {
       "path": "package.json",
@@ -493,7 +493,7 @@
     },
     {
       "path": "source/social-worker/README.md",
-      "sha256": "54a6f84eec8d4ec5b3fa7fb8c2285f19600e7ba9f0ccbbebb2f658b6a0bffbe6"
+      "sha256": "93022fb7df7e9687fb1f0a697b6a1f175e91d0f76cce85e73efb13ee42611699"
     },
     {
       "path": "source/social-worker/schema.sql",
@@ -505,7 +505,7 @@
     },
     {
       "path": "source/social-worker/worker.test.mjs",
-      "sha256": "1ce1eadc4ec5a7f94d1b84cd3ed5bfbcaa11833955ec724301171d4487343bc1"
+      "sha256": "c391c39dc7ca99b32103c71f0c87c318d91b08ed792baad51315f1a9484ef764"
     },
     {
       "path": "source/tests/camera-utils.test.mjs",

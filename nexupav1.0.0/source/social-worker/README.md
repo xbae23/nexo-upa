@@ -9,9 +9,16 @@ Este Worker es **separado** de `nexo-acceso`. Usa las sesiones, cuentas y perfil
 3. En **Workers & Pages → Create → Start with Hello World**, crea un Worker llamado `nexo-social`. Sustituye el código de ejemplo por el contenido íntegro de [`worker.js`](worker.js) y publícalo.
 4. Dentro de `nexo-social`, en **Bindings → Add binding**, añade **D1 database** con nombre de variable `DB` y selecciona `nexo-usuarios`. Añade **R2 bucket** con nombre `MEDIA` y selecciona `nexo-medios`.
 5. En **Settings → Variables and Secrets**, crea una variable de texto `ALLOWED_ORIGINS` con valor exacto `https://xbae23.github.io`. No pongas aquí `ADMIN_KEY` ni claves del login; la API verifica el token de sesión contra D1.
-6. Añade un **Cron Trigger** `*/15 * * * *` al Worker. El Worker deja de mostrar contenido en cuanto vence y el cron borra físicamente filas y objetos de R2. Los Dumps vencen en 3 horas; posts, comentarios, seguimientos, avisos y chats en 3 días. La foto de perfil, la cuenta y el perfil no vencen.
+6. Añade un **Cron Trigger** `*/15 * * * *` al Worker. En la consola actual: **Workers & Pages → Overview → nexo-social → Settings → Triggers → Cron Triggers → Add**. Guarda la expresión exactamente como aparece aquí. Los Cron Triggers usan UTC, pero esta expresión significa «cada 15 minutos» en cualquier zona horaria. El Worker deja de mostrar contenido en cuanto vence y el cron borra físicamente filas y objetos de R2. Los Dumps vencen en 3 horas; posts, comentarios, seguimientos, avisos y chats en 3 días. La foto de perfil, la cuenta y el perfil no vencen.
 7. Abre `https://<tu-worker>.workers.dev/v1/health`. Debe responder `{"ok":true,"service":"nexo-social"}`. Si indica `ok:false`, revisa los dos bindings.
 8. La URL pública `https://nexo-social.19salasdechema.workers.dev` ya está configurada como `socialApiUrl` en `public/app-config.js`. Tras publicar el frontend en GitHub Pages, comprueba con dos cuentas en dispositivos distintos. No publiques credenciales, tokens ni claves.
+
+### Comprobar la limpieza programada
+
+- `https://nexo-social.19salasdechema.workers.dev/v1/health` responde `ok:true`: esto confirma **solo los bindings**, no que el Cron Trigger esté instalado o ejecutándose.
+- Después de guardar el Cron, espera hasta 15 minutos de propagación. En **nexo-social → Settings → Trigger Events → View events**, comprueba que aparece una ejecución programada satisfactoria. Los eventos de un Worker nuevo o renombrado pueden tardar hasta 30 minutos en mostrarse.
+- Conserva el bucket R2 **privado**. No apliques una regla de eliminación de 3 días a todo el bucket: también borraría las fotos de perfil que deben permanecer. El Worker elimina los objetos temporales por su propia fecha de caducidad.
+- Haz una prueba con dos cuentas ficticias, en navegadores o dispositivos distintos: crear perfil, seguir, publicar con foto, dar Up!, enviar mensaje con archivo y comprobar que la otra cuenta lo recibe. No uses datos privados reales mientras el login no verifique la identidad.
 
 ## Qué habilita
 
@@ -31,4 +38,4 @@ El límite de duración de video (25 segundos Dump; 30 segundos post) lo comprue
 
 ## Pruebas de código
 
-Desde la raíz del repositorio: `node --test social-worker/worker.test.mjs`. Estas pruebas usan una D1 simulada con SQLite local y R2 simulado; **no prueban la configuración real de tu cuenta Cloudflare**. La prueba final exige desplegar y comprobar dos dispositivos.
+Desde la raíz del repositorio: `node --test social-worker/worker.test.mjs`. Estas pruebas usan una D1 simulada con SQLite local y R2 simulado; incluyen 50 cuentas y comprueban que la limpieza conserva los avatares, pero **no prueban la configuración real de tu cuenta Cloudflare**. La prueba final exige comprobar el Cron Trigger y dos dispositivos.
