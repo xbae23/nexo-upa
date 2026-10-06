@@ -57,7 +57,7 @@
     },
     {
       "path": "source/app/page.tsx",
-      "sha256": "9d5b56192701109e1aa47ab1692181a189b0a4a141b12ea9c3d617f6d807703e"
+      "sha256": "34ad824c154602999923b86ec5de57907d3ec0229ba165418b0ee242b52abe5f"
     },
     {
       "path": "source/app/reference-account.css",
@@ -105,11 +105,11 @@
     },
     {
       "path": "source/components/nexo-chat.tsx",
-      "sha256": "89527ec1cef20ece81fe3c39ca9934b8091669b664299efb148fd0e82db795e4"
+      "sha256": "3cef96cce84c67073ad08974286b394465ab346c0d5e9221366e85b58c3ca41b"
     },
     {
       "path": "source/components/nexo-features.tsx",
-      "sha256": "11337a51e3158b0b96cad769b84425f14609cec44a56f0ab59657b013fd9e71e"
+      "sha256": "8107cb5d81dc6b9d8dc87d8b61d53c1b463817dbeba08a0456476372ce2f4074"
     },
     {
       "path": "source/components/nexo-logo.tsx",
@@ -544,8 +544,8 @@
       "sha256": "86746dc6c241b9d9e5af9d7043a2c5decd632fd17e08b6d6ec15f22884471a52"
     },
     {
-      "path": "web/assets/index-C-f9N9PU.js",
-      "sha256": "18d961803b397a21f5e77d4fd7c6ed509dc88b1089779c11fb7932b1de3f82b3"
+      "path": "web/assets/index-CM3YzUho.js",
+      "sha256": "2592335c85f51bf4a5e9d317fed79c1c312aac256937d51a96da1297a9b74c77"
     },
     {
       "path": "web/assets/index-LBzE787q.css",
@@ -556,12 +556,12 @@
       "sha256": "8a7832223d18cdab4b04d74945f4c5c19245e3dc50e9c708ac987f969fdb3068"
     },
     {
-      "path": "web/assets/nexo-camera-DY55twdw.js",
-      "sha256": "4dc7076b9ece43fac08afa5934c155ed6b064981c667047f0fb141147b8ca034"
+      "path": "web/assets/nexo-camera-BhzUjfx4.js",
+      "sha256": "e3696ae63c6ffac03ff8cd11e04835e6fead4c9c78afdc935f703221cc0b7cf4"
     },
     {
-      "path": "web/assets/nexo-chat-DkXZ0UkY.js",
-      "sha256": "a1538f435a8e4eb2e76c2f376d4cfb0616f8a5dd6a5ee37f2a75f1a29f90ae99"
+      "path": "web/assets/nexo-chat-CckNIVNI.js",
+      "sha256": "8356cebd9a86c934432b64df43080debe35b5d7e51b1c816b527be39287e18a2"
     },
     {
       "path": "web/favicon.svg",
@@ -581,7 +581,7 @@
     },
     {
       "path": "web/index.html",
-      "sha256": "02f31e36c955bcdb08c9405d505e40763b98115da4162e98ab838b5473e79e78"
+      "sha256": "204156d6a62272b12eca223e0b9f3fb8a4b8f322b52fd701cba7d6154b060695"
     },
     {
       "path": "web/login-provider.svg",
